@@ -190,7 +190,7 @@ public class CodeBrick_typeA_Control : MonoBehaviour
             yield return new WaitForSeconds(fInterval);
         }
 
-        Destroy(this.transform.gameObject, 0.1f);
+        //Destroy(this.transform.gameObject, 0.1f);
 
 
     }

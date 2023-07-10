@@ -22,6 +22,8 @@ public enum eKEYCODES {C, G, D, A, E, F, Bb, NONE} // 플레이 가능한 키 �
 public enum e_C_KEYCODES {C, Dm, Em, F, G, Am, Bb} // 해당 키의 가족 코드들. 
 
 
+public enum eMUSICMODE {Scale, Code} // 음 연습인지, 코드 연습인지. 
+
 public class GameManager : MonoBehaviour
 {
 
@@ -32,6 +34,8 @@ public class GameManager : MonoBehaviour
     public AudioClip[] aryAudioClips_Ckey;
 
     public eKEYCODES eSelectedKey;
+
+    public eMUSICMODE eSelectedMusicMode;
 
     // 각 코드애 따라, 1~7 화음의 코드가 뭔지 넣기 위해. 
     //public Dictionary<int, string> dicCodeNum_itsCode;
@@ -74,6 +78,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.eSelectedMusicMode = eMUSICMODE.Code; // 의미는 없지만 그냥 초기값으로.
         
         aryAudioClips_Ckey[0] = Resources.Load<AudioClip>("Audio/C_code");
         aryAudioClips_Ckey[1] = Resources.Load<AudioClip>("Audio/Dm_code");
@@ -144,6 +149,21 @@ public class GameManager : MonoBehaviour
     }
 
 
+    void Update()
+    {
+
+        if(Application.platform == RuntimePlatform.Android)
+        {
+
+            if(Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
+
+        }
+
+
+    }
     
 
 }
