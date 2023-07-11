@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/02-01_Code_Intro.unity
     guid: 8bbf1d0de91ec674fbbca450b9c6fde5
+  - enabled: 1
+    path: Assets/Scenes/02-02_Scale_Intro_a.unity
+    guid: e102720314a31a547bacfe4ce4ae1257
   m_configObjects: {}

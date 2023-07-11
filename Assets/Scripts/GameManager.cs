@@ -14,15 +14,41 @@ using UnityEngine;
 using System.Linq; // 23.07.07 딕셔너리내의 셀렉트를 사용해보기 위해. 
 
 
+//---------------------------------------
+// [스케일, 코드 값 관련 공통]
+public enum eMUSICMODE {Scale, Code}; // 음 연습인지, 코드 연습인지. 
+public enum eAVAILABLEKEYS {C, G, D, A, E, F, Bb, NONE}; // 플레이 가능한 키 코드들. 즉, C key...
+//---------------------------------------
+
+//---------------------------------------
+// [코드]
 // 몇도를 나타내는 키패드 3D 오브젝트의 이름은, 아래의 enum 과 같아야 함! 왜? 상호간 형변환 해서 인덱싱 하기 떄문!
-public enum eDO_NUMBER { _1do, _2do, _3do, _4do, _5do, _6do, _7do } // 영어로 몰라서.. 1도.. 화음. 지금은, 1~7화음만 하지만, 나중에는 dim, sus4 등도 할수 있으므로.
+public enum eDO_NUMBER { _1do, _2do, _3do, _4do, _5do, _6do, _7do }; // 영어로 몰라서.. 1도.. 화음. 지금은, 1~7화음만 하지만, 나중에는 dim, sus4 등도 할수 있으므로.
+public enum e_C_KEYCODES {C, Dm, Em, F, G, Am, Bb}; // 해당 키의 가족 코드들. 
+//---------------------------------------
 
-public enum eKEYCODES {C, G, D, A, E, F, Bb, NONE} // 플레이 가능한 키 코드들. 즉, C key...
+//---------------------------------------
+// [단음] Scale
+// 건반의 개수를 다 화면에 표시하고, 
+// 특정 키에서 쓰이는 음에는 해당 음을, 
+// 안 쓰이는 음은 x 표시를 하기. (밤송이 투하)
 
-public enum e_C_KEYCODES {C, Dm, Em, F, G, Am, Bb} // 해당 키의 가족 코드들. 
+// 왜 14개 이냐면, C4 D E F G A B C5 (건반 모양상 C#)
+// 옥타브 번호를 뺀, 그 키를 구성하는 음만.
+//      e.g. C4 건반을 누른다 => 파싱해서 C만 때낸다.   => C키 + C건반 으로 딕셔너리를 인덱싱 한다 => O (해당키 음 맞음) 를 결과로.
+//      e.g. D4b 건반을 누른다 => 파싱해서 Db만 떼낸다. => C키 + Db건반 으로 딕셔너리를 인덱싱 한다 => X (해당키 음 아님) 를 결과로.
+
+// 스케일 연습 화면상에서 보이는 모든 피아노 키의 대표 이름. 
+public enum ePIANOKEYS {C, Db, D, Eb, E, F, Fsharp, G, Ab, A, Bb, B};
+// 이건 그냥 이넘이므로, 위의 것과 일치하지 않는다. 해당 키 스케일의 딕셔녀리 데이터를 완성하는 부분의 코드를 참조. 
+// 0은 그 키 스케일에 해당음이 아닐때. 1 은 그 키 스케일의 1도 음, 2는 2도 음을 의미. 
+//public enum e_KEYSCALES_NUMBER {_0, _1, _2, _3, _4, _5, _6, _7} // 음.. 이게 뭔 의미가 있나. 판별하는데서 정수로 사용할 건데. 
+
+//public enum e7_PIANOKEYS {C, Db, D, Eb, E, F, Fsharp, G, Ab, A, Bb, B}
+
+//---------------------------------------
 
 
-public enum eMUSICMODE {Scale, Code} // 음 연습인지, 코드 연습인지. 
 
 public class GameManager : MonoBehaviour
 {
@@ -32,14 +58,22 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
 
     public AudioClip[] aryAudioClips_Ckey;
+    public AudioClip AudioClip_Error;
 
-    public eKEYCODES eSelectedKey;
+    public Material[] matCkey_ScoreImage;
+
+    public eAVAILABLEKEYS eSelectedKey;
 
     public eMUSICMODE eSelectedMusicMode;
 
-    // 각 코드애 따라, 1~7 화음의 코드가 뭔지 넣기 위해. 
+    // 각 키 ~~코드~~ 애 따라, 1~7 화음의 코드가 뭔지 넣기 위해. 
     //public Dictionary<int, string> dicCodeNum_itsCode;
-    public Dictionary<eKEYCODES, Dictionary<eDO_NUMBER, string>> dicCode_byKeyAndDoNum; // 키와 몇도인지 값에 따라, 해당 코드를 알려주기 위해.  
+    public Dictionary<eAVAILABLEKEYS, Dictionary<eDO_NUMBER, string>> dicCode_byKeyAndDoNum; // 키와 몇도인지 값에 따라, 해당 코드를 알려주기 위해.  
+
+    // 각 키에 따라, 구성하는 기본음이 뭔지 넣기 위해. 
+    public Dictionary<eAVAILABLEKEYS, Dictionary<ePIANOKEYS, int>> dicScale_byKeyAndPianoKeys; // 키와 피아노 건반에 따라, 해당 키의 기본 스케일 음의 번호를 알려주기 위해.
+    //public Dictionary<eAVAILABLEKEYS, Dictionary<ePIANOKEYS, string>> dicScale_byKeyAndPianoKeys; // 키와 피아노 건반에 따라, 해당 키의 기본 스케일 음을 알려주기 위해. 
+    //public Dictionary<eAVAILABLEKEYS, Dictionary<e7_PIANOKEYS, string>> dicScale_byKeyAndPianoKeys; // 키와 피아노 건반에 따라, 해당 키의 기본 스케일 음을 알려주기 위해. 
 
 
     void Awake()
@@ -70,6 +104,13 @@ public class GameManager : MonoBehaviour
 
         this.aryAudioClips_Ckey = new AudioClip[7];
 
+        // 머티리얼 로드. 
+        // Ref. https://bloodstrawberry.tistory.com/813
+        //      https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=oklmg&logNo=221148770706 
+        //      https://cagongman.tistory.com/64 
+        // Resources.LoadAll<Material>("Material/BlockColor");
+        this.matCkey_ScoreImage = Resources.LoadAll<Material>("Materials/Ckey_Scores");
+
     }
 
 
@@ -88,10 +129,12 @@ public class GameManager : MonoBehaviour
         aryAudioClips_Ckey[5] = Resources.Load<AudioClip>("Audio/Am_code");
         aryAudioClips_Ckey[6] = Resources.Load<AudioClip>("Audio/Bb_code");
 
-        this.eSelectedKey = eKEYCODES.NONE;
+        AudioClip_Error = Resources.Load<AudioClip>("Audio/KbdKeyTap");
+
+        this.eSelectedKey = eAVAILABLEKEYS.NONE;
 
 
-        this.dicCode_byKeyAndDoNum = new Dictionary<eKEYCODES, Dictionary<eDO_NUMBER, string>>();
+        this.dicCode_byKeyAndDoNum = new Dictionary<eAVAILABLEKEYS, Dictionary<eDO_NUMBER, string>>();
 
         //==============================================
         // 키 별 각 가족코드 데이터 넣기. 
@@ -99,7 +142,7 @@ public class GameManager : MonoBehaviour
         // 소리를 내 줄때, 파싱하는 데이터로도 쓰인다.       
         // Ref. https://afsdzvcx123.tistory.com/entry/C-%EB%AC%B8%EB%B2%95-Dictionarykey-DcitionaryTT-%EC%9D%B4%EC%A4%91-Dictionary-Linq-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95 
         //==============================================
-        //this.dicCode_byKeyAndDoNum.Add(eKEYCODES.C, new Dictionary<eDO_NUMBER, string>( eDO_NUMBER._1do, e_C_KEYCODES.C.ToString() ) );
+        //this.dicCode_byKeyAndDoNum.Add(eAVAILABLEKEYS.C, new Dictionary<eDO_NUMBER, string>( eDO_NUMBER._1do, e_C_KEYCODES.C.ToString() ) );
         Dictionary<eDO_NUMBER, string> dic_C_KeyFamily = new Dictionary<eDO_NUMBER, string>
                                                             {
                                                                 {eDO_NUMBER._1do, e_C_KEYCODES.C.ToString()},
@@ -111,11 +154,11 @@ public class GameManager : MonoBehaviour
                                                                 {eDO_NUMBER._7do, e_C_KEYCODES.Bb.ToString()}
                                                             };
 
-        this.dicCode_byKeyAndDoNum.Add(eKEYCODES.C, dic_C_KeyFamily);
+        this.dicCode_byKeyAndDoNum.Add(eAVAILABLEKEYS.C, dic_C_KeyFamily);
 
         if(Application.isEditor)
         {
-            Debug.Log( dicCode_byKeyAndDoNum[eKEYCODES.C][eDO_NUMBER._2do] );
+            Debug.Log( dicCode_byKeyAndDoNum[eAVAILABLEKEYS.C][eDO_NUMBER._2do] );
 
             var result = dicCode_byKeyAndDoNum.SelectMany( s => s.Value )
                                                 .Select( x => x.Value )
@@ -128,7 +171,33 @@ public class GameManager : MonoBehaviour
 
         }
 
-        
+        //==============================================
+        // 키 별 각 단음 (스케일) 데이터 넣기. 
+        // 이 데이터는, 화면에 단음 값을 표시하거나, 
+        // 소리를 내 줄때, 파싱하는 데이터로도 쓰인다.     
+        // treble clef, bass clef
+        //==============================================
+        // 0은 그 키 스케일에 해당음이 아닐때. 1 은 그 키 스케일의 1도 음, 2는 2도 음을 의미. 
+        this.dicScale_byKeyAndPianoKeys = new Dictionary<eAVAILABLEKEYS, Dictionary<ePIANOKEYS, int>>();
+
+        Dictionary<ePIANOKEYS, int> dic_C_KeyScales = new Dictionary<ePIANOKEYS, int>
+                                                {
+                                                    {ePIANOKEYS.C, 1},
+                                                    {ePIANOKEYS.Db, 0},
+                                                    {ePIANOKEYS.D, 2},
+                                                    {ePIANOKEYS.Eb, 0},
+                                                    {ePIANOKEYS.E, 3},
+                                                    {ePIANOKEYS.F, 4},
+                                                    {ePIANOKEYS.Fsharp, 0},
+                                                    {ePIANOKEYS.G, 5},
+                                                    {ePIANOKEYS.Ab, 0},
+                                                    {ePIANOKEYS.A, 6},
+                                                    {ePIANOKEYS.Bb, 0},
+                                                    {ePIANOKEYS.B, 7}
+                                                };
+
+
+        this.dicScale_byKeyAndPianoKeys.Add(eAVAILABLEKEYS.C, dic_C_KeyScales);
 
 
     }
@@ -162,6 +231,30 @@ public class GameManager : MonoBehaviour
 
         }
 
+
+    }
+
+    public string ParsingTheTappedPianoKey(string sPianoKeyNameWithPositionNumber)
+    {
+        string sScaleAlphabet_withoutPositionNumber;
+
+
+        if( sPianoKeyNameWithPositionNumber.Length == 2 ) // C4, D4.. 
+        {
+            sScaleAlphabet_withoutPositionNumber = sPianoKeyNameWithPositionNumber.Substring(0, 1);
+
+        }else if( sPianoKeyNameWithPositionNumber.Length == 3 ) // D4b .. 
+        {
+            sScaleAlphabet_withoutPositionNumber = 
+                                      sPianoKeyNameWithPositionNumber.Substring(0, 1)
+                                    + sPianoKeyNameWithPositionNumber.Substring(2, 1);
+        }else
+        {
+            // 예외적인 것은 그대로 표시. 
+            sScaleAlphabet_withoutPositionNumber = sPianoKeyNameWithPositionNumber;
+        }
+
+        return sScaleAlphabet_withoutPositionNumber;
 
     }
     

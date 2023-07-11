@@ -21,7 +21,7 @@ public class KeyListControl : MonoBehaviour
 
     public void OnClick_Ckey()
     {
-        GameManager.Instance.eSelectedKey = eKEYCODES.C;
+        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.C;
         //SceneManager.LoadScene("02-01_Code_Intro");
 
         this.gmobjPanel_PopupMenu.SetActive(true);
@@ -34,7 +34,7 @@ public class KeyListControl : MonoBehaviour
 
         GameManager.Instance.eSelectedMusicMode = eMUSICMODE.Scale;
 
-        //SceneManager.LoadScene("02-02_Scale_Intro");
+        SceneManager.LoadScene("02-02_Scale_Intro_a");
     }
 
     public void OnClick_Popup_CodeMode_Selected()

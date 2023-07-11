@@ -45,7 +45,7 @@ public class CodeMode_Level_0_Control : MonoBehaviour
         vOrigianlSize = this.transform.localScale; 
         crPopEffect = null;
 
-        if(Application.isEditor) Debug.Log("Mouse Down: " + this.name + ": " + vOrigianlSize );
+        if(Application.isEditor) Debug.Log("Code input object: " + this.name + ": " + vOrigianlSize );
 
     }
 

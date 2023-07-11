@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////////
+//
+// 화음 (code) 브릭 프리팹의 제어를 위한 스크립트.
+// 
+// 주님, 이것이 주님 보시기에, 과정도 결과도 그 이후의 진행도, 선한일이 될 수 있게 해 주십시요!
+// 예수님의 이름으로 기도드렸습니다, 아멘!
+//
+// 23.07.11. sjjo. 큐브 기반으로, 하위의 글자 TMP로 구성한 프리팹 대상. 
+//
+///////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,11 +46,14 @@ public class CodeBrick_typeA_Control : MonoBehaviour
         Invoke("VanishingEffect", 1f);
         
 
+        /*
         // 각도 변환이 어렵지는 않습니다. 도를 라디안으로 바꿀 때는 π/180 (= 0.0174533)를 곱하면 되고, 라디안을 도로 바꿀 때는 180/π (= 57.2958)를 곱하면 되죠.
         float fAngle_inDegree = 45f;
         float fAngle_inRadian = fAngle_inDegree * 0.0174533f; // * pMathf.PI/180
         float fTfuncReuslt = Mathf.Sin(fAngle_inRadian);
         Debug.Log(vOrigianlSize + "  |  "+ fTfuncReuslt);
+        */
+
 
     }
 
@@ -51,7 +64,10 @@ public class CodeBrick_typeA_Control : MonoBehaviour
 
         // 효과 코루틴 시작.
         //crVanishingEffect = StartCoroutine( MakeMe_Disappear(0.15f, 0.01f) );
-        crVanishingEffect = StartCoroutine( MakeMe_Disappear_typeA(0.15f, Time.deltaTime) );
+        //crVanishingEffect = StartCoroutine( MakeMe_Disappear_typeA(0.15f, Time.deltaTime) );
+
+        // 모바일에서 움직임이 끊어져서.. 고정 시간으로 변경: 25fps
+        crVanishingEffect = StartCoroutine( MakeMe_Disappear_typeA(0.15f, 0.04f) );
         //crVanishingEffect = StartCoroutine( MakeMe_Disappear_typeB(0.15f, Time.deltaTime) );
 
     }
@@ -190,6 +206,9 @@ public class CodeBrick_typeA_Control : MonoBehaviour
             yield return new WaitForSeconds(fInterval);
         }
 
+        //----------------------
+        // 사라지는 단계
+        // 
         //Destroy(this.transform.gameObject, 0.1f);
 
 
