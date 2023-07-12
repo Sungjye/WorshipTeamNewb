@@ -269,28 +269,28 @@ public class CodeBrick_typeA_Control : MonoBehaviour
         switch( this.name )
         {
             case "instCodeBrick_C__1do": // C
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[0];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[0];
                 break;
             case "instCodeBrick_C__2do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[1];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[1];
                 break;
             case "instCodeBrick_C__3do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[2];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[2];
                 break;
             case "instCodeBrick_C__4do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[3];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[3];
                 break;
             case "instCodeBrick_C__5do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[4];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[4];
                 break;
             case "instCodeBrick_C__6do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[5];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[5];
                 break;
             case "instCodeBrick_C__7do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[6];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[6];
                 break;
             default:
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[6];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[6];
                 break;
         }
 

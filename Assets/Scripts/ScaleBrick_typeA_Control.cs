@@ -122,31 +122,31 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
         switch( this.name )
         {
             case "instScaleBrick_C_C4": // C4 음. 
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[0];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[0];
                 this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[0];
                 break;
             case "instScaleBrick_C_D4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[1];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[2];
                 this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[1];
                 break;
             case "instScaleBrick_C_E4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[2];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[4];
                 this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[2];
                 break;
             case "instScaleBrick_C_F4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[3];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[5];
                 this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[3];
                 break;
             case "instScaleBrick_C_G4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[4];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[7];
                 this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[4];
                 break;
             case "instScaleBrick_C_A4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[5];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[9];
                 this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[5];
                 break;
             case "instScaleBrick_C_B4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey[6];
+                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[11];
                 this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[6];
                 break;
             default:

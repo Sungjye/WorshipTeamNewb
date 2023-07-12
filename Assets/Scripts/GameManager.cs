@@ -57,7 +57,9 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance = null;
 
-    public AudioClip[] aryAudioClips_Ckey;
+    public AudioClip[] aryAudioClips_Ckey_Code;
+    public AudioClip[] aryAudioClips_Ckey_Scale;
+
     public AudioClip AudioClip_Error;
 
     public Material[] matCkey_ScoreImage;
@@ -102,7 +104,9 @@ public class GameManager : MonoBehaviour
 
         }
 
-        this.aryAudioClips_Ckey = new AudioClip[7];
+        this.aryAudioClips_Ckey_Code = new AudioClip[7];
+
+        this.aryAudioClips_Ckey_Scale = new AudioClip[12]; // 23.07.12
 
         // 머티리얼 로드. 
         // Ref. https://bloodstrawberry.tistory.com/813
@@ -121,13 +125,30 @@ public class GameManager : MonoBehaviour
     {
         this.eSelectedMusicMode = eMUSICMODE.Code; // 의미는 없지만 그냥 초기값으로.
         
-        aryAudioClips_Ckey[0] = Resources.Load<AudioClip>("Audio/C_code");
-        aryAudioClips_Ckey[1] = Resources.Load<AudioClip>("Audio/Dm_code");
-        aryAudioClips_Ckey[2] = Resources.Load<AudioClip>("Audio/Em_code");
-        aryAudioClips_Ckey[3] = Resources.Load<AudioClip>("Audio/F_code");
-        aryAudioClips_Ckey[4] = Resources.Load<AudioClip>("Audio/G_code");
-        aryAudioClips_Ckey[5] = Resources.Load<AudioClip>("Audio/Am_code");
-        aryAudioClips_Ckey[6] = Resources.Load<AudioClip>("Audio/Bb_code");
+        aryAudioClips_Ckey_Code[0] = Resources.Load<AudioClip>("Audio/Code_C_Codes/C_code");
+        aryAudioClips_Ckey_Code[1] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Dm_code");
+        aryAudioClips_Ckey_Code[2] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Em_code");
+        aryAudioClips_Ckey_Code[3] = Resources.Load<AudioClip>("Audio/Code_C_CodesF_code");
+        aryAudioClips_Ckey_Code[4] = Resources.Load<AudioClip>("Audio/Code_C_Codes/G_code");
+        aryAudioClips_Ckey_Code[5] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Am_code");
+        aryAudioClips_Ckey_Code[6] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Bb_code");
+
+        // 현재는 C4~B4 한 옥타브만 하는데, 나중에는 더 생길수도.. 그러면, 머티리얼 리소스 로드하는 것처럼 해야할지도..
+        // 23.07.12
+        aryAudioClips_Ckey_Scale[0] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/C4");
+        aryAudioClips_Ckey_Scale[1] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/D4b");
+        aryAudioClips_Ckey_Scale[2] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/D4");
+        aryAudioClips_Ckey_Scale[3] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/E4b");
+        aryAudioClips_Ckey_Scale[4] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/E4");
+
+        aryAudioClips_Ckey_Scale[5] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/F4");
+        aryAudioClips_Ckey_Scale[6] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/F4#");
+        aryAudioClips_Ckey_Scale[7] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/G4");
+        aryAudioClips_Ckey_Scale[8] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/A4b");
+        aryAudioClips_Ckey_Scale[9] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/A4");
+
+        aryAudioClips_Ckey_Scale[10] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/B4b");
+        aryAudioClips_Ckey_Scale[11] = Resources.Load<AudioClip>("Audio/Scale_C_SingleNote/B4");
 
         AudioClip_Error = Resources.Load<AudioClip>("Audio/KbdKeyTap");
 
@@ -241,6 +262,7 @@ public class GameManager : MonoBehaviour
 
         if( sPianoKeyNameWithPositionNumber.Length == 2 ) // C4, D4.. 
         {
+
             sScaleAlphabet_withoutPositionNumber = sPianoKeyNameWithPositionNumber.Substring(0, 1);
 
         }else if( sPianoKeyNameWithPositionNumber.Length == 3 ) // D4b .. 
@@ -248,6 +270,21 @@ public class GameManager : MonoBehaviour
             sScaleAlphabet_withoutPositionNumber = 
                                       sPianoKeyNameWithPositionNumber.Substring(0, 1)
                                     + sPianoKeyNameWithPositionNumber.Substring(2, 1);
+
+            // 23.07.12. 주님, 감사합니다! 고민했었는데 이렇게 해결할 지혜를 주셔서 감사합니다!
+            // # 이 붙은 것들은 enum 타입에 선언이 안되어서 sharp으로 되어 있다. 
+            // 그래서 enum을 사용한 딕셔너리 인덱싱할 때만
+            // (탭된 오브젝트의 이름에 포함 되었을) #을 sharp로 치환해서 사용!
+
+            if( sScaleAlphabet_withoutPositionNumber.Substring(1, 1) == "#")
+            {
+                //Debug.Log("BANG! I detect #!");
+                // #이 있으므로 다시 재구성. 
+                sScaleAlphabet_withoutPositionNumber = 
+                                    sPianoKeyNameWithPositionNumber.Substring(0, 1)
+                                    + "sharp";
+            }
+
         }else
         {
             // 예외적인 것은 그대로 표시. 
