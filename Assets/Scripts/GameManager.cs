@@ -52,6 +52,9 @@ public enum ePIANOKEYS {C, Db, D, Eb, E, F, Fsharp, G, Ab, A, Bb, B};
 public class GameManager : MonoBehaviour
 {
 
+    // 이걸로 다 통일 안되어서 삭제. public const string PREFIX_INSTCODEBRICK = "instCodeBrick_";
+
+
     //public const string s3D_Keypads_7do_Name = ""; // 사용자가 입력하는 1~7도 화음 브릭의 오브젝트 이름. 탭 되면 코드에서 구분하기 위함. 나중에 이름이 어떻게 바뀔지 모르므로.. 아. 스위치 문에 안되어서 그냥 다시 주석. 
 
     private static GameManager instance = null;
@@ -62,6 +65,7 @@ public class GameManager : MonoBehaviour
     public AudioClip AudioClip_Error;
 
     public Material[] matCkey_ScoreImage;
+    public Material matQuiz_Tap_Mark_Image, matQuiz_O_Mark_Image, matQuiz_X_Mark_Image;
 
     public eAVAILABLEKEYS eSelectedKey;
 
@@ -78,7 +82,7 @@ public class GameManager : MonoBehaviour
 
 
     //--------------------------------------
-    public string sCodeMode_Level_PickNumber_QuizBrickName;
+    // public string sCodeMode_Level_PickNumber_QuizBrickName;
     //public string sCodeMode_Tapped_Keypad_inTermsOfTheSelectedKey; 
 
 
@@ -118,6 +122,10 @@ public class GameManager : MonoBehaviour
         //      https://cagongman.tistory.com/64 
         // Resources.LoadAll<Material>("Material/BlockColor");
         this.matCkey_ScoreImage = Resources.LoadAll<Material>("Materials/Ckey_Scores");
+
+        this.matQuiz_Tap_Mark_Image = Resources.Load<Material>("Materials/Mark_Tap");
+        this.matQuiz_O_Mark_Image = Resources.Load<Material>("Materials/Mark_O");
+        this.matQuiz_X_Mark_Image = Resources.Load<Material>("Materials/Mark_X");
 
     }
 
@@ -261,6 +269,12 @@ public class GameManager : MonoBehaviour
 
     public string ParsingTheTappedPianoKey(string sPianoKeyNameWithPositionNumber)
     {
+        // 뭐하는 함수?
+        // 스케일 모드의 피아노 키(오브젝트)값을 받아서, 
+        // 키의 위치 값만 떼고 키 값을 리턴해 주는 함수. 
+        // 왜? 이 리턴값이 enum 인덱싱 하는데 쓰이므로...
+        //
+        // e.g. C4 => C, D4b => Db, F4# => Fsharp
         string sScaleAlphabet_withoutPositionNumber;
 
 
@@ -299,5 +313,24 @@ public class GameManager : MonoBehaviour
 
     }
     
+    public string ParsingTheQuiz_SoundBrickName(string sQuizBrickName)
+    {
+        // 뭐하는 함수?
+        // 코드모드의 퀴즈 레벨에서..
+        // 문제로 나오는 인스턴시에엣 된 (사운드) 브릭의 (긴) 이름을 파싱해서, 
+        // 아니 피싱일것도 없고, 몇도인지만 스트링을 떼서 리턴해 줌. 
+        // 왜? 
+        // 인스턴시에잇 되면서 만들어진 descriptive 한 오브젝트의 이름에서, 
+        // 딕셔너리를 인덱싱하기 위한 '몇도' 인지만 알아내기 위해. 
+        // e.g. 
+        // instCodeBrick_C__1do => _1do
+
+        int nLengthOfName = sQuizBrickName.Length;
+
+        string sDoNumberString = sQuizBrickName.Substring((nLengthOfName-4), 4);
+
+        return sDoNumberString;
+    }
+
 
 }

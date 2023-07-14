@@ -14,6 +14,11 @@ using UnityEngine;
 public class CodeMode_Level_PickNumber_Control : MonoBehaviour
 {
 
+
+    // 나 (지금 이 스크립트)는 지금 몇도 키패드 브릭에 붙어 있는 스크립트 인데, 
+    // 이 퀴즈 레벨의 전체를 주관하는 플레이어 매니저의 스크립트에게, 
+    // 내가 탭 된것을 알리기 위해서 가지고 오는 오브젝트. 
+    public GameObject gmobjPlayManager; 
     //public GameObject gmobjCodeBrickPrefab;
 
     //Vector3 mousePosition;
@@ -114,20 +119,22 @@ public class CodeMode_Level_PickNumber_Control : MonoBehaviour
 
         PopEffect_inTermsOf_Size();
 
-        // sCodeMode_Tapped_Keypad_inTermsOfTheSelectedKey
+       // sCodeMode_Tapped_Keypad_inTermsOfTheSelectedKey
 
-        // 탭된 (버튼 역할인) 3D 오브젝트의 이름 자체가, eDO_NUMBER 타입의 이름. 그래서 변환해서 바로 인덱싱 하면 됨.
-        string sMyName_inTermsOfTheSelectedKey = GameManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), this.name)];
+        this.gmobjPlayManager.GetComponent<CodeMode_Level_PickNumber_PlayManager>().CheckIfInputIsCorrect(this.name);
 
+        
+/*
         if( GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
                 == sMyName_inTermsOfTheSelectedKey )
         {
             Debug.Log("Correct!");
         }else
         {
-            Debug.Log("Wrong... Brick: " + GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName + " Tapped: " + sMyName_inTermsOfTheSelectedKey);
+            Debug.Log("Wrong... Brick: " + GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
+                            + " Tapped: " + sMyName_inTermsOfTheSelectedKey);
         }
-
+*/
 
 
 
