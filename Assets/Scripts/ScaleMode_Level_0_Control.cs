@@ -42,7 +42,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 
         if(Application.isEditor) Debug.Log("Scale input object: " + this.name + ": " + vOrigianlSize );
 
-        // 이 블럭의 텍슽 표기를 자신의 오브젝트 이름으로. (피아노 키 값)
+        // 이 블럭의 텍스트 표기를 자신의 오브젝트 이름으로. (피아노 키 값)
         this.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = this.name;
 
 
@@ -164,7 +164,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 
                 //-------------------------------------------
                 // 인스턴시에잇된 오브젝트 자체의 이름 정하기:
-                // 인스턴시에잇된 (하늘에서 떨어지는) 코드 브릭 + 현재선택된 키, 사용자가 누른 몇번 화음인지를 나타내는 값.
+                // 인스턴시에잇된 (하늘에서 떨어지는) 스케일 브릭 + 현재선택된 키, 사용자가 누른 어떤 키인지를 나타내는 값.
                 instCodeBrick.name = "instScaleBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + this.name;
         
                 instCodeBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = this.name; // 건반 이름을 그대로. 

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 56444310}
   - component: {fileID: 56444309}
   - component: {fileID: 56444308}
-  - component: {fileID: 56444307}
+  - component: {fileID: 56444311}
   m_Layer: 0
   m_Name: A4b
   m_TagString: Untagged
@@ -159,21 +159,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &56444307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56444305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &56444308
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -237,6 +222,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 56444305}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &56444311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56444305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &96591633
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +247,7 @@ GameObject:
   - component: {fileID: 96591638}
   - component: {fileID: 96591637}
   - component: {fileID: 96591636}
-  - component: {fileID: 96591635}
+  - component: {fileID: 96591639}
   m_Layer: 0
   m_Name: E4
   m_TagString: Untagged
@@ -273,21 +271,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &96591635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96591633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &96591636
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -351,6 +334,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 96591633}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &96591639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96591633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &96960635
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,7 +929,7 @@ GameObject:
   - component: {fileID: 358635105}
   - component: {fileID: 358635104}
   - component: {fileID: 358635103}
-  - component: {fileID: 358635102}
+  - component: {fileID: 358635106}
   m_Layer: 0
   m_Name: A4
   m_TagString: Untagged
@@ -957,21 +953,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &358635102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 358635100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &358635103
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1035,6 +1016,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358635100}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &358635106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358635100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &433777368
 GameObject:
   m_ObjectHideFlags: 0
@@ -1143,12 +1137,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 433777368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &573603533
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,7 +1527,7 @@ GameObject:
   - component: {fileID: 777646282}
   - component: {fileID: 777646281}
   - component: {fileID: 777646280}
-  - component: {fileID: 777646279}
+  - component: {fileID: 777646283}
   m_Layer: 0
   m_Name: F4#
   m_TagString: Untagged
@@ -1559,21 +1551,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &777646279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 777646277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &777646280
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1637,6 +1614,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777646277}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &777646283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777646277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &798646978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,7 +1826,7 @@ GameObject:
   - component: {fileID: 981914216}
   - component: {fileID: 981914215}
   - component: {fileID: 981914214}
-  - component: {fileID: 981914213}
+  - component: {fileID: 981914217}
   m_Layer: 0
   m_Name: E4b
   m_TagString: Untagged
@@ -1860,21 +1850,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &981914213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 981914211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &981914214
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1938,6 +1913,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 981914211}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &981914217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 981914211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &1022764048
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,7 +2222,7 @@ GameObject:
   - component: {fileID: 1086634787}
   - component: {fileID: 1086634786}
   - component: {fileID: 1086634785}
-  - component: {fileID: 1086634784}
+  - component: {fileID: 1086634788}
   m_Layer: 0
   m_Name: G4
   m_TagString: Untagged
@@ -2258,21 +2246,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1086634784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086634782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &1086634785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2336,6 +2309,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1086634782}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1086634788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086634782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &1158768867
 GameObject:
   m_ObjectHideFlags: 0
@@ -3252,7 +3238,7 @@ GameObject:
   - component: {fileID: 1524284656}
   - component: {fileID: 1524284655}
   - component: {fileID: 1524284654}
-  - component: {fileID: 1524284653}
+  - component: {fileID: 1524284657}
   m_Layer: 0
   m_Name: F4
   m_TagString: Untagged
@@ -3276,21 +3262,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1524284653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1524284651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &1524284654
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3354,6 +3325,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524284651}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1524284657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524284651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &1534035862
 GameObject:
   m_ObjectHideFlags: 0
@@ -3553,7 +3537,7 @@ GameObject:
   - component: {fileID: 1595599463}
   - component: {fileID: 1595599462}
   - component: {fileID: 1595599461}
-  - component: {fileID: 1595599460}
+  - component: {fileID: 1595599464}
   m_Layer: 0
   m_Name: B4
   m_TagString: Untagged
@@ -3577,21 +3561,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1595599460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1595599458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &1595599461
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3655,6 +3624,64 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1595599458}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1595599464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1595599458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
+--- !u!1 &1633388946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1633388947}
+  - component: {fileID: 1633388948}
+  m_Layer: 0
+  m_Name: PlayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1633388947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633388946}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.11205503, y: -0.031119496, z: 0.3510418}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1633388948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633388946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb4eec7d045ff84ab99ddbc618fc290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjQuizBrickPrefab: {fileID: 2941762373286357793, guid: 043001fdd46aaac49864bfec62c491b2, type: 3}
 --- !u!1 &1761090445
 GameObject:
   m_ObjectHideFlags: 0
@@ -4137,12 +4164,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1833492651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &1837648165
 GameObject:
   m_ObjectHideFlags: 0
@@ -4155,7 +4180,7 @@ GameObject:
   - component: {fileID: 1837648170}
   - component: {fileID: 1837648169}
   - component: {fileID: 1837648168}
-  - component: {fileID: 1837648167}
+  - component: {fileID: 1837648171}
   m_Layer: 0
   m_Name: D4
   m_TagString: Untagged
@@ -4179,21 +4204,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1837648167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1837648165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &1837648168
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4257,6 +4267,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837648165}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1837648171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837648165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &1952181774
 GameObject:
   m_ObjectHideFlags: 0
@@ -4269,7 +4292,7 @@ GameObject:
   - component: {fileID: 1952181779}
   - component: {fileID: 1952181778}
   - component: {fileID: 1952181777}
-  - component: {fileID: 1952181776}
+  - component: {fileID: 1952181780}
   m_Layer: 0
   m_Name: B4b
   m_TagString: Untagged
@@ -4293,21 +4316,6 @@ Transform:
   m_Father: {fileID: 1160734679}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1952181776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1952181774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0954f464fd11480499be65472830c4f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjScaleBrickPrefab: {fileID: 2418405759665265722, guid: f1391bafbb4c5f244a6c476698f089a5, type: 3}
-  gmobjFruitBrickPrefab: {fileID: 4713954110278746585, guid: 8c4e24e280f0e4b4a95c4254eb3051ef, type: 3}
-  gmobjErrorBrickPrefab: {fileID: 4713954110278746585, guid: 204f516c19155324f8b17328d267e918, type: 3}
 --- !u!65 &1952181777
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4371,6 +4379,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952181774}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1952181780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952181774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2571503df401c5f43acb3d5cd6c14bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjPlayManager: {fileID: 1633388946}
 --- !u!1 &2014623115
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,11 +30,15 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
                 case "03-01_Code_PickNumber":
                     this.sGoToThisScene = "02-01_Code_Intro";
                     break;
+                case "03-01_Scale_PickNote":
+                    this.sGoToThisScene = "02-02_Scale_Intro_a";
+                    break;
                 default:
                     // Do nothing?
                     this.sGoToThisScene = "01-01_Mainmenu";
                     break;
             }
+
 
         }else if( this.name == "NextBtnBrick" )
         {
@@ -42,24 +46,31 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
             switch( sCurrentSceneName )
             {
                 case "02-01_Code_Intro":
-                    this.sGoToThisScene = "03-01_Code_PickNumber";
+                    this.sGoToThisScene = "03-01_Code_PickNumber";                    
                     break;
                 case "02-02_Scale_Intro_a":
-                    //this.sGoToThisScene = "03-02_Scale_PickPianokey";
+                    this.sGoToThisScene = "03-01_Scale_PickNote";
                     break; 
-                //case "03-01_Code_PickNumber":
-                //    this.sGoToThisScene = "03-02_Code_@";
-                //    break;
+                case "03-01_Code_PickNumber":
+                    //this.sGoToThisScene = "03-02_Code_@";
+                    this.sGoToThisScene = "StayHere";
+                    break;
+                case "03-01_Scale_PickNote":
+                    //this.sGoToThisScene = "03-02_Scale_@";
+                    this.sGoToThisScene = "StayHere";
+                    break;
                 default:
                     // Do nothing?
-                    this.sGoToThisScene = "01-01_Mainmenu";
+                    //this.sGoToThisScene = "01-01_Mainmenu";
+                    this.sGoToThisScene = "StayHere";
                     break;
             }
 
         }
 
 
-        SceneManager.LoadScene(this.sGoToThisScene);
+        if( this.sGoToThisScene != "StayHere" ) SceneManager.LoadScene(this.sGoToThisScene);
+
 
     }
 

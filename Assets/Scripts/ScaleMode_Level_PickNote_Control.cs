@@ -1,45 +1,43 @@
 //====================================================================================
-// 주님, 이렇게 진행할 수 있게 해 주셔서 감사합니다!!!
+// 주님, 부활하신 주님을 믿고, 임재하여 주시고 성령님으로 인도하여 주시는 것을 믿는 저에게
+// 주님의 말씀과 약속을 붙들고, 소망과 인내로 감사로 기쁨으로 모든 순간을 살게 하실 것을 믿습니다!
 // 
-// 코드 연습을 하는 레벨중, 위에서 내려온 사운드 브릭을 (탭해서) 듣고 맞추는데 사용되는 
-// 하단의 "몇도" 버튼 브릭 각각에 붙는 스크립트. 
-// 
-// 2023.07.12. sjjo. Initial. 
+// 단음 연습을 하는 레벨중, 위에서 내려온 사운드 브릭을 (탭해서) 듣고 맞추는데 사용되는
+// 하단의 "건반" 버튼 브릭 각각에 붙는 스크립트. 
+//
+// 2023.07.18. sjjo. Initial.
 //
 //====================================================================================
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CodeMode_Level_PickNumber_Control : MonoBehaviour
+using TMPro;
+
+public class ScaleMode_Level_PickNote_Control : MonoBehaviour
 {
 
-
-    // 나 (지금 이 스크립트)는 지금 몇도 키패드 브릭에 붙어 있는 스크립트 인데, 
+    // 나 (지금 이 스크립트)는 (스케일 모드의) 피아노 건반 키패드 브릭에 붙어 있는 스크립트 인데, 
     // 이 퀴즈 레벨의 전체를 주관하는 플레이어 매니저의 스크립트에게, 
     // 내가 탭 된것을 알리기 위해서 가지고 오는 오브젝트. 
     public GameObject gmobjPlayManager; 
-    //public GameObject gmobjCodeBrickPrefab;
-
-    //Vector3 mousePosition;
 
     // 선택시 효과 관련. 
     private Vector3 vOrigianlSize;
     private Coroutine crPopEffect;
 
-
-
     // Start is called before the first frame update
     void Start()
     {
-
         vOrigianlSize = this.transform.localScale; 
         crPopEffect = null;
 
         if(Application.isEditor) Debug.Log("User tapped object: " + this.name + ": " + vOrigianlSize );
 
-    }
+        // 이 블럭의 텍스트 표기를 자신의 오브젝트 이름으로. (피아노 키 값)
+        this.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = this.name;
 
+    }
 
     void PopEffect_inTermsOf_Size()
     {
@@ -50,7 +48,7 @@ public class CodeMode_Level_PickNumber_Control : MonoBehaviour
 
         // 효과 코루틴 시작.
         //crPopEffect = StartCoroutine( MakeMe_Pop_TypeA(0.1f, 0.02f) );
-        crPopEffect = StartCoroutine( MakeMe_Pop_TypeA(0.15f, 0.01f) );
+        crPopEffect = StartCoroutine( MakeMe_Pop_TypeA(0.15f, 0.04f) ); // 25fps
         //crPopEffect = StartCoroutine( MakeMe_Pop_TypeA_General(this, 0.1f, 0.02f) ); 안되네. 다른 방법으로.. 
 
     }
@@ -103,14 +101,6 @@ public class CodeMode_Level_PickNumber_Control : MonoBehaviour
          this.transform.localScale = vOrigianlSize;
 
     }
-/*
-    private Vector3 GetMousePos()
-    {
-        return Camera.main.WorldToScreenPoint(transform.position);
-    }
-*/
-
-
 
     private void OnMouseDown()
     {
@@ -121,7 +111,7 @@ public class CodeMode_Level_PickNumber_Control : MonoBehaviour
 
        // sCodeMode_Tapped_Keypad_inTermsOfTheSelectedKey
 
-        this.gmobjPlayManager.GetComponent<CodeMode_Level_PickNumber_PlayManager>().CheckIfInputIsCorrect(this.name);
+        this.gmobjPlayManager.GetComponent<ScaleMode_Level_PickNote_PlayManager>().CheckIfInputIsCorrect(this.name);
 
         
 /*
@@ -155,6 +145,5 @@ public class CodeMode_Level_PickNumber_Control : MonoBehaviour
 
 
     }
-
 
 }

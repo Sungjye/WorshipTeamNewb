@@ -26,7 +26,7 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
     // 사운드 브릭이 될 수도 있고, 글자 브릭이 될 수도 있고 그림 브릭이 될 수도 있고..
     public GameObject gmobjQuizBrickPrefab; // 지금 이 레벨(PickNumber)의 경우는 사운드 브릭
 
-    public int nQuizTotalCount; // 있다 사용하겠지만.. 
+    //public int nQuizTotalCount; // 있다 사용하겠지만..  어찌면, 전체를 주관하는 GameManager에 두어야 할지도?
 
     private GameObject gmobjCurrentBrick; // 현재 생성되어 있는 브릭
 
@@ -99,7 +99,7 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
         // This function is called from the each key tap of a user.
         //
         // Functions
-        // > Compare the tapped key object namw with the quiz brick name
+        // > Compare the tapped key object name with the quiz brick name
         // > Set the quiz brick components according to the result.
 
         // 탭된 (버튼 역할인) 3D 오브젝트의 이름 자체가, eDO_NUMBER 타입의 이름. 

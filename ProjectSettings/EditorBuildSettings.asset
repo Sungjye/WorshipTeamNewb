@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/03-01_Code_PickNumber.unity
     guid: dc338ad0f72aac442bd8c011d9b7dfb7
+  - enabled: 1
+    path: Assets/Scenes/03-01_Scale_PickNote.unity
+    guid: 142a461619908e74284b841d61540479
   m_configObjects: {}

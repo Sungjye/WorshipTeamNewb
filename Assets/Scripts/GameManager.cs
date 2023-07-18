@@ -46,6 +46,9 @@ public enum ePIANOKEYS {C, Db, D, Eb, E, F, Fsharp, G, Ab, A, Bb, B};
 
 //public enum e7_PIANOKEYS {C, Db, D, Eb, E, F, Fsharp, G, Ab, A, Bb, B}
 
+// 스케일 모드의 퀴즈는, 위치 번호까지 존재하므로, (적어도 Pick Note 퀴즈는)
+// 별도의 enum type을 사용함!
+public enum e_C_SCALENOTES {C4, D4, E4, F4, G4, A4, B4}; // 나중에 한 옥타브 넘어서 퀴즈내고 싶으면, 여기에 추가.. 
 
 
 
@@ -213,6 +216,8 @@ public class GameManager : MonoBehaviour
         // 0은 그 키 스케일에 해당음이 아닐때. 1 은 그 키 스케일의 1도 음, 2는 2도 음을 의미. 
         this.dicScale_byKeyAndPianoKeys = new Dictionary<eAVAILABLEKEYS, Dictionary<ePIANOKEYS, int>>();
 
+        // 이 데이터는, 사용자가 친 음이, 해당 스케일의 음인지 아닌지를 판정하는데만 쓴다!
+        // 스케일 모드의 경우, 탭된 건반에 해당하는 유일한 음을 내주고, 또 그 음 (e.g. C4 숫자 포함)으로 퀴즈모드에서 비교해야. 
         Dictionary<ePIANOKEYS, int> dic_C_KeyScales = new Dictionary<ePIANOKEYS, int>
                                                 {
                                                     {ePIANOKEYS.C, 1},
