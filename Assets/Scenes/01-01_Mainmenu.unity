@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.07924773, g: 0.0665322, b: 0.042922754, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1717,11 +1717,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9eafba17b2788b47bb3399736da1f5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aryAudioClips_Ckey: []
+  aryAudioClips_Ckey_Code: []
+  aryAudioClips_Ckey_Scale: []
   AudioClip_Error: {fileID: 8300000, guid: b9c9016d6ad935342b8ac633bcbb9fe4, type: 3}
-  matCkey_score:
-  - {fileID: 2100000, guid: 0d4bc9f9a76906f43ac61bb3a69d6514, type: 2}
-  - {fileID: 2100000, guid: 198bcfa7e3342fe4f8c89d07bca2266c, type: 2}
+  matCkey_ScoreImage: []
+  matQuiz_Tap_Mark_Image: {fileID: 0}
+  matQuiz_O_Mark_Image: {fileID: 0}
+  matQuiz_X_Mark_Image: {fileID: 0}
   eSelectedKey: 0
   eSelectedMusicMode: 0
 --- !u!4 &1829925475
