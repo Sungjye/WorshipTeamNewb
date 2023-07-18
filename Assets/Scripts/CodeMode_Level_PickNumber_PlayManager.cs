@@ -114,7 +114,12 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
         {
             Debug.Log("Correct!");
 
-            this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asCorrect();
+            // 여기서 이 맞는 브릭은 사라지게 함. 
+            this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asCorrect(); 
+
+            // 맞으면 다음 브릭 생성!
+            //this.SpawnNewBrick();
+            Invoke("SpawnNewBrick", 0.7f);
 
         }else
         {

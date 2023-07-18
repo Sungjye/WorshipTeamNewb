@@ -140,7 +140,7 @@ public class GameManager : MonoBehaviour
         aryAudioClips_Ckey_Code[0] = Resources.Load<AudioClip>("Audio/Code_C_Codes/C_code");
         aryAudioClips_Ckey_Code[1] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Dm_code");
         aryAudioClips_Ckey_Code[2] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Em_code");
-        aryAudioClips_Ckey_Code[3] = Resources.Load<AudioClip>("Audio/Code_C_CodesF_code");
+        aryAudioClips_Ckey_Code[3] = Resources.Load<AudioClip>("Audio/Code_C_Codes/F_code");
         aryAudioClips_Ckey_Code[4] = Resources.Load<AudioClip>("Audio/Code_C_Codes/G_code");
         aryAudioClips_Ckey_Code[5] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Am_code");
         aryAudioClips_Ckey_Code[6] = Resources.Load<AudioClip>("Audio/Code_C_Codes/Bb_code");

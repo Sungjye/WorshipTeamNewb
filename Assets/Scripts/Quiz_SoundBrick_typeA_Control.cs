@@ -21,6 +21,16 @@ using UnityEngine;
 
 using TMPro;
 
+enum eTextMovingDirection
+{
+    // These mean the state sequence of horizontal moving of the bundle name text. 23.06.29
+    eSTART, 
+    eFORWARD, 
+    ePAUSE, 
+    eBACKWORD, 
+    eEND
+}
+
 public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 {
     private AudioSource brickSpeaker;
@@ -32,6 +42,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
     // 이 오브젝트의 자체의 이름은, instCodeBrick_C__2do 
     // 이런 식일 텐데, 이 값에는 이것으로 파싱한, 이를테면 Dm 이 들어가 있다. 
     public string sMyDictionariedCodeName; 
+
 
     // Start is called before the first frame update
     void Start()
@@ -62,9 +73,11 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
         Check_WhoAmI_AndPlaySound();
 
-        //Invoke("VanishingEffect", 1f);
+
+        //Invoke("MovingAway_type1", 2f);
 
     }
+
 
     void PopEffect()
     {
@@ -271,6 +284,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
     }
 
+#region Public Methods regarding to a displaying the brick face.
     public void SetMe_asQuestion()
     {
         // SSS_SSS_PlayManager.cs 에서 부르는 함수. 
@@ -300,6 +314,8 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
         this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_O_Mark_Image;
 
+        Invoke("MovingAway", 0.7f);
+
     }
 
     public void SetMe_asWrong()
@@ -310,10 +326,56 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         // > Make my tmp child's string '?' still.
         // > Make my object child's material _Wrong_
 
+        PopEffect();
+
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "X";
 
         this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_X_Mark_Image;
 
     }
+#endregion
+
+#region Public Methods regarding to a controlling of the brick (me)
+
+    private void MovingAway()
+    {
+        //MovingAway_type1();
+        MovingAway_type2();
+    }
+
+    private void MovingAway_type1()
+    {
+        // 왼쪽으로 가서 사라지기.
+        if(Application.isEditor) Debug.Log("MOVE AWAY!");
+
+        this.GetComponent<Rigidbody>().AddForce(Vector3.left*50f, ForceMode.Impulse); // Force, Impulse, Acceleration
+
+        Invoke("IveDoneMyRole", 1f);
+
+    }
+
+    private void MovingAway_type2()
+    {
+        // 살짝 점프하고, 왼쪽으로 가서 사라지기. 
+        if(Application.isEditor) Debug.Log("MOVE AWAY!");
+
+        this.GetComponent<Rigidbody>().AddForce(Vector3.up*5f, ForceMode.Impulse); // Force, Impulse, Acceleration
+
+        Invoke("MovingAway_type1", 0.5f);
+
+    }
+
+
+    private void IveDoneMyRole()
+    {
+        if(Application.isEditor) Debug.Log("See you then!");
+
+        Destroy(this.transform.gameObject, 0.1f);
+    }
+
+
+
+
+#endregion
 
 }

@@ -45,10 +45,10 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
                     this.sGoToThisScene = "03-01_Code_PickNumber";
                     break;
                 case "02-02_Scale_Intro_a":
-                    this.sGoToThisScene = "03-02_Scale_PickPianokey";
+                    //this.sGoToThisScene = "03-02_Scale_PickPianokey";
                     break; 
                 //case "03-01_Code_PickNumber":
-                //    this.sGoToThisScene = "01_Code_Intro";
+                //    this.sGoToThisScene = "03-02_Code_@";
                 //    break;
                 default:
                     // Do nothing?
