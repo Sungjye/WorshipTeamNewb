@@ -200,7 +200,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
 //        if(Application.isEditor)
 
-        switch( GameManager.Instance.eSelectedKey )
+        switch( ContentsManager.Instance.eSelectedKey )
         {
             case eAVAILABLEKEYS.C:
                 AmI_Ckey_thenPlaySound(this.name);
@@ -232,35 +232,35 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
         switch( sMyName )
         {
             case "C4": // C4 음. 
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[0];
-                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[0];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[0];
+                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[0];
                 break;
             case "D4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[2];
-                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[1];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[2];
+                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[1];
                 break;
             case "E4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[4];
-                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[2];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[4];
+                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[2];
                 break;
             case "F4": // ""instScaleBrick_C_F4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[5];
-                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[3];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[5];
+                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[3];
                 break;
             case "G4": // "instScaleBrick_C_G4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[7];
-                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[4];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[7];
+                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[4];
                 break;
             case "A4": // "instScaleBrick_C_A4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[9];
-                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[5];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[9];
+                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[5];
                 break;
             case "B4": // "instScaleBrick_C_B4":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[11];
-                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[6];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[11];
+                //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[6];
                 break;
             default:
-                this.brickSpeaker.clip = GameManager.Instance.AudioClip_Error;
+                this.brickSpeaker.clip = ContentsManager.Instance.AudioClip_Error;
                 break;
         }
 
@@ -279,40 +279,40 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
         switch( sMyName )
         {
             case "C4": // C4 음. 
-                //this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[0];
-                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[0];
+                //this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[0];
+                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[0];
                 break;
             case "D4":
-                //this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[2];
-                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[1];
+                //this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[2];
+                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[1];
                 break;
             case "E4":
-                //this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[4];
-                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[2];
+                //this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[4];
+                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[2];
                 break;
             case "F4": // ""instScaleBrick_C_F4":
-                //this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[5];
-                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[3];
+                //this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[5];
+                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[3];
                 break;
             case "G4": // "instScaleBrick_C_G4":
-                //this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[7];
-                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[4];
+                //this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[7];
+                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[4];
                 break;
             case "A4": // "instScaleBrick_C_A4":
-                //this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[9];
-                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[5];
+                //this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[9];
+                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[5];
                 break;
             case "B4": // "instScaleBrick_C_B4":
-                //this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Scale[11];
-                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matCkey_ScoreImage[6];
+                //this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Scale[11];
+                this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matCkey_ScoreImage[6];
                 break;
             default:
-                //this.brickSpeaker.clip = GameManager.Instance.AudioClip_Error;
+                //this.brickSpeaker.clip = ContentsManager.Instance.AudioClip_Error;
                 this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "Err.Mat.";
                 break;
         }
 
-        brickSpeaker.Play();
+        //brickSpeaker.Play();
 
     }
 
@@ -332,7 +332,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "?";
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_Tap_Mark_Image;
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_Tap_Mark_Image;
 
     }
 
@@ -347,10 +347,13 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text 
                 = this.name;
 
-        //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_O_Mark_Image;
+        //this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_O_Mark_Image;
         
         // 맞다 표시 대신에, 맞는 악보를.. 
         this.AmI_Ckey_thenShowScore(this.name);
+
+        // 맞았을 때는, 맞은 음을 한번 플레이 해 주고 사라지기. 
+        brickSpeaker.Play();
 
 
         Invoke("MovingAway", 0.7f);
@@ -369,7 +372,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "X";
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_X_Mark_Image;
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_X_Mark_Image;
 
     }
 #endregion

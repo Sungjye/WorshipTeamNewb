@@ -43,13 +43,13 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
         // 게임 매니져에게, 내가 누구인지 알려줘야. 
         // 그래야, 키패드 컨트롤 스크립트에서 맞게 눌렀는지 아닌지 판단하지. 
-        // Nope, as it is.. GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName = this.name;
+        // Nope, as it is.. ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName = this.name;
 
         // 여기에는 몇도가 아니라, 구체적인 코드 이름이 들어간다. 
-        string sWhatDoNumber = GameManager.Instance.ParsingTheQuiz_SoundBrickName(this.name);
-        //GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName
+        string sWhatDoNumber = ContentsManager.Instance.ParsingTheQuiz_SoundBrickName(this.name);
+        //ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName
         this.sMyDictionariedCodeName
-            = GameManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sWhatDoNumber)];
+            = ContentsManager.Instance.dicCode_byKeyAndDoNum[ContentsManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sWhatDoNumber)];
 
         if(Application.isEditor) Debug.Log("Quiz brick name. Original: " + this.name + ". Parsed: " + this.sMyDictionariedCodeName);
 
@@ -218,7 +218,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
 //        if(Application.isEditor)
 
-        switch( GameManager.Instance.eSelectedKey )
+        switch( ContentsManager.Instance.eSelectedKey )
         {
             case eAVAILABLEKEYS.C:
                 AmI_Ckey_thenPlaySound(this.name);
@@ -250,28 +250,28 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         switch( sMyName )
         {
             case "instCodeBrick_C__1do": // C
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[0];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[0];
                 break;
             case "instCodeBrick_C__2do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[1];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[1];
                 break;
             case "instCodeBrick_C__3do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[2];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[2];
                 break;
             case "instCodeBrick_C__4do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[3];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[3];
                 break;
             case "instCodeBrick_C__5do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[4];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[4];
                 break;
             case "instCodeBrick_C__6do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[5];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[5];
                 break;
             case "instCodeBrick_C__7do":
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[6];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[6];
                 break;
             default:
-                this.brickSpeaker.clip = GameManager.Instance.aryAudioClips_Ckey_Code[6];
+                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[6];
                 break;
         }
 
@@ -292,7 +292,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "?";
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_Tap_Mark_Image;
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_Tap_Mark_Image;
 
     }
 
@@ -306,9 +306,12 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text 
                 = this.sMyDictionariedCodeName;
-                //= GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName;
+                //= ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName;
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_O_Mark_Image;
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_O_Mark_Image;
+
+        // 맞았을 때는, 맞은 음을 한번 플레이 해 주고 사라지기. 
+        brickSpeaker.Play();
 
         Invoke("MovingAway", 0.7f);
 
@@ -326,7 +329,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "X";
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = GameManager.Instance.matQuiz_X_Mark_Image;
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_X_Mark_Image;
 
     }
 #endregion

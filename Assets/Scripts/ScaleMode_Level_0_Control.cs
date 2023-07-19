@@ -143,7 +143,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
         //---------------------------------------------
         // 지금 탭된 피아노 키가 무엇인지 확인부터해서.. 
         // 어떤 것을 인스턴시에잇 할지 결정!
-        string sParsedPinanoKey = GameManager.Instance.ParsingTheTappedPianoKey(this.name); // e.g. C4는 C로, D4b 은 Db로 변환해 준다. 
+        string sParsedPinanoKey = ContentsManager.Instance.ParsingTheTappedPianoKey(this.name); // e.g. C4는 C로, D4b 은 Db로 변환해 준다. 
         // 피아노 키 값이 나중에 뭐가될지 C# or Db 뭐가 될지 모르므로.. 있는지 확인해야 함. 
         // ref. https://learn.microsoft.com/ko-kr/dotnet/api/system.enum.isdefined?view=net-7.0 
         if( System.Enum.IsDefined( typeof(ePIANOKEYS),  sParsedPinanoKey ) ) 
@@ -155,7 +155,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
             
             ePIANOKEYS eTappedPianoKey = (ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sParsedPinanoKey);
         
-            int nCorrespondentKeyValue = GameManager.Instance.dicScale_byKeyAndPianoKeys[GameManager.Instance.eSelectedKey][eTappedPianoKey];
+            int nCorrespondentKeyValue = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[ContentsManager.Instance.eSelectedKey][eTappedPianoKey];
             // 해당하는 키 스케일에 포함되는 음이면 1~7 일것이고, 아니면 0 일것임. 1은 해당 키 스케일의 1번음. 
             if( (nCorrespondentKeyValue >= 1) && (nCorrespondentKeyValue <= 7) )
             {  
@@ -165,7 +165,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
                 //-------------------------------------------
                 // 인스턴시에잇된 오브젝트 자체의 이름 정하기:
                 // 인스턴시에잇된 (하늘에서 떨어지는) 스케일 브릭 + 현재선택된 키, 사용자가 누른 어떤 키인지를 나타내는 값.
-                instCodeBrick.name = "instScaleBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + this.name;
+                instCodeBrick.name = "instScaleBrick_" + ContentsManager.Instance.eSelectedKey.ToString()+ "_" + this.name;
         
                 instCodeBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = this.name; // 건반 이름을 그대로. 
 
@@ -193,7 +193,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 
 
         //instCodeBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text 
-        //            = GameManager.Instance.dicScale_byKeyAndPianoKeys[GameManager.Instance.eSelectedKey][(ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sParsedPinanoKey)];
+        //            = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[ContentsManager.Instance.eSelectedKey][(ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sParsedPinanoKey)];
 
 
 

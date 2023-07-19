@@ -56,7 +56,7 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
         //eDO_NUMBER eQuizCodeNumber = eDO_NUMBER._2do; // Randomly or a certain pattern.
         eDO_NUMBER eQuizCodeNumber = GetOneBrickName_ineDO_NUMBER__Randomly();
         
-        this.gmobjCurrentBrick.name = "instCodeBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + eQuizCodeNumber.ToString();
+        this.gmobjCurrentBrick.name = "instCodeBrick_" + ContentsManager.Instance.eSelectedKey.ToString()+ "_" + eQuizCodeNumber.ToString();
 
         //--------------------------------------------------
         // 오브젝트 자식중, 이미지 브릭의 머티리얼(이미지) 을 정하기.
@@ -66,7 +66,7 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
         // with searching the Dictionary according to the selected code-key. (e.g. C key)
         /*
         this.gmobjCurrentBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text 
-                    = GameManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][eQuizCodeNumber] ;
+                    = ContentsManager.Instance.dicCode_byKeyAndDoNum[ContentsManager.Instance.eSelectedKey][eQuizCodeNumber] ;
         */
         // Nope. use the method in the spawned object. 
         this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asQuestion();
@@ -104,11 +104,11 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
 
         // 탭된 (버튼 역할인) 3D 오브젝트의 이름 자체가, eDO_NUMBER 타입의 이름. 
         // 그래서 변환해서 바로 인덱싱 하면 됨.
-        string sTappedCodeName_inTermsOfTheSelectedKey = GameManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sTappedKeyObjectName)];
+        string sTappedCodeName_inTermsOfTheSelectedKey = ContentsManager.Instance.dicCode_byKeyAndDoNum[ContentsManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sTappedKeyObjectName)];
 
 
 
-        //if( GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
+        //if( ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
         if( this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().sMyDictionariedCodeName
                 == sTappedCodeName_inTermsOfTheSelectedKey )
         {
@@ -123,7 +123,7 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
 
         }else
         {
-            Debug.Log("Wrong... Brick: " + this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().sMyDictionariedCodeName // + GameManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
+            Debug.Log("Wrong... Brick: " + this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().sMyDictionariedCodeName // + ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
                             + " Tapped: " + sTappedCodeName_inTermsOfTheSelectedKey);
 
             this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asWrong();
