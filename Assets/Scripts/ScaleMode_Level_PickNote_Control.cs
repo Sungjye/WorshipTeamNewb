@@ -133,13 +133,13 @@ public class ScaleMode_Level_PickNote_Control : MonoBehaviour
 
         // 인스턴시에잇된 오브젝트 자체의 이름 정하기:
         // 인스턴시에잇된 (하늘에서 떨어지는) 코드 브릭 + 현재선택된 키, 사용자가 누른 몇번 화음인지를 나타내는 값.
-        instCodeBrick.name = "instCodeBrick_" + ContentsManager.Instance.eSelectedKey.ToString()+ "_" + this.name;
+        instCodeBrick.name = "instCodeBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + this.name;
 
         // 인스턴시에잇된 오브젝트 자식으로 붙어 있는 TMP의 텍스트 내용을 정하기:
         // Ref. https://mentum.tistory.com/333 , https://chashtag.tistory.com/50 
         // 탭된 (버튼 역할인) 3D 오브젝트의 이름 자체가, eDO_NUMBER 타입의 이름. 그래서 변환해서 바로 인덱싱 하면 됨. 
         instCodeBrick.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text 
-                    = ContentsManager.Instance.dicCode_byKeyAndDoNum[ContentsManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), this.name)];
+                    = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), this.name)];
                     //= ContentsManager.Instance.dicCode_byKeyAndDoNum[eKEYCODES.C][eDO_NUMBER._1do];
 */
 

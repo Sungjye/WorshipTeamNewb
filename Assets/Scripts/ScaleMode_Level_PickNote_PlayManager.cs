@@ -55,11 +55,11 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
         //-------------------------------------------
         // 인스턴시에잇된 오브젝트 자체의 이름 정하기:
         // 인스턴시에잇된 (하늘에서 떨어지는) 스케일 브릭 + 현재선택된 키, 사용자가 누른 어떤 키인지를 나타내는 값.        
-        //this.gmobjCurrentBrick.name = "instScaleBrick_" + ContentsManager.Instance.eSelectedKey.ToString()+ "_" + eQuizScaleNote.ToString();
+        //this.gmobjCurrentBrick.name = "instScaleBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + eQuizScaleNote.ToString();
         // 스케일 모드는, 악보를 표시할 때 빼고는 그냥 이름 inst 이런거 붙이지 말고 이름그대로 사용하자! 
         // 스케일을 섞어서, 브릭을 생성해 낼 일도 없을듯.. 
         // 나중에 악보 표시나, 소리 매칭할 때, 컨트롤 스크립트에서 현재 선택된 key (조) 를 확인해서 서브루틴 돌리기로.. 
-        //this.gmobjCurrentBrick.name = "instScaleBrick_" + ContentsManager.Instance.eSelectedKey.ToString()+ "_" + eQuizScaleNote.ToString();
+        //this.gmobjCurrentBrick.name = "instScaleBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + eQuizScaleNote.ToString();
         this.gmobjCurrentBrick.name = sQuizScaleNote;
 
         //--------------------------------------------------
@@ -70,7 +70,7 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
         // with searching the Dictionary according to the selected code-key. (e.g. C key)
         /*
         this.gmobjCurrentBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text 
-                    = ContentsManager.Instance.dicCode_byKeyAndDoNum[ContentsManager.Instance.eSelectedKey][eQuizCodeNumber] ;
+                    = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][eQuizCodeNumber] ;
         */
         // Nope. use the method in the spawned object. 
         // Type B sound birck is for a scale mode. 23.07.18
@@ -87,7 +87,7 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
 
         string sRandomNote;
 
-        switch( ContentsManager.Instance.eSelectedKey )
+        switch( GameManager.Instance.eSelectedKey )
         {
             case eAVAILABLEKEYS.C:
                 //e_C_SCALENOTES eRandomNote = (e_C_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_C_SCALENOTES)).Length) );
@@ -109,7 +109,6 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
 
         return sRandomNote;
     }
-
 
     public void CheckIfInputIsCorrect(string sTappedKeyObjectName)
     {
@@ -143,7 +142,7 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
             // 2. 같다면 맞다고 처리.
             // 3. 다르다면, 틀렸다고 처리. 
 
-            //sTappedNoteName_inTermsOfTheSelectedKey = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[ContentsManager.Instance.eSelectedKey][(ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sTappedKeyObjectName)];
+            //sTappedNoteName_inTermsOfTheSelectedKey = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[GameManager.Instance.eSelectedKey][(ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sTappedKeyObjectName)];
 
             // 스케일 모드는, 악보를 표시할 때 빼고는 그냥 이름 inst 이런거 붙이지 말고 이름그대로 사용하자! 
 

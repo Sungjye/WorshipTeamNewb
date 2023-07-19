@@ -49,7 +49,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         string sWhatDoNumber = ContentsManager.Instance.ParsingTheQuiz_SoundBrickName(this.name);
         //ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName
         this.sMyDictionariedCodeName
-            = ContentsManager.Instance.dicCode_byKeyAndDoNum[ContentsManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sWhatDoNumber)];
+            = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sWhatDoNumber)];
 
         if(Application.isEditor) Debug.Log("Quiz brick name. Original: " + this.name + ". Parsed: " + this.sMyDictionariedCodeName);
 
@@ -218,7 +218,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
 //        if(Application.isEditor)
 
-        switch( ContentsManager.Instance.eSelectedKey )
+        switch( GameManager.Instance.eSelectedKey )
         {
             case eAVAILABLEKEYS.C:
                 AmI_Ckey_thenPlaySound(this.name);

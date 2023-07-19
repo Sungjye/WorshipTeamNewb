@@ -155,7 +155,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
             
             ePIANOKEYS eTappedPianoKey = (ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sParsedPinanoKey);
         
-            int nCorrespondentKeyValue = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[ContentsManager.Instance.eSelectedKey][eTappedPianoKey];
+            int nCorrespondentKeyValue = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[GameManager.Instance.eSelectedKey][eTappedPianoKey];
             // 해당하는 키 스케일에 포함되는 음이면 1~7 일것이고, 아니면 0 일것임. 1은 해당 키 스케일의 1번음. 
             if( (nCorrespondentKeyValue >= 1) && (nCorrespondentKeyValue <= 7) )
             {  
@@ -165,7 +165,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
                 //-------------------------------------------
                 // 인스턴시에잇된 오브젝트 자체의 이름 정하기:
                 // 인스턴시에잇된 (하늘에서 떨어지는) 스케일 브릭 + 현재선택된 키, 사용자가 누른 어떤 키인지를 나타내는 값.
-                instCodeBrick.name = "instScaleBrick_" + ContentsManager.Instance.eSelectedKey.ToString()+ "_" + this.name;
+                instCodeBrick.name = "instScaleBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + this.name;
         
                 instCodeBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = this.name; // 건반 이름을 그대로. 
 
@@ -193,7 +193,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 
 
         //instCodeBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text 
-        //            = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[ContentsManager.Instance.eSelectedKey][(ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sParsedPinanoKey)];
+        //            = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[GameManager.Instance.eSelectedKey][(ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sParsedPinanoKey)];
 
 
 

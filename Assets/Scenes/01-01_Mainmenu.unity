@@ -1283,7 +1283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1624013819}
-  - component: {fileID: 1624013818}
+  - component: {fileID: 1624013820}
   m_Layer: 0
   m_Name: ContentsManager
   m_TagString: Untagged
@@ -1291,18 +1291,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1624013818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1624013817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b430c61de0230343b3ced5e449d19d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1624013819
 Transform:
   m_ObjectHideFlags: 0
@@ -1318,6 +1306,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1624013820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624013817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b430c61de0230343b3ced5e449d19d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aryAudioClips_Ckey_Code: []
+  aryAudioClips_Ckey_Scale: []
+  AudioClip_Error: {fileID: 0}
+  matCkey_ScoreImage: []
+  matQuiz_Tap_Mark_Image: {fileID: 0}
+  matQuiz_O_Mark_Image: {fileID: 0}
+  matQuiz_X_Mark_Image: {fileID: 0}
 --- !u!1 &1718404188
 GameObject:
   m_ObjectHideFlags: 0
@@ -1741,7 +1748,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1829925475}
-  - component: {fileID: 1829925474}
+  - component: {fileID: 1829925476}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1749,27 +1756,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1829925474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829925473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9eafba17b2788b47bb3399736da1f5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aryAudioClips_Ckey_Code: []
-  aryAudioClips_Ckey_Scale: []
-  AudioClip_Error: {fileID: 8300000, guid: b9c9016d6ad935342b8ac633bcbb9fe4, type: 3}
-  matCkey_ScoreImage: []
-  matQuiz_Tap_Mark_Image: {fileID: 0}
-  matQuiz_O_Mark_Image: {fileID: 0}
-  matQuiz_X_Mark_Image: {fileID: 0}
-  eSelectedKey: 0
-  eSelectedMusicMode: 0
 --- !u!4 &1829925475
 Transform:
   m_ObjectHideFlags: 0
@@ -1785,6 +1771,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1829925476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829925473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9eafba17b2788b47bb3399736da1f5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eSelectedKey: 0
+  eSelectedMusicMode: 0
 --- !u!1 &2023656892
 GameObject:
   m_ObjectHideFlags: 0

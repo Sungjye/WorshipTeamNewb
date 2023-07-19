@@ -200,7 +200,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
 //        if(Application.isEditor)
 
-        switch( ContentsManager.Instance.eSelectedKey )
+        switch( GameManager.Instance.eSelectedKey )
         {
             case eAVAILABLEKEYS.C:
                 AmI_Ckey_thenPlaySound(this.name);

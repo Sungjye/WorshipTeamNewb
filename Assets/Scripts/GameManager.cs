@@ -11,7 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using System.Linq; // 23.07.07 딕셔너리내의 셀렉트를 사용해보기 위해. 
+
 
 
 

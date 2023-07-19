@@ -14,6 +14,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Linq; // 23.07.07 딕셔너리내의 셀렉트를 사용해보기 위해. 
+
 //---------------------------------------
 // [스케일, 코드 값 관련 공통]
 public enum eMUSICMODE {Scale, Code}; // 음 연습인지, 코드 연습인지. 
@@ -55,6 +57,7 @@ public enum e_C_SCALENOTES {C4, D4, E4, F4, G4, A4, B4}; // 나중에 한 옥타
 
 public class ContentsManager : MonoBehaviour
 {
+    private static ContentsManager instance = null;
 
     public AudioClip[] aryAudioClips_Ckey_Code;
     public AudioClip[] aryAudioClips_Ckey_Scale;
@@ -224,7 +227,7 @@ public class ContentsManager : MonoBehaviour
 
 
     // 컨텐츠 매니저 인스턴스에 접근할 수 있는 프로퍼티. static이므로 다른 클래스에서 맘껏 호출할 수 있다.
-    public static GameManager Instance
+    public static ContentsManager Instance
     {
         get
         {
