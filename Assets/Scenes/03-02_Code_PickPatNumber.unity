@@ -877,7 +877,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 426296904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5d5e4ba94ccd04a847559cd509270a, type: 3}
+  m_Script: {fileID: 11500000, guid: bafae6ab59acf47469a2f1344de609e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gmobjPlayManager: {fileID: 2082861843}
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 433777368}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5d5e4ba94ccd04a847559cd509270a, type: 3}
+  m_Script: {fileID: 11500000, guid: bafae6ab59acf47469a2f1344de609e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gmobjPlayManager: {fileID: 2082861843}
@@ -1662,7 +1662,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 933604951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5d5e4ba94ccd04a847559cd509270a, type: 3}
+  m_Script: {fileID: 11500000, guid: bafae6ab59acf47469a2f1344de609e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gmobjPlayManager: {fileID: 2082861843}
@@ -2169,7 +2169,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1067024993}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5d5e4ba94ccd04a847559cd509270a, type: 3}
+  m_Script: {fileID: 11500000, guid: bafae6ab59acf47469a2f1344de609e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gmobjPlayManager: {fileID: 2082861843}
@@ -2695,7 +2695,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1686531341}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5d5e4ba94ccd04a847559cd509270a, type: 3}
+  m_Script: {fileID: 11500000, guid: bafae6ab59acf47469a2f1344de609e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gmobjPlayManager: {fileID: 2082861843}
@@ -2807,7 +2807,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1746953325}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5d5e4ba94ccd04a847559cd509270a, type: 3}
+  m_Script: {fileID: 11500000, guid: bafae6ab59acf47469a2f1344de609e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gmobjPlayManager: {fileID: 2082861843}
@@ -2919,7 +2919,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1833492651}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5d5e4ba94ccd04a847559cd509270a, type: 3}
+  m_Script: {fileID: 11500000, guid: bafae6ab59acf47469a2f1344de609e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gmobjPlayManager: {fileID: 2082861843}
@@ -3230,7 +3230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2082861845}
-  - component: {fileID: 2082861844}
+  - component: {fileID: 2082861846}
   m_Layer: 0
   m_Name: PlayManager
   m_TagString: Untagged
@@ -3238,19 +3238,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2082861844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2082861843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1c60d92693499e4b9e2e8b53ab89de9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gmobjQuizBrickPrefab: {fileID: 2941762373286357793, guid: 65d4dfa1e0a8dcf49961211df8d74f25, type: 3}
 --- !u!4 &2082861845
 Transform:
   m_ObjectHideFlags: 0
@@ -3266,3 +3253,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2082861846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082861843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b03cdbb6d4a68c48b1f5a1cc0f772a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gmobjQuizBrickPrefab: {fileID: 2842274773505674098, guid: 71dfe60e8ff22cb41b28f7d674f77b47, type: 3}
+  liGmobjCurrentBrick: []
