@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/03-02_Scale_PickPatNotes.unity
     guid: 35f4f9cb51270244e93202cacc4f2ec6
+  - enabled: 1
+    path: Assets/Scenes/03-03_Code_MatchSound.unity
+    guid: e4425a69003479b4fa3408687d7001f0
   m_configObjects: {}
