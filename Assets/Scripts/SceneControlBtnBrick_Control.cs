@@ -38,6 +38,9 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
                 case "03-02_Code_PickPatNumber":
                     this.sGoToThisScene = "03-01_Code_PickNumber";
                     break;
+                case "03-02_Scale_PickPatNotes": // 23.07.24
+                    this.sGoToThisScene = "03-01_Scale_PickNote";
+                    break;
                 default:
                     // Do nothing?
                     this.sGoToThisScene = "01-01_Mainmenu";
@@ -61,9 +64,9 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
                     this.sGoToThisScene = "03-02_Code_PickPatNumber";
                     //this.sGoToThisScene = "StayHere";
                     break;
-                case "03-01_Scale_PickNote":
-                    //this.sGoToThisScene = "03-02_Scale_@";
-                    this.sGoToThisScene = "StayHere";
+                case "03-01_Scale_PickNote": // 23.07.24
+                    this.sGoToThisScene = "03-02_Scale_PickPatNotes";
+                    //this.sGoToThisScene = "StayHere";
                     break;
                 //-----------------------------------------
                 default:

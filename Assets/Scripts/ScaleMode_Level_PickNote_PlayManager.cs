@@ -50,7 +50,7 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
         // Tentative. Randomly chosen note among the available keys in the piano keyboard which are defined in ContentsManager.
         //ePIANOKEYS eQuizScaleNote = ePIANOKEYS.Db; // Randomly or a certain pattern.
         // ePIANOKEYS eQuizScaleNote = GetOneBrickName_inePIANOKEYS__Randomly();
-        string sQuizScaleNote = GetOneBrickName_inePIANOKEYS__Randomly();
+        string sQuizScaleNote =  ContentsManager.Instance.GetOneBrickName_inePIANOKEYS__Randomly();
 
         //-------------------------------------------
         // 인스턴시에잇된 오브젝트 자체의 이름 정하기:
@@ -79,36 +79,7 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
 
     }
 
-    private string GetOneBrickName_inePIANOKEYS__Randomly()
-    {
-        // Ref. 
-        // https://www.reddit.com/r/Unity3D/comments/ax1tqf/unity_tip_random_item_from_enum/
-        // https://afsdzvcx123.tistory.com/entry/C-%EB%AC%B8%EB%B2%95-C-Enum-Count-%EA%B0%80%EC%A0%B8%EC%98%A4%EB%8A%94-%EB%B0%A9%EB%B2%95 
 
-        string sRandomNote;
-
-        switch( GameManager.Instance.eSelectedKey )
-        {
-            case eAVAILABLEKEYS.C:
-                //e_C_SCALENOTES eRandomNote = (e_C_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_C_SCALENOTES)).Length) );
-                //string sRandomNote = (e_C_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_C_SCALENOTES)).Length) ).ToString();
-                sRandomNote  = ((e_C_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_C_SCALENOTES)).Length) )).ToString();
-                break;
-            case eAVAILABLEKEYS.G:
-                sRandomNote = "F4#"; // tentative.
-                break;
-            default:
-                sRandomNote = "Err:Rnd"; // 랜덤 브릭 생성 오류.
-                break;
-        }
-
-        // random function for integer has the upper bound value which is not include itself.
-        //nUpperBound++;
-
-
-
-        return sRandomNote;
-    }
 
     public void CheckIfInputIsCorrect(string sTappedKeyObjectName)
     {

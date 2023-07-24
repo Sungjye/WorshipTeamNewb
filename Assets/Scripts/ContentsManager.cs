@@ -308,6 +308,43 @@ public class ContentsManager : MonoBehaviour
         return sDoNumberString;
     }
 
+    public string GetOneBrickName_inePIANOKEYS__Randomly()
+    {
+        // 뭐하는 함수?
+        // 스케일 모드 퀴즈 또는 스케일 패턴 모드 퀴즈 에서. 
+        // 현재 선택된 키에 해당하는 노트 중에서, 랜덤으로 하나 골라 그것을 스트링으로 리턴해 주는 함수. 
+        //
+        // 
+        // Ref. 
+        // https://www.reddit.com/r/Unity3D/comments/ax1tqf/unity_tip_random_item_from_enum/
+        // https://afsdzvcx123.tistory.com/entry/C-%EB%AC%B8%EB%B2%95-C-Enum-Count-%EA%B0%80%EC%A0%B8%EC%98%A4%EB%8A%94-%EB%B0%A9%EB%B2%95 
+
+        string sRandomNote;
+
+        switch( GameManager.Instance.eSelectedKey )
+        {
+            case eAVAILABLEKEYS.C:
+                //e_C_SCALENOTES eRandomNote = (e_C_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_C_SCALENOTES)).Length) );
+                //string sRandomNote = (e_C_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_C_SCALENOTES)).Length) ).ToString();
+                sRandomNote  = ((e_C_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_C_SCALENOTES)).Length) )).ToString();
+                break;
+            case eAVAILABLEKEYS.G:
+                sRandomNote = "F4#"; // tentative.
+                break;
+            default:
+                sRandomNote = "Err:Rnd"; // 랜덤 브릭 생성 오류.
+                break;
+        }
+
+        // random function for integer has the upper bound value which is not include itself.
+        //nUpperBound++;
+
+
+
+        return sRandomNote;
+    }
+
+
 #endregion
 
 }
