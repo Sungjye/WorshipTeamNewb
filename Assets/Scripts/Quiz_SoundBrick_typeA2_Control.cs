@@ -29,14 +29,32 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
 {
     private AudioSource brickSpeaker;
 
-    private Coroutine crPopEffect, crVanishingEffect;
+    private Coroutine crPopEffect, crVanishingEffect, crMovingTheMark;
     
     private Vector3 vOrigianlSize;
+
+    // 마커 오브젝트 관련
+    private Vector3 v3Marker_InitialPosition; // 마커의 처음 위치.
+    private Vector3 v3Marker_NewPosition; // 매번 계산하는 마커의 이동 위치 그릇.
+    private float fMarker_DeltaSpan; // 좌(우)로 이동 가능한 x 최대값. 
+    private float fMarker_Speed; // 이동 속도. 
+    
 
     // 이 오브젝트의 자체의 이름은, instCodeBrick_C__2do 
     // 이런 식일 텐데, 이 값에는 이것으로 파싱한, 이를테면 Dm 이 들어가 있다. 
     public string sMyDictionariedCodeName; 
 
+
+    private Transform trChildObject_Image; // 자식: 머티리얼(이미지 표시) 을 가진/
+    private Transform trChildObject_Text; // 자식: 텍스트메쉬프로 를 가진.
+    private Transform trChildObject_Marker; // 자식: 마커 오브젝트의 트랜스폼.
+
+    void Awake()
+    {
+        this.trChildObject_Image = this.transform.GetChild(0);
+        this.trChildObject_Text = this.transform.GetChild(1);
+        this.trChildObject_Marker = this.transform.GetChild(2);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +81,13 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
 
 
         this.vOrigianlSize = this.transform.localScale; 
+
+        //============================================================
+        // (자신이 focus되었다는 것을 표시하는) 마커 오브젝트 제어 관련
+        this.v3Marker_InitialPosition = this.trChildObject_Marker.position; // 마커의 최초 위치를 저장해두고..
+        this.fMarker_DeltaSpan = 1f; // 좌(우)로 이동 가능한 x 최대값. 
+        this.fMarker_Speed = 1f; // 이동 속도. 
+
 
 
         Check_WhoAmI_AndPlaySound();
@@ -287,7 +312,25 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
     public void SetMe_Focused(bool bShowTheFocusMark)
     {
 
-        this.transform.GetChild(2).gameObject.SetActive(bShowTheFocusMark);
+        //this.trChildObject_Marker.gameObject.SetActive(bShowTheFocusMark); // 마크를 보이게, 안보이게. 
+
+        //this.SetToMove_theFocusMarkObject(bShowTheFocusMark); // 마크를 주기적으로 움직이게, 안움직이게. 더 주목되도록. 
+
+        // 움직임 제어가 있어서.. 순서가 중요해서 조건문으로.. (active가 안된 물체를 access하지 않게.)
+
+        if( bShowTheFocusMark )
+        {
+            this.trChildObject_Marker.gameObject.SetActive(true); // 마크를 보이게
+
+            this.SetToMove_theFocusMarkObject(true); // 마크를 주기적으로 움직이게. 더 주목되도록. 
+
+        }else
+        {
+            this.SetToMove_theFocusMarkObject(false); // 움직이는 마크를 멈춤.
+
+            this.trChildObject_Marker.gameObject.SetActive(false); // 마크를 안보이게.
+
+        }
 
     }
 
@@ -302,13 +345,13 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
         // > Make my object child's material _TapMe_Icon_ (손가락 모양 머티리얼)
 
 
-        this.transform.GetChild(2).gameObject.SetActive(bShowTheFocusMark);
+        this.trChildObject_Marker.gameObject.SetActive(bShowTheFocusMark);
 
         //this.ShowTheFocusMark_withMotion_typeA(bShowTheFocusMark);
 
-        this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "?";
+        this.trChildObject_Text.gameObject.GetComponent<TextMeshPro>().text = "?";
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_Tap_Mark_Image;
+        this.trChildObject_Image.gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_Tap_Mark_Image;
 
     }
 
@@ -323,11 +366,11 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
         // > Make my object child's material _TapMe_Icon_ (손가락 모양 머티리얼)
 
 
-        this.transform.GetChild(2).gameObject.SetActive(false);
+        this.trChildObject_Marker.gameObject.SetActive(false);
 
-        this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "?";
+        this.trChildObject_Text.gameObject.GetComponent<TextMeshPro>().text = "?";
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_Tap_Mark_Image;
+        this.trChildObject_Image.gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_Tap_Mark_Image;
 
     }
 
@@ -339,13 +382,13 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
         // > Make my tmp child's string with my real code name. e.g. Dm
         // > Make my object child's material _Correct_
 
-        this.transform.GetChild(2).gameObject.SetActive(false); // 맞았으니, 포커스 마크는 없애고. 
+        this.trChildObject_Marker.gameObject.SetActive(false); // 맞았으니, 포커스 마크는 없애고. 
 
-        this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text 
+        this.trChildObject_Text.gameObject.GetComponent<TextMeshPro>().text 
                 = this.sMyDictionariedCodeName;
                 //= ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName;
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_O_Mark_Image;
+        this.trChildObject_Image.gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_O_Mark_Image;
 
         // 맞았을 때는, 맞은 음을 한번 플레이 해 주고 사라지기. 
         brickSpeaker.Play();
@@ -365,9 +408,9 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
 
         // 원래 코드 PopEffect();
 
-        this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "X";
+        this.trChildObject_Text.gameObject.GetComponent<TextMeshPro>().text = "X";
 
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_X_Mark_Image;
+        this.trChildObject_Image.gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_X_Mark_Image;
 
     }
 
@@ -387,16 +430,101 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
 
 #region Private Methods regarding to a controlling of the brick (me)
 
-    private void ShowTheFocusMark_withMotion_typeA(bool bMove)
+
+    private void SetToMove_theFocusMarkObject(bool bAmIactive)
     {
 
-        // 포커스 마크 입체 도형을 앞뒤로 진동시키는 모션을 하며 표시함. 
+        // 포커스 마크 입체 도형을 앞뒤로 진동시키는 모션으로 움직임. 
 
-        this.transform.GetChild(2).gameObject.SetActive(true);
+        if( bAmIactive )
+        {
 
-        //if( cr)
+            if( crMovingTheMark != null ) StopCoroutine( crMovingTheMark );
+
+            // 새로 움직일 때는 마커 위치를 원위치 하고 시작!
+            //this.trChildObject_Marker.position = this.v3Marker_InitialPosition;
+
+            //this.crMovingTheMark = StartCoroutine( MovingTheFocusMark_withMotion_typeA( 0.04f ) );
+            //this.crMovingTheMark = StartCoroutine( MovingTheFocusMark_withMotion_typeB( 0.5f ) );
+            this.crMovingTheMark = StartCoroutine( MovingTheFocusMark_withMotion_typeC( 0.04f ) );
+
+        }else
+        {
+
+            if( crMovingTheMark != null ) StopCoroutine( crMovingTheMark );
+
+            // 멈출 때도 마커 위치를 원위치!
+            //this.trChildObject_Marker.position = this.v3Marker_InitialPosition;
+
+        }
 
     }
+
+    IEnumerator MovingTheFocusMark_withMotion_typeA(float fFrameTimePeriod)
+    {
+        // 동작 안됨!! 
+
+        // 사인 곡선에 의해서 움직이기. 
+        // Ref. https://blog.naver.com/PostView.nhn?blogId=namwhis&logNo=221259594717 
+
+        yield return null;
+
+        while( true )
+        {
+            this.v3Marker_NewPosition = this.v3Marker_InitialPosition;
+            this.v3Marker_NewPosition.x += this.fMarker_DeltaSpan * Mathf.Sin( fFrameTimePeriod * this.fMarker_Speed );
+
+            // 좌우 이동의 최대치 및 반전 처리를 이렇게 한줄에 멋있게 하네요. 
+            // Ref. https://blog.naver.com/PostView.nhn?blogId=namwhis&logNo=221259594717
+
+            this.trChildObject_Marker.position = this.v3Marker_NewPosition; 
+
+            yield return new WaitForSeconds( fFrameTimePeriod );
+        }
+
+
+    }
+
+    // 다시.. 단순 이동부터..
+    // 로컬 좌표 기준, 월드 좌표 기준. 
+
+    IEnumerator MovingTheFocusMark_withMotion_typeB(float fFrameTimePeriod)
+    {
+        // 동작 안됨!! 
+
+        // 그냥 좌우로 움직이기.
+        
+
+        yield return null;
+
+        bool bDir = true; // tentative
+
+        while( true )
+        {
+            // 초기 위치는, 상대적으로 (-0.63f, 0f, 0f );
+            if( bDir ) this.trChildObject_Marker.Translate( new Vector3(0.07f, 0f, 0f) );
+            else this.trChildObject_Marker.Translate( new Vector3(-0.07f, 0f, 0f) );
+
+            yield return new WaitForSeconds( fFrameTimePeriod );
+        }
+
+
+    }
+
+    IEnumerator MovingTheFocusMark_withMotion_typeC(float fFrameTimePeriod)
+    {
+        // 다 안되니.. 일단 돌게.. 마커는 큐브로 바꾸고. 
+
+        yield return null;
+
+        while( true )
+        {
+            this.trChildObject_Marker.Rotate(10f, 0f, 0f); // x축 기준으로 돌기.
+
+            yield return new WaitForSeconds( fFrameTimePeriod );
+        }
+    }
+
 
 
     private void MovingAway()
