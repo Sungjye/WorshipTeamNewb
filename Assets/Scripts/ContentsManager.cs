@@ -240,6 +240,50 @@ public class ContentsManager : MonoBehaviour
 
     }
 
+#region Private Methods
+
+    private AudioClip AmI_Ckey_CodeMode_Retrieve_AudioClip(string sMyName)
+    {
+        // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
+
+
+        AudioClip acItsClip = null;
+        //-----------
+        // C 키
+        switch( sMyName )
+        {
+            case "_1do": // C
+                acItsClip = this.aryAudioClips_Ckey_Code[0];
+                break;
+            case "_2do":
+                acItsClip = this.aryAudioClips_Ckey_Code[1];
+                break;
+            case "_3do":
+                acItsClip = this.aryAudioClips_Ckey_Code[2];
+                break;
+            case "_4do":
+                acItsClip = this.aryAudioClips_Ckey_Code[3];
+                break;
+            case "_5do":
+                acItsClip = this.aryAudioClips_Ckey_Code[4];
+                break;
+            case "_6do":
+                acItsClip = this.aryAudioClips_Ckey_Code[5];
+                break;
+            case "_7do":
+                acItsClip = this.aryAudioClips_Ckey_Code[6];
+                break;
+            default:
+                acItsClip = this.AudioClip_Error;
+                break;
+        }
+
+        return acItsClip;
+
+    }
+
+#endregion
+
 
 #region Popular methods to retirve content related information.
 
@@ -345,6 +389,41 @@ public class ContentsManager : MonoBehaviour
     }
 
 
+    public AudioClip Check_WhoAmI_AndPlaySound_CodeOrNote(string sUserTappedObjectName)
+    {
+        // 뭐하는 함수?
+        // 코드인지 노트인지 상관없이 (이름으로 구별..) 
+        // 넘어온 게임오브젝트의 이름을 확인해서 
+        // 키를 확인하고, 해당하는 소리의 클립 데이터를 리턴해 주는 함수. 
+
+        AudioClip acResult_AudioClipData = null;
+
+        if( sUserTappedObjectName.Substring(0,1) == "_" ) // _1do, _3do
+        {
+            // 코드 모드인 경우. 탭한 오브젝트의 키보드 브릭이.
+            switch( GameManager.Instance.eSelectedKey )
+            {
+                case eAVAILABLEKEYS.C:
+                    acResult_AudioClipData = AmI_Ckey_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.G:
+                    //AmI_Gkey_thenPlaySound(this.name);
+                    break;
+                default:
+                    break;
+            }
+        }else
+        {
+            // 스케일 모드 인경우. 
+            // TBD.
+            ;
+        }
+
+        return acResult_AudioClipData;
+    }
+
 #endregion
+
+
 
 }

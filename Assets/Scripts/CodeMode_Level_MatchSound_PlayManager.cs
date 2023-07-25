@@ -37,6 +37,11 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
     public TextMeshProUGUI tmpGuideText;
 
+    #region Declare list variables to scramble _do codes
+    private List<string> sCode_doList_inOrder; // 몇도인지 도를 순서대로 다 넣는 리스트. 
+    public List<string> sCode_doList_scrambled; // 도를 중복없이 스크램블 해서 넣은 리스트. 이건, 각 버튼에서 엑세스 해야 해서.  
+    #endregion 
+
     void Awake()
     {
         this.liGmobjCurrentBrick = new List<GameObject>();
@@ -44,6 +49,9 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
         this.nUserFocusIndex = 0;
 
         this.nTentativeNumOfBricks = 1;
+
+        // 여기서 섞은 이름 데이터를 준비해 놓고, 각 키패드 (물음표) 브릭에서 가져가서 자신의 이름으로 삼는다. 
+        this.Prepare_ScrambledCodesBrickName();
 
         this.SpawnNewBrickS();
 
@@ -55,7 +63,56 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
     {
 
         this.tmpGuideText.text = "Drag-and-drop the correct sound brick to this code below.";
+
+        
+
     }
+
+
+        
+#region Scramble _do (7) codes
+    private void Prepare_ScrambledCodesBrickName()
+    {    
+        // 중복없는 랜덤값 구하기. 
+        // 방금 한 2~3분간 생각한 방법이 그대로 있다.. 인줄 알았는데.. 아니네. 주신 지혜로 뒷부분 해결!
+        // Ref. https://saens.tistory.com/12
+
+
+        this.sCode_doList_inOrder = new List<string>(); // 몇도인지 도를 순서대로 다 넣는 리스트. 
+        this.sCode_doList_scrambled = new List<string>(); // 도를 중복없이 스크램블 해서 넣은 리스트. 
+
+        int nNumOfDOs = System.Enum.GetValues(typeof(eDO_NUMBER)).Length;
+        int nRandomIndex;
+
+        // 일단 데이터 넣기. 
+        for(int i=0; i<nNumOfDOs; i++)
+        {
+            this.sCode_doList_inOrder.Add( ((eDO_NUMBER)(i)).ToString() );
+        }
+
+
+        while( this.sCode_doList_inOrder.Count > 0 )
+        {
+
+            nRandomIndex = Random.Range(0, this.sCode_doList_inOrder.Count);
+            this.sCode_doList_scrambled.Add( this.sCode_doList_inOrder[nRandomIndex] ); // 현재 남아있는 데이터 중에 랜덤한 인덱스로 차곡차곡 넣기.
+            
+            this.sCode_doList_inOrder.RemoveAt( nRandomIndex ); // 방금 넣은 데이터는 제거. 중복을 피하기 위해. 
+
+        }
+
+        // 데이터 확인. 주님, 감사합니다!!!
+        if( Application.isEditor )
+        {
+            foreach( var data in this.sCode_doList_scrambled)
+            {
+                Debug.Log(" Scrambled _Do: " + data );
+            }
+        }
+
+    }
+#endregion
+
 
 #region Data processing related.
 
