@@ -62,7 +62,8 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
     void Start()
     {
 
-        this.tmpGuideText.text = "Drag-and-drop the correct sound brick to this code below.";
+        //this.tmpGuideText.text = "Drag-and-drop the correct sound brick to this code below.";
+        this.tmpGuideText.text = "<size=120%>Drag-and-drop</size>\n the correct sound brick\nto this code below.";
 
         
 
@@ -119,7 +120,9 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
     private void GenerateOneQuizBrick_andAddToList(string sMyNameIs, float fDropPositionY)
     {
 
-        GameObject gmobjTemp = Instantiate( this.gmobjQuizBrickPrefab, new Vector3(0f, fDropPositionY, 0f), Quaternion.identity );
+        //GameObject gmobjTemp = Instantiate( this.gmobjQuizBrickPrefab, new Vector3(0f, fDropPositionY, 0f), Quaternion.identity );
+        // 이 레벨(텍스트-사운드 매칭) 에서는 drag & drop 이라.. 서로 안 부딪히게.. (레이캐스트 사용.)
+        GameObject gmobjTemp = Instantiate( this.gmobjQuizBrickPrefab, new Vector3(0f, fDropPositionY, 0.95f), Quaternion.identity );
 
         gmobjTemp.name = sMyNameIs;
 
@@ -131,7 +134,11 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
         gmobjTemp.GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_asQuestion(true, sCodeName);
 
+
+
         this.liGmobjCurrentBrick.Add(gmobjTemp);
+
+        if(Application.isEditor) Debug.Log($"Added. Data Count? : {this.liGmobjCurrentBrick.Count}");
 
     }
 
@@ -195,8 +202,11 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
         for(int idx = 0; idx< this.liGmobjCurrentBrick.Count; idx++)
         {
-            if(idx == this.nUserFocusIndex) this.liGmobjCurrentBrick[idx].GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_Focused(true); 
-            else this.liGmobjCurrentBrick[idx].GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_Focused(false); 
+            this.liGmobjCurrentBrick[idx].GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_Focused(false); 
+
+            //일단 시나리오상, 여러개 브릭은 안 쓸것 같으므로.. 
+            //if(idx == this.nUserFocusIndex) this.liGmobjCurrentBrick[idx].GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_Focused(true); 
+            //else this.liGmobjCurrentBrick[idx].GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_Focused(false); 
         }
     }
 
@@ -225,8 +235,58 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
 #endregion
 
-#if FALSE
+
 #region Public Methods
+
+    public void TheInputIsCorrect()
+    {
+        // 뭐하는 함수?
+        // 이제는, (이 레벨에서는) 각각의 (사용자가 탭하는) 버튼이 자신의 레이캐스트로, 퀴즈브릭과 자신이 같은지 확인해서
+        // 맞았을(이름이 동일할) 경우, 이 함수를 호출해 준다. 
+        // 그래서 맞았다는 가정하에서 처리. 
+
+        if(Application.isEditor) Debug.Log($"CORRECT! FocusIndex: {this.nUserFocusIndex} NumOfListData: {this.liGmobjCurrentBrick.Count}");
+
+        //GameObject gmobjFocusedBrick = this.liGmobjCurrentBrick[this.nUserFocusIndex];
+
+        //-------------------
+        // 브릭을 다 없애고,
+        this.SweepAway_allBricks();
+
+        //--------------------
+        // 잠시 기다렸다가, 다시 또 브릭세트 생성!
+        //Invoke("SpawnNewBrickS", 0.7f); // 작아지는 시간 0초,  움직이기 시작하는 시간 0.5초..    
+        // 드래그 하고 있는 상태에서는 키패드 브릭의 레이캐스크가 계속 있으므로,
+        // 새로운 퀴즈 브릭을 생성하면 또 부딪혀서 문제가 생김. 
+        // 그래서, 맞췄고, 마우스 업 이벤트가 발생하면, 새로 브릭 스파운..
+
+    }
+
+    public void GiveMeNewQuizBrick()
+    {
+        // 드래그 하고 있는 상태에서는 키패드 브릭의 레이캐스크가 계속 있으므로,
+        // 새로운 퀴즈 브릭을 생성하면 또 부딪혀서 문제가 생김. 
+        // 그래서, 맞췄고, 마우스 업 이벤트가 발생하면, 새로 브릭 스파운..
+
+        //--------------------
+        // 잠시 기다렸다가, 다시 또 브릭세트 생성!
+        Invoke("SpawnNewBrickS", 0.7f); // 작아지는 시간 0초,  움직이기 시작하는 시간 0.5초..   
+
+    }
+
+    public void TheInputIsWrong()
+    {
+        if(Application.isEditor) Debug.Log($"WRONG.. FocusIndex: {this.nUserFocusIndex} NumOfListData: {this.liGmobjCurrentBrick.Count}");
+
+        //GameObject gmobjFocusedBrick = this.liGmobjCurrentBrick[this.nUserFocusIndex];
+
+
+        //if(Application.isEditor) Debug.Log($"WRONG.. 2/2 FocusIndex: {this.nUserFocusIndex} NumOfListData: {this.liGmobjCurrentBrick.Count}");
+    }
+
+    
+
+#if FALSE
     public void CheckIfInputIsCorrect(string sTappedKeyObjectName)
     {
 
@@ -315,7 +375,7 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
 
     }
-
-#endregion
 #endif
+#endregion
+
 }
