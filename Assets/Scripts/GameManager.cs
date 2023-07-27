@@ -27,7 +27,10 @@ public class GameManager : MonoBehaviour
 
     public eMUSICMODE eSelectedMusicMode;
 
-
+    #region Score System Related variable declaration.
+    // 최대치 넘는지 체크 필요함. 
+    public long nl_NoteScore, nl_CodeScore;
+    #endregion
 
     void Awake()
     {
@@ -56,6 +59,14 @@ public class GameManager : MonoBehaviour
         }
 
 
+    #region Score System Related variable initialization.
+        // 최대치 넘는지 체크 필요함. 
+        nl_NoteScore = 1234567;
+        nl_CodeScore = 1234567;
+        
+    #endregion
+
+
     }
 
 
@@ -66,6 +77,8 @@ public class GameManager : MonoBehaviour
     {
         this.eSelectedMusicMode = eMUSICMODE.Code; // 의미는 없지만 그냥 초기값으로.
         this.eSelectedKey = eAVAILABLEKEYS.NONE;        
+
+
 
     }
 
