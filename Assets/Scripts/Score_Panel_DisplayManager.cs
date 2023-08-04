@@ -16,11 +16,15 @@ using UnityEngine;
 
 using TMPro;
 
+using UnityEngine.SceneManagement;
+
 public class Score_Panel_DisplayManager : MonoBehaviour
 {
 
-    public TextMeshProUGUI gmobjNoteScoreText;
-    public TextMeshProUGUI gmobjCodeScoreText;
+    private GameObject gmobjNoteScorePanel;
+    private GameObject gmobjCodeScorePanel;
+    private GameObject gmobjNoteScoreText;
+    private GameObject gmobjCodeScoreText;
 
     private string sDISPLAYFORMAT;
 
@@ -29,20 +33,76 @@ public class Score_Panel_DisplayManager : MonoBehaviour
     {
         this.sDISPLAYFORMAT = "N0"; // "#,#";
 
-        this.gmobjNoteScoreText = this.transform.GetChild(0).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        this.gmobjCodeScoreText = this.transform.GetChild(1).GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        this.gmobjNoteScorePanel = this.transform.GetChild(0).gameObject;
+        this.gmobjCodeScorePanel = this.transform.GetChild(1).gameObject;
 
-        this.gmobjNoteScoreText.text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
-        this.gmobjCodeScoreText.text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
+        this.gmobjNoteScoreText = this.transform.GetChild(0).GetChild(1).gameObject;
+        this.gmobjCodeScoreText = this.transform.GetChild(1).GetChild(1).gameObject;
+
+        //this.gmobjNoteScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
+        //this.gmobjCodeScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
+
+        //==============================================================================================
+        // 현재 이 스코어 패널이 어느 scene에 표시되었냐에 따라서, 자식들의 표시/안표시 여부를 결정 먼저 하고. 
+        this.ActivateMyChildren_asNOTEmodeOrCODEmode_byGMval();
+
+        //=====================================================
+        // 일단 시작하면서 점수를 업데이트 해준다. 
+        this.RefreshScores();
 
     }
 
     public void RefreshScores()
     {
-        this.gmobjNoteScoreText.text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
-        this.gmobjCodeScoreText.text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
+        //this.gmobjNoteScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
+        //this.gmobjCodeScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
+
+        if( this.gmobjNoteScorePanel.activeSelf ) this.gmobjNoteScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
+        if( this.gmobjCodeScorePanel.activeSelf ) this.gmobjCodeScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
     }
 
+
+    // 각 scene에서 이 패널이 인스턴시에엣 될 때마다, 처음에 한번 호출되면 되므로. 
+    private void ActivateMyChildren_asNOTEmodeOrCODEmode_byGMval() 
+    {
+        // 2개의 자식(노트모드 스코어보드, 코드모드 스코어보드)을 보이게 안보이게 하는 함수. 
+        // 
+        // 일단, 현재의 scene 이 다음의 종류에 따라서, 나누기. 
+        // 
+        // 절대음감 키리스트 모드라면, 
+        //      둘다 표시해 주기.
+        // Quiz 관련 scene 이라면,
+        //      GM 의 변수값을 확인해서, 
+        //      Note 모드 이면, Note 스코어만 표시. 
+        //      Code 모드 이면, Code 스코어만 표시. 
+        // 
+        
+
+        switch( SceneManager.GetActiveScene().name )
+        {
+            case "02-02_Scale_Intro_a":
+            case "03-01_Scale_PickNote":
+            case "03-02_Scale_PickPatNotes":
+                gmobjNoteScorePanel.SetActive(true);
+                gmobjCodeScorePanel.SetActive(false);
+                break;
+            
+            case "02-01_Code_Intro":
+            case "03-01_Code_PickNumber":
+            case "03-02_Code_PickPatNumber":
+            case "03-03_Code_MatchSound":
+                gmobjNoteScorePanel.SetActive(false);
+                gmobjCodeScorePanel.SetActive(true);
+                break;
+            default:
+                // Show both of them.
+                break;
+        }
+        
+    
+
+
+    }
 
 
 }

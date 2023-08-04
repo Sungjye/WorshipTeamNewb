@@ -20,6 +20,7 @@ using TMPro;
 
 public class ScaleMode_Level_0_Control : MonoBehaviour
 {
+    public GameObject gmobjScorePanel; // 점수 표시 패널. 
 
     public GameObject gmobjScaleBrickPrefab;
     public GameObject gmobjFruitBrickPrefab;
@@ -119,6 +120,9 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 */
 
 
+        
+
+
 
     private void OnMouseDown()
     {
@@ -156,6 +160,12 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
             ePIANOKEYS eTappedPianoKey = (ePIANOKEYS)System.Enum.Parse(typeof(ePIANOKEYS), sParsedPinanoKey);
         
             int nCorrespondentKeyValue = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[GameManager.Instance.eSelectedKey][eTappedPianoKey];
+
+            //-------------------------------------------
+            // 스코어 증감 조건인지 체크: 선텍된 스케일의, 화음인지! 23.08.03
+            //
+            //GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( this.gmobjScorePanel, eSCORING_CASEID.SM_ITR_1 );
+
             // 해당하는 키 스케일에 포함되는 음이면 1~7 일것이고, 아니면 0 일것임. 1은 해당 키 스케일의 1번음. 
             if( (nCorrespondentKeyValue >= 1) && (nCorrespondentKeyValue <= 7) )
             {  
@@ -169,6 +179,12 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
         
                 instCodeBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = this.name; // 건반 이름을 그대로. 
 
+                //-------------------------------------------
+                // 임시로, 스코어 반영되는지 해보기. 
+                //GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( this.gmobjScorePanel, eSCORING_CASEID.SM_ITR_0 );
+
+
+
             }else
             {
                 // 이 키 스케일에 해당하는 음이 아니면,
@@ -177,9 +193,22 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 
                 instCodeBrick.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = this.name;
 
+                //-------------------------------------------
+                // 해당 스케일이 아니더라도, 인스턴시에잇된 오브젝트 자체의 이름을 정해야, 화음 확인에 대해서 일반적인 코드가 된다. 
+                // 인스턴시에잇된 (하늘에서 떨어지는) 스케일 브릭 + 현재선택된 키, 사용자가 누른 어떤 키인지를 나타내는 값.
+                instCodeBrick.name = "instScaleBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + this.name; // 디스.네임은, 건반의 고유이름.
+
             }
             
+            //===========================================================
+            // 정상적인 브릭이 인스턴시에잇 된 경우에만, 스코어시스템 함수 호출. 
+            // 그런데, 이 (화음체크 등의 경우) 바로 생성된 직후에 하면 좀 이상하니까,
+            // 그리고, 인스턴스 브릭의 스크립트에서, 싱글톤 리스트에 데이터 추가할 시간도 기다릴 겸...
+            // 0.#초 기다렸다가 호출 및 체크. 
+            // 끙.. 브릭도 자기 타이머로 사라져서.. 시점 차이로, 화음 체크 안되는 경우 많음. 다시 0초..
+            Invoke("CheckIfScored", 0f);
             
+
 
         }else
         {
@@ -197,6 +226,13 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 
 
 
+
+    }
+
+    private void CheckIfScored()
+    {
+
+        GameManager.Instance.ScoreSystem_ScaleMode_Intro_CheckAndApplyScore__BasicHarmonies( this.gmobjScorePanel );
 
     }
 

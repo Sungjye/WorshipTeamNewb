@@ -36,6 +36,20 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
 
         Check_WhoAmI_AndPlaySound();
 
+        //-------------------------------------------
+        // 스코어 증감 조건인지 확인 및 반영을 위한 데이터 준비. 
+        // 해당 키에서의 도. 즉, 무슨 키이건, 1,3,5 이런식으로 리스트에 저장된다. 0 이 들어가면, 해당 스케일의 음이 아니라는 뜻. 
+        // 이 리스트의 내용을 확인해서, 화음 인스턴시에잇 한것에 대해서 점수를 줄 수 있다!
+        // 주님, 지혜를 주셔서 감사합니다!!! 2023.08.03
+        
+        // 생성할 때, 싱글턴 리스트에 담아주고.. 나 스스로의 이름을.
+        GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Add(this.transform.gameObject); 
+
+        // Tentative.
+        //GameManager.Instance.ScoreSystem_Check_CurrentlyExistingBricks();
+        //GameManager.Instance.ScoreSystem_CheckAndApplyScore_ScaleMode_BasicHarmonies();
+
+
         Invoke("VanishingEffect", 1f);
 
     }
@@ -110,6 +124,14 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
         // 
         Destroy(this.transform.gameObject, 0.1f);
 
+
+        //---------------------
+        // 건반의 각 키에 붙어 있는, ScaleMode_Level_0_Control.cs 스크립트에서, 생성한 "나"를, 
+        // 이제 사라질 것이므로, 리스트에서 날린다. 
+        GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Remove(this.transform.gameObject); // 중복된 이름의 오브젝트가 있어도 잘 제거 되려나?... 잘됩니다, 감사합니다, 주님!!!
+        // Tentative.
+        //GameManager.Instance.ScoreSystem_Check_CurrentlyExistingBricks();
+        //GameManager.Instance.ScoreSystem_CheckAndApplyScore_ScaleMode_BasicHarmonies();
 
     }
 
