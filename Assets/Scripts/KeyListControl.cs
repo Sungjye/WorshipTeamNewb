@@ -19,9 +19,26 @@ public class KeyListControl : MonoBehaviour
     }
 
 
+#region Private Methods
+
+    //private BranchScenes_AccordingTo
+
+#endregion
+
+
     public void OnClick_Ckey()
     {
         GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.C;
+        //SceneManager.LoadScene("02-01_Code_Intro");
+
+        this.gmobjPanel_PopupMenu.SetActive(true);
+    }
+
+//================================
+// 키 알아맞추기는 맨 마지막에 배치. 
+    public void OnClick_RecogKeys()
+    {
+        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.NONE; // 일단 실제로 모드 들어갈 때 랜덤으로 생성하게.
         //SceneManager.LoadScene("02-01_Code_Intro");
 
         this.gmobjPanel_PopupMenu.SetActive(true);
@@ -34,7 +51,13 @@ public class KeyListControl : MonoBehaviour
 
         GameManager.Instance.eSelectedMusicMode = eMUSICMODE.Scale;
 
-        SceneManager.LoadScene("02-02_Scale_Intro_a");
+        if( GameManager.Instance.eSelectedKey == eAVAILABLEKEYS.NONE )
+        {
+            SceneManager.LoadScene("04-01_Scale_RecogKeys");
+        }else
+        {
+            SceneManager.LoadScene("02-02_Scale_Intro_a");
+        }
     }
 
     public void OnClick_Popup_CodeMode_Selected()
@@ -43,7 +66,16 @@ public class KeyListControl : MonoBehaviour
 
         GameManager.Instance.eSelectedMusicMode = eMUSICMODE.Code;
 
-        SceneManager.LoadScene("02-01_Code_Intro");
+
+        if( GameManager.Instance.eSelectedKey == eAVAILABLEKEYS.NONE )
+        {
+            // TBD.
+            SceneManager.LoadScene("02-01_Code_Intro");
+            
+        }else
+        {
+            SceneManager.LoadScene("02-01_Code_Intro");
+        }
     }
 
     public void OnClick_Popup_Close()
@@ -60,5 +92,7 @@ public class KeyListControl : MonoBehaviour
         SceneManager.LoadScene("01-01_Mainmenu");
 
     }
+
+
 
 }

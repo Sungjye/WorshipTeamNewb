@@ -45,6 +45,10 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
                 case "03-03_Code_MatchSound": // 23.07.24
                     this.sGoToThisScene = "03-02_Code_PickPatNumber";
                     break;
+                //-----------------------------------------
+                case "04-01_Scale_RecogKeys": // 23.08.04
+                    this.sGoToThisScene = "01-02_KeyList";
+                    break;
                 default:
                     // Do nothing?
                     this.sGoToThisScene = "01-01_Mainmenu";
