@@ -38,7 +38,9 @@ public class KeyListControl : MonoBehaviour
 // 키 알아맞추기는 맨 마지막에 배치. 
     public void OnClick_RecogKeys()
     {
-        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.NONE; // 일단 실제로 모드 들어갈 때 랜덤으로 생성하게.
+        GameManager.Instance.bIsRecogKeysMode = true;
+        //GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.NONE; // 일단 실제로 모드 들어갈 때 랜덤으로 생성하게.        
+        // 라기 보다는.. 의미상으로, 키 선택이 없는 모드로.. 키 인식 모드는.. 
         //SceneManager.LoadScene("02-01_Code_Intro");
 
         this.gmobjPanel_PopupMenu.SetActive(true);
@@ -51,7 +53,7 @@ public class KeyListControl : MonoBehaviour
 
         GameManager.Instance.eSelectedMusicMode = eMUSICMODE.Scale;
 
-        if( GameManager.Instance.eSelectedKey == eAVAILABLEKEYS.NONE )
+        if( GameManager.Instance.bIsRecogKeysMode == true )
         {
             SceneManager.LoadScene("04-01_Scale_RecogKeys");
         }else
@@ -67,10 +69,11 @@ public class KeyListControl : MonoBehaviour
         GameManager.Instance.eSelectedMusicMode = eMUSICMODE.Code;
 
 
-        if( GameManager.Instance.eSelectedKey == eAVAILABLEKEYS.NONE )
+        if( GameManager.Instance.bIsRecogKeysMode == true )
         {
             // TBD.
-            SceneManager.LoadScene("02-01_Code_Intro");
+            //SceneManager.LoadScene("04-01_Code_RecogKeys");
+            ;
             
         }else
         {

@@ -379,6 +379,17 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
 #region Public Methods regarding to a controlling of the brick (me)
 
+    public void MakeMe_Byebye()
+    {
+        // 나를 사라지게 하는 함수. 
+        // 여러개의 다른 인스턴스 브릭들이 겹쳐 있는 상황일 것이므로.. 안 부딪히게 사라져야. 
+
+        this.MovingAway_type3();
+
+        Invoke("IveDoneMyRole", 1f);
+
+    }
+
     private void MovingAway()
     {
         //MovingAway_type1();
@@ -407,6 +418,16 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
     }
 
+    private void MovingAway_type3()
+    {
+        // 살짝 작아졌다가, 왼쪽으로 쌩 가서 사라지기. 
+
+        //this.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f); // 여유되면 감쇄 계수 적용? 
+        this.transform.localScale *= 0.85f;
+
+        Invoke("MovingAway_type1", 0.5f);
+        
+    }
 
     private void IveDoneMyRole()
     {

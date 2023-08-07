@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/03-03_Code_MatchSound.unity
     guid: e4425a69003479b4fa3408687d7001f0
+  - enabled: 1
+    path: Assets/Scenes/04-01_Scale_RecogKeys.unity
+    guid: 6a2fad305ede2fc4cabff46ca069b87e
   m_configObjects: {}

@@ -19,7 +19,7 @@ using System.Linq; // 23.07.07 딕셔너리내의 셀렉트를 사용해보기 �
 //---------------------------------------
 // [스케일, 코드 값 관련 공통]
 public enum eMUSICMODE {Scale, Code}; // 음 연습인지, 코드 연습인지. 
-public enum eAVAILABLEKEYS {C, G, D, A, E, F, Bb, NONE}; // 플레이 가능한 키 코드들. 즉, C key...
+public enum eAVAILABLEKEYS {C, G, D, A, E, F, Bb}; // 플레이 가능한 키 코드들. 즉, C key...
 //---------------------------------------
 
 //---------------------------------------
@@ -51,7 +51,7 @@ public enum ePIANOKEYS {C, Db, D, Eb, E, F, Fsharp, G, Ab, A, Bb, B};
 // 스케일 모드의 퀴즈는, 위치 번호까지 존재하므로, (적어도 Pick Note 퀴즈는)
 // 별도의 enum type을 사용함!
 public enum e_C_SCALENOTES {C4, D4, E4, F4, G4, A4, B4}; // 나중에 한 옥타브 넘어서 퀴즈내고 싶으면, 여기에 추가.. 
-
+public enum e_F_SCALENOTES {F4, G4, A4, B4b, C4, D4, E4};
 
 
 

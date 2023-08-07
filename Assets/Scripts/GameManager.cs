@@ -50,10 +50,13 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null;
 
 
-
-    public eAVAILABLEKEYS eSelectedKey;
-
+    [Tooltip("이 값은, 키 알아맞추기 모드에서도 사용한다. 랜덤하게 선택하는 키 값을 넣는다. 왜? 사운드 불러오기 등에도 이 값이 기준으로 사용되기 떄문.")]
+    public eAVAILABLEKEYS eSelectedKey; 
+    
     public eMUSICMODE eSelectedMusicMode;
+
+    [Tooltip("키 알아맞추기 모드인지, 스케일모드 or 코드모드 분기 팝업에서 확인해야 해서.")]
+    public bool bIsRecogKeysMode;
 
 
 #region Score System Related variable declaration.
@@ -113,7 +116,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         this.eSelectedMusicMode = eMUSICMODE.Code; // 의미는 없지만 그냥 초기값으로.
-        this.eSelectedKey = eAVAILABLEKEYS.NONE;        
+        this.bIsRecogKeysMode = false;
 
 
     #region Score System Related Data Set-up
