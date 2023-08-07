@@ -266,6 +266,20 @@ public class CodeBrick_typeA_Control : MonoBehaviour
 
     private void Check_WhoAmI_AndPlaySound()
     {
+
+        // 컨텐츠 매니져에서 클립만 불러오는 것으로 공용화. 23.08.07
+
+        // 키는 이미 싱글턴 변수에 들어가 있으므로, 
+        // 내 이름 중에서 몇도인지만 잘라서 보내주면 됨!
+        string sMyName = this.name; // 나의 오브젝트 네임. 
+
+        // 끝에 3개, 즉 _3do 이것만 넘기기.
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( sMyName.Substring(sMyName.Length-4, 4) );
+
+
+
+        brickSpeaker.Play();
+/*
         switch( this.name )
         {
             case "instCodeBrick_C__1do": // C
@@ -295,6 +309,9 @@ public class CodeBrick_typeA_Control : MonoBehaviour
         }
 
         brickSpeaker.Play();
+*/
+
     }
+
 
 }

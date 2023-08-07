@@ -237,13 +237,14 @@ public class Quiz_SoundBrick_typeB2_Control : MonoBehaviour
     private void Check_WhoAmI_AndPlaySound()
     {
 
-        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_AndPlaySound_CodeOrNote( this.name );
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( this.name ); //
+
 
         brickSpeaker.Play();
 
     }
 
-
+/*
     private void AmI_Ckey_thenShowScore(string sMyName)
     {
         // 내 이름과 키에 해당하는 악보를 보여주기. 
@@ -288,10 +289,9 @@ public class Quiz_SoundBrick_typeB2_Control : MonoBehaviour
                 break;
         }
 
-        //brickSpeaker.Play();
 
     }
-
+*/
 
 
     #endregion
@@ -375,7 +375,10 @@ public class Quiz_SoundBrick_typeB2_Control : MonoBehaviour
         //this.trChildObject_Image.gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_O_Mark_Image;
         
         // 맞다 표시 대신에, 맞는 악보를.. 
-        this.AmI_Ckey_thenShowScore(this.name);
+        //this.AmI_Ckey_thenShowScore(this.name);
+        // 공용화. 23.08.07
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material 
+                            = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_Scale(this.name);
 
         // 맞았을 때는, 맞은 음을 한번 플레이 해 주고 사라지기. 
         brickSpeaker.Play();

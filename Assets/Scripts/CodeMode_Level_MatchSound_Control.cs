@@ -154,7 +154,8 @@ public class CodeMode_Level_MatchSound_Control : MonoBehaviour
 
         // this.gmobjPlayManager.GetComponent<CodeMode_Level_PickPatNumber_PlayManager>().CheckIfInputIsCorrect(this.name);
 
-        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_AndPlaySound_CodeOrNote(this.name);
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale(this.name);
+
 
         this.brickSpeaker.Play();
 

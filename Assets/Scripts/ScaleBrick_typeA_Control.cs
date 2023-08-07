@@ -139,6 +139,20 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
     private void Check_WhoAmI_AndPlaySound()
     {
 
+        string sMyName = this.name; // 나의 오브젝트 네임. 
+
+        // e.g. 
+        // instScaleBrick_C_F4#
+        // 012345678901234567
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( sMyName.Substring(17) );
+
+        // 공용화. 23.08.07
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material 
+                            = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_Scale( sMyName.Substring(17) );
+
+        brickSpeaker.Play();
+
+        /*
 //        if(Application.isEditor)
 
         switch( this.name )
@@ -177,6 +191,7 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
         }
 
         brickSpeaker.Play();
+        */
     }
 
 }

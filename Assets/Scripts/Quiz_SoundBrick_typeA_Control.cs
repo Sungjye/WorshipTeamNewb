@@ -225,7 +225,8 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         string sMyName = this.name; // 나의 오브젝트 네임. 
 
         // 끝에 3개, 즉 _3do 이것만 넘기기.
-        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_AndPlaySound_CodeOrNote( sMyName.Substring(sMyName.Length-4, 4) );
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( sMyName.Substring(sMyName.Length-4, 4) );
+
 
 
         brickSpeaker.Play();

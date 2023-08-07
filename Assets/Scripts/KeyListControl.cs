@@ -34,6 +34,13 @@ public class KeyListControl : MonoBehaviour
         this.gmobjPanel_PopupMenu.SetActive(true);
     }
 
+    public void OnClick_Gkey()
+    {
+        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.G;
+
+        this.gmobjPanel_PopupMenu.SetActive(true);
+    }
+
 //================================
 // 키 알아맞추기는 맨 마지막에 배치. 
     public void OnClick_RecogKeys()
