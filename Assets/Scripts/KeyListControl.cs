@@ -71,10 +71,7 @@ public class KeyListControl : MonoBehaviour
 
         if( GameManager.Instance.bIsRecogKeysMode == true )
         {
-            // TBD.
-            //SceneManager.LoadScene("04-01_Code_RecogKeys");
-            ;
-            
+            SceneManager.LoadScene("04-01_Code_RecogKeys");
         }else
         {
             SceneManager.LoadScene("02-01_Code_Intro");

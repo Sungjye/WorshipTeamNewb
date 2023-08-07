@@ -282,6 +282,26 @@ public class ContentsManager : MonoBehaviour
 
     }
 
+    private AudioClip AmI_Ckey_ScaleMode_Retrieve_AudioClip(string sMyName)
+    {
+        AudioClip acItsClip = null;
+        //-----------
+        // C 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            case "C4": acItsClip = this.aryAudioClips_Ckey_Scale[0]; break;
+            case "D4": acItsClip = this.aryAudioClips_Ckey_Scale[2]; break;
+            case "E4": acItsClip = this.aryAudioClips_Ckey_Scale[4]; break;
+            case "F4": acItsClip = this.aryAudioClips_Ckey_Scale[5]; break;
+            case "G4": acItsClip = this.aryAudioClips_Ckey_Scale[7]; break;
+            case "A4": acItsClip = this.aryAudioClips_Ckey_Scale[9]; break;
+            case "B4": acItsClip = this.aryAudioClips_Ckey_Scale[11]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }
+
 #endregion
 
 
@@ -415,8 +435,20 @@ public class ContentsManager : MonoBehaviour
         }else
         {
             // 스케일 모드 인경우. 
-            // TBD.
-            ;
+            switch( GameManager.Instance.eSelectedKey )
+            {
+                case eAVAILABLEKEYS.C:
+                    acResult_AudioClipData = AmI_Ckey_ScaleMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                //------
+                // 음.. 스케일 모드는, 키 상관없이, 그냥 음 이름을 리턴해주면 될듯? 23.08.07
+                // 아니, 인트로 모드 떄문에 안될듯...? 왜? 해당 스케일이 아닌 음은 '띡' 소리 나야 해서. 
+                case eAVAILABLEKEYS.G:
+                    //AmI_Gkey_thenPlaySound(this.name);
+                    break;
+                default:
+                    break;
+            }
         }
 
         return acResult_AudioClipData;

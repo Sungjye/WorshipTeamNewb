@@ -49,6 +49,9 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
                 case "04-01_Scale_RecogKeys": // 23.08.04
                     this.sGoToThisScene = "01-02_KeyList";
                     break;
+                case "04-01_Code_RecogKeys": // 23.08.07
+                    this.sGoToThisScene = "01-02_KeyList";
+                    break;
                 default:
                     // Do nothing?
                     this.sGoToThisScene = "01-01_Mainmenu";
@@ -80,6 +83,15 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
                 case "03-02_Code_PickPatNumber": // 23.07.24
                     this.sGoToThisScene = "03-03_Code_MatchSound";
                     //this.sGoToThisScene = "StayHere";
+                    break;
+                //-----------------------------------------
+                case "04-01_Scale_RecogKeys": // 23.08.07
+                    //this.sGoToThisScene = "04-01_Code_RecogKeys"; // 키 알아맞추기 모드간에 스위칭..
+                    this.sGoToThisScene = "StayHere";
+                    break;
+                case "04-01_Code_RecogKeys": // 23.08.07
+                    //this.sGoToThisScene = "04-01_Scale_RecogKeys"; // 키 알아맞추기 모드간에 스위칭..
+                    this.sGoToThisScene = "StayHere";
                     break;
                 default:
                     // Do nothing?

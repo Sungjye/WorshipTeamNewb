@@ -242,68 +242,20 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
     private void Check_WhoAmI_AndPlaySound()
     {
 
-//        if(Application.isEditor)
+        // 컨텐츠 매니져에서 클립만 불러오는 것으로 공용화. 23.08.07
 
-        switch( GameManager.Instance.eSelectedKey )
-        {
-            case eAVAILABLEKEYS.C:
-                AmI_Ckey_thenPlaySound(this.name);
-                break;
-            case eAVAILABLEKEYS.G:
-                //AmI_Gkey_thenPlaySound(this.name);
-                break;
-            default:
-                break;
-        }
-        
-        
-        //AmI_Dkey_thenPlaySound(this.name);
-        //AmI_Akey_thenPlaySound(this.name);
-        //AmI_Ekey_thenPlaySound(this.name);
+        // 키는 이미 싱글턴 변수에 들어가 있으므로, 
+        // 내 이름 중에서 몇도인지만 잘라서 보내주면 됨!
+        string sMyName = this.name; // 나의 오브젝트 네임. 
 
-        //AmI_Fkey_thenPlaySound(this.name);
-        // .. 
+        // 끝에 3개, 즉 _3do 이것만 넘기기.
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_AndPlaySound_CodeOrNote( sMyName.Substring(sMyName.Length-4, 4) );
 
-
-    }
-
-    private void AmI_Ckey_thenPlaySound(string sMyName)
-    {
-        // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
-
-        //-----------
-        // C 키
-        switch( sMyName )
-        {
-            case "instCodeBrick_C__1do": // C
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[0];
-                break;
-            case "instCodeBrick_C__2do":
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[1];
-                break;
-            case "instCodeBrick_C__3do":
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[2];
-                break;
-            case "instCodeBrick_C__4do":
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[3];
-                break;
-            case "instCodeBrick_C__5do":
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[4];
-                break;
-            case "instCodeBrick_C__6do":
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[5];
-                break;
-            case "instCodeBrick_C__7do":
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[6];
-                break;
-            default:
-                this.brickSpeaker.clip = ContentsManager.Instance.aryAudioClips_Ckey_Code[6];
-                break;
-        }
 
         brickSpeaker.Play();
 
     }
+
 
 
 #region Public Methods regarding to a displaying the brick face.

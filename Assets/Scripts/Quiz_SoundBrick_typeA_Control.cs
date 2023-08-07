@@ -218,6 +218,19 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
 //        if(Application.isEditor)
 
+        // 컨텐츠 매니져에서 클립만 불러오는 것으로 공용화. 23.08.07
+
+        // 키는 이미 싱글턴 변수에 들어가 있으므로, 
+        // 내 이름 중에서 몇도인지만 잘라서 보내주면 됨!
+        string sMyName = this.name; // 나의 오브젝트 네임. 
+
+        // 끝에 3개, 즉 _3do 이것만 넘기기.
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_AndPlaySound_CodeOrNote( sMyName.Substring(sMyName.Length-4, 4) );
+
+
+        brickSpeaker.Play();
+
+        /*
         switch( GameManager.Instance.eSelectedKey )
         {
             case eAVAILABLEKEYS.C:
@@ -229,7 +242,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
             default:
                 break;
         }
-        
+        */
         
         //AmI_Dkey_thenPlaySound(this.name);
         //AmI_Akey_thenPlaySound(this.name);
@@ -241,6 +254,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
     }
 
+    /*
     private void AmI_Ckey_thenPlaySound(string sMyName)
     {
         // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
@@ -278,9 +292,22 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         brickSpeaker.Play();
 
     }
+    */
 
 
 #region Public Methods regarding to a displaying the brick face.
+
+    public void SetMe_asDoNumber(string sWhatDoNum)
+    {
+        // 뭐하는 함수?
+        // '무슨 키인지 알아맞추기' 레벨에서 사용되는
+        // 내 자신이 몇도 화음인지를 텍스트 컴포넌트에 표시하는 함수. 
+        this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = sWhatDoNum;
+
+        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_Tap_Mark_Image;
+
+    }
+
     public void SetMe_asQuestion()
     {
         // SSS_SSS_PlayManager.cs 에서 부르는 함수. 
@@ -336,6 +363,17 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
 #region Public Methods regarding to a controlling of the brick (me)
 
+    public void MakeMe_Byebye()
+    {
+        // 나를 사라지게 하는 함수. 
+        // 여러개의 다른 인스턴스 브릭들이 겹쳐 있는 상황일 것이므로.. 안 부딪히게 사라져야. 
+
+        this.MovingAway_type3();
+
+        // 중복인듯. Invoke("IveDoneMyRole", 1f);
+
+    }
+
     private void MovingAway()
     {
         //MovingAway_type1();
@@ -364,6 +402,16 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
     }
 
+    private void MovingAway_type3()
+    {
+        // 살짝 작아졌다가, 왼쪽으로 쌩 가서 사라지기. 
+
+        //this.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f); // 여유되면 감쇄 계수 적용? 
+        this.transform.localScale *= 0.85f;
+
+        Invoke("MovingAway_type1", 0.5f);
+        
+    }
 
     private void IveDoneMyRole()
     {

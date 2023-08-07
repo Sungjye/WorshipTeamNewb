@@ -198,8 +198,16 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
     private void Check_WhoAmI_AndPlaySound()
     {
 
+
+
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_AndPlaySound_CodeOrNote( this.name );
+
+        brickSpeaker.Play();
+
+
 //        if(Application.isEditor)
 
+/*
         switch( GameManager.Instance.eSelectedKey )
         {
             case eAVAILABLEKEYS.C:
@@ -212,7 +220,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
                 break;
         }
       
-        
+*/
         //AmI_Dkey_thenPlaySound(this.name);
         //AmI_Akey_thenPlaySound(this.name);
         //AmI_Ekey_thenPlaySound(this.name);
@@ -223,6 +231,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
     }
 
+/*
     private void AmI_Ckey_thenPlaySound(string sMyName)
     {
         // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
@@ -267,6 +276,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
         brickSpeaker.Play();
 
     }
+*/
 
     private void AmI_Ckey_thenShowScore(string sMyName)
     {
@@ -386,7 +396,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
         this.MovingAway_type3();
 
-        Invoke("IveDoneMyRole", 1f);
+        // 중복인듯. Invoke("IveDoneMyRole", 1f);
 
     }
 
