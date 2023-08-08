@@ -113,9 +113,31 @@ public class ScaleMode_Level_RecogKeys_PlayManager : MonoBehaviour
                     // 이 키는 enum 타입에 sharp 이 있어서 이걸 사용해야 함. 
                     sBrickNameToInstantiate = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark(sBrickNameToInstantiate);
                     break;
-/*                    
                 case eAVAILABLEKEYS.F:
                     sBrickNameToInstantiate = ((e_F_SCALENOTES)(nNoteIndex)).ToString();
+                    // 예는 샵이 없어서 안해도 될듯?
+                    //sBrickNameToInstantiate = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark(sBrickNameToInstantiate);
+                    break;
+                case eAVAILABLEKEYS.D:
+                    sBrickNameToInstantiate = ((e_D_SCALENOTES)(nNoteIndex)).ToString();
+                    // 이 키는 enum 타입에 sharp 이 있어서 이걸 사용해야 함. 
+                    sBrickNameToInstantiate = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark(sBrickNameToInstantiate);
+                    break;
+                case eAVAILABLEKEYS.A:
+                    sBrickNameToInstantiate = ((e_A_SCALENOTES)(nNoteIndex)).ToString();
+                    // 이 키는 enum 타입에 sharp 이 있어서 이걸 사용해야 함. 
+                    sBrickNameToInstantiate = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark(sBrickNameToInstantiate);
+                    break;
+                case eAVAILABLEKEYS.E:
+                    sBrickNameToInstantiate = ((e_E_SCALENOTES)(nNoteIndex)).ToString();
+                    // 이 키는 enum 타입에 sharp 이 있어서 이걸 사용해야 함. 
+                    sBrickNameToInstantiate = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark(sBrickNameToInstantiate);
+                    break;
+/*                    
+                case eAVAILABLEKEYS.%:
+                    sBrickNameToInstantiate = ((e_%_SCALENOTES)(nNoteIndex)).ToString();
+                    // 이 키는 enum 타입에 sharp 이 있어서 이걸 사용해야 함. 
+                    sBrickNameToInstantiate = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark(sBrickNameToInstantiate);
                     break;
 */
                 default:

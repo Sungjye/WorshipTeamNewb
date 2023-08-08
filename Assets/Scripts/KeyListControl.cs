@@ -34,10 +34,32 @@ public class KeyListControl : MonoBehaviour
         this.gmobjPanel_PopupMenu.SetActive(true);
     }
 
+    public void OnClick_Fkey()
+    {
+        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.F;
+        this.gmobjPanel_PopupMenu.SetActive(true);
+    }
+
     public void OnClick_Gkey()
     {
         GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.G;
+        this.gmobjPanel_PopupMenu.SetActive(true);
+    }
 
+    public void OnClick_Dkey()
+    {
+        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.D;
+        this.gmobjPanel_PopupMenu.SetActive(true);
+    }
+
+    public void OnClick_Akey()
+    {
+        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.A;
+        this.gmobjPanel_PopupMenu.SetActive(true);
+    }
+    public void OnClick_Ekey()
+    {
+        GameManager.Instance.eSelectedKey = eAVAILABLEKEYS.E;
         this.gmobjPanel_PopupMenu.SetActive(true);
     }
 

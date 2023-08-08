@@ -35,6 +35,9 @@ public class ScaleMode_Level_RecogKeys_Control : MonoBehaviour
         vOrigianlSize = this.transform.localScale; 
         crPopEffect = null;
 
+        // 내이름, 선택된 키에 따라, D4b 스타일로 할것인가, C4#으로 할것인가.. 
+        // 이건 그냥 Db 스타일 표기 그대로. this.name = ContentsManager.Instance.ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey(this.name);
+
         if(Application.isEditor) Debug.Log("User tapped object: " + this.name + ": " + vOrigianlSize );
 
         // 이 블럭의 텍스트 표기를 자신의 오브젝트 이름으로. (피아노 키 값)

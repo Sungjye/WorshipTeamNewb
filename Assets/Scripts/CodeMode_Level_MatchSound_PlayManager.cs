@@ -129,6 +129,11 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
         string sCodeName
             = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sMyNameIs)];
 
+        // F#m 이런 코드의 enum 타입은 Fsharpm 이다. 
+        // 딕셔너리로 찾은, Fsharpm 과 같은 스트링을, F#m 이렇게 바꾸어 주어야, 피아노 건반 탭한 것과 비교 및 화면 표시등에 사용할 수 있다. 
+        // ( F#m 인데. Fsharpm 이렇게 표시되면 어색함..)
+        sCodeName = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark( sCodeName );
+
         //gmobjTemp.GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_asQuestion(true);
         // 혹시나.. 비활성화 한 상태에서 트랜스폼 가져오기가 안될 까봐.. 
 

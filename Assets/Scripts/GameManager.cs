@@ -331,12 +331,12 @@ public class GameManager : MonoBehaviour
 
         bool[] bWhaEum = new bool[] {false, false, false, false, false, false, false, false}; // 화음번호가 1부터 시작하므로, 7개+1개 .
 
-        Debug.Log($"CnA: Existing Bricks: {this.li_gmobj_CurrentlyExistingBricks.Count}");
+        Debug.Log($"Score CnA: Existing Bricks: {this.li_gmobj_CurrentlyExistingBricks.Count}");
 
 
         foreach(GameObject objs in this.li_gmobj_CurrentlyExistingBricks)
         {
-            //Debug.Log(objs.name);
+            Debug.Log($"Score CnA, Existing obj: {objs.name}");
 
             string sObjName = objs.name;
 

@@ -119,16 +119,17 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
         }
         */
 
+        //---------------------
+        // 건반의 각 키에 붙어 있는, ScaleMode_Level_0_Control.cs 스크립트에서, 생성한 "나"를, 
+        // 이제 사라질 것이므로, 리스트에서 날린다. 
+        GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Remove(this.transform.gameObject); // 중복된 이름의 오브젝트가 있어도 잘 제거 되려나?... 잘됩니다, 감사합니다, 주님!!!
+
         //----------------------
         // 사라지는 단계
         // 
         Destroy(this.transform.gameObject, 0.1f);
 
 
-        //---------------------
-        // 건반의 각 키에 붙어 있는, ScaleMode_Level_0_Control.cs 스크립트에서, 생성한 "나"를, 
-        // 이제 사라질 것이므로, 리스트에서 날린다. 
-        GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Remove(this.transform.gameObject); // 중복된 이름의 오브젝트가 있어도 잘 제거 되려나?... 잘됩니다, 감사합니다, 주님!!!
         // Tentative.
         //GameManager.Instance.ScoreSystem_Check_CurrentlyExistingBricks();
         //GameManager.Instance.ScoreSystem_CheckAndApplyScore_ScaleMode_BasicHarmonies();

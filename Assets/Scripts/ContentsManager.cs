@@ -20,7 +20,7 @@ using System.Linq; // 23.07.07 딕셔너리내의 셀렉트를 사용해보기 �
 // [스케일, 코드 값 관련 공통]
 public enum eMUSICMODE {Scale, Code}; // 음 연습인지, 코드 연습인지. 
 //public enum eAVAILABLEKEYS {C, G, D, A, E, F, Bb}; // 플레이 가능한 키 코드들. 즉, C key...
-public enum eAVAILABLEKEYS {C, G}; // 플레이 가능한 키 코드들. 즉, C key...
+public enum eAVAILABLEKEYS {C, F, G, D, A, E}; // 플레이 가능한 키 코드들. 즉, C key...
 //---------------------------------------
 
 //---------------------------------------
@@ -29,6 +29,10 @@ public enum eAVAILABLEKEYS {C, G}; // 플레이 가능한 키 코드들. 즉, C 
 public enum eDO_NUMBER { _1do, _2do, _3do, _4do, _5do, _6do, _7do }; // 영어로 몰라서.. 1도.. 화음. 지금은, 1~7화음만 하지만, 나중에는 dim, sus4 등도 할수 있으므로.
 public enum e_C_KEYCODES {C, Dm, Em, F, G, Am, Bb}; // 해당 키의 가족 코드들. 
 public enum e_G_KEYCODES {G, Am, Bm, C, D, Em, F}; // 해당 키의 가족 코드들. 
+public enum e_F_KEYCODES {F, Gm, Am, Bb, C, Dm, Eb}; 
+public enum e_D_KEYCODES {D, Em, Fsharpm, G, A, Bm, C}; 
+public enum e_A_KEYCODES {A, Bm, Csharpm, D, E, Fsharpm, G}; 
+public enum e_E_KEYCODES {E, Fsharpm, Gsharpm, A, B, Csharpm, D}; 
 //---------------------------------------
 
 //---------------------------------------
@@ -55,6 +59,9 @@ public enum ePIANOKEYS {C, Db, D, Eb, E, F, Fsharp, G, Ab, A, Bb, B};
 public enum e_C_SCALENOTES {C4, D4, E4, F4, G4, A4, B4}; // 나중에 한 옥타브 넘어서 퀴즈내고 싶으면, 여기에 추가.. 
 public enum e_G_SCALENOTES {G4, A4, B4, C4, D4, E4, F4sharp};
 public enum e_F_SCALENOTES {F4, G4, A4, B4b, C4, D4, E4};
+public enum e_D_SCALENOTES {D4, E4, F4sharp, G4, A4, B4, C4sharp};
+public enum e_A_SCALENOTES {A4, B4, C4sharp, D4, E4, F4sharp, G4sharp};
+public enum e_E_SCALENOTES {E4, F4sharp, G4sharp, A4, B4, C4sharp, D4sharp};
 
 
 
@@ -64,6 +71,10 @@ public class ContentsManager : MonoBehaviour
 
     public AudioClip[] aryAudioClips_Ckey_Code;
     public AudioClip[] aryAudioClips_Gkey_Code;
+    public AudioClip[] aryAudioClips_Fkey_Code;
+    public AudioClip[] aryAudioClips_Dkey_Code;
+    public AudioClip[] aryAudioClips_Akey_Code;
+    public AudioClip[] aryAudioClips_Ekey_Code;
 
     public AudioClip[] aryAudioClips_Ckey_Scale;
 
@@ -71,6 +82,10 @@ public class ContentsManager : MonoBehaviour
 
     public Material[] matCkey_ScoreImage;
     public Material[] matGkey_ScoreImage;
+    public Material[] matFkey_ScoreImage;
+    public Material[] matDkey_ScoreImage;
+    public Material[] matAkey_ScoreImage;
+    public Material[] matEkey_ScoreImage;
 
     public Material matQuiz_Tap_Mark_Image, matQuiz_O_Mark_Image, matQuiz_X_Mark_Image;
 
@@ -116,8 +131,16 @@ public class ContentsManager : MonoBehaviour
 
         this.aryAudioClips_Ckey_Code = new AudioClip[7];
         this.aryAudioClips_Gkey_Code = new AudioClip[7];
+        this.aryAudioClips_Fkey_Code = new AudioClip[7];
+        this.aryAudioClips_Dkey_Code = new AudioClip[7];
+        this.aryAudioClips_Akey_Code = new AudioClip[7];
+        this.aryAudioClips_Ekey_Code = new AudioClip[7];
 
         this.aryAudioClips_Ckey_Scale = new AudioClip[12]; // 23.07.12
+
+        // 각 키별, 스케일, 코드 데이터 로드. 
+        this.SetScaleAndCodeData_all();
+
 
         // 머티리얼 로드. 
         // Ref. https://bloodstrawberry.tistory.com/813
@@ -126,6 +149,10 @@ public class ContentsManager : MonoBehaviour
         // Resources.LoadAll<Material>("Material/BlockColor");
         this.matCkey_ScoreImage = Resources.LoadAll<Material>("Materials/Ckey_Scores");
         this.matGkey_ScoreImage = Resources.LoadAll<Material>("Materials/Gkey_Scores"); // 23.08.07
+        this.matFkey_ScoreImage = Resources.LoadAll<Material>("Materials/Fkey_Scores"); // 23.08.08
+        this.matDkey_ScoreImage = Resources.LoadAll<Material>("Materials/Dkey_Scores"); // 23.08.08
+        this.matAkey_ScoreImage = Resources.LoadAll<Material>("Materials/Akey_Scores"); // 23.08.08
+        this.matEkey_ScoreImage = Resources.LoadAll<Material>("Materials/Ekey_Scores"); // 23.08.08
 
 
         this.matQuiz_Tap_Mark_Image = Resources.Load<Material>("Materials/Mark_Tap");
@@ -155,6 +182,53 @@ public class ContentsManager : MonoBehaviour
         aryAudioClips_Gkey_Code[5] = Resources.Load<AudioClip>("Audio/Code_G_Codes/Em_code_guitar");
         aryAudioClips_Gkey_Code[6] = Resources.Load<AudioClip>("Audio/Code_G_Codes/F_code_guitar");
 
+        //= Code: F Major ====================================================================================
+        aryAudioClips_Fkey_Code[0] = Resources.Load<AudioClip>("Audio/Code_F_Codes/F_code_voice");
+        aryAudioClips_Fkey_Code[1] = Resources.Load<AudioClip>("Audio/Code_F_Codes/Gm_code_voice");
+        aryAudioClips_Fkey_Code[2] = Resources.Load<AudioClip>("Audio/Code_F_Codes/Am_code_voice");
+        aryAudioClips_Fkey_Code[3] = Resources.Load<AudioClip>("Audio/Code_F_Codes/Bb_code_voice");
+        aryAudioClips_Fkey_Code[4] = Resources.Load<AudioClip>("Audio/Code_F_Codes/C_code_voice");
+        aryAudioClips_Fkey_Code[5] = Resources.Load<AudioClip>("Audio/Code_F_Codes/Dm_code_voice");
+        aryAudioClips_Fkey_Code[6] = Resources.Load<AudioClip>("Audio/Code_F_Codes/Eb_code_voice");
+
+        //= Code: D Major ====================================================================================
+        aryAudioClips_Dkey_Code[0] = Resources.Load<AudioClip>("Audio/Code_D_Codes/D_code_voice");
+        aryAudioClips_Dkey_Code[1] = Resources.Load<AudioClip>("Audio/Code_D_Codes/Em_code_voice");
+        aryAudioClips_Dkey_Code[2] = Resources.Load<AudioClip>("Audio/Code_D_Codes/F#m_code_voice");
+        aryAudioClips_Dkey_Code[3] = Resources.Load<AudioClip>("Audio/Code_D_Codes/G_code_voice");
+        aryAudioClips_Dkey_Code[4] = Resources.Load<AudioClip>("Audio/Code_D_Codes/A_code_voice");
+        aryAudioClips_Dkey_Code[5] = Resources.Load<AudioClip>("Audio/Code_D_Codes/Bm_code_voice");
+        aryAudioClips_Dkey_Code[6] = Resources.Load<AudioClip>("Audio/Code_D_Codes/C_code_voice");
+
+        //= Code: A Major ====================================================================================
+        aryAudioClips_Akey_Code[0] = Resources.Load<AudioClip>("Audio/Code_A_Codes/A_code_voice");
+        aryAudioClips_Akey_Code[1] = Resources.Load<AudioClip>("Audio/Code_A_Codes/Bm_code_voice");
+        aryAudioClips_Akey_Code[2] = Resources.Load<AudioClip>("Audio/Code_A_Codes/C#m_code_voice");
+        aryAudioClips_Akey_Code[3] = Resources.Load<AudioClip>("Audio/Code_A_Codes/D_code_voice");
+        aryAudioClips_Akey_Code[4] = Resources.Load<AudioClip>("Audio/Code_A_Codes/E_code_voice");
+        aryAudioClips_Akey_Code[5] = Resources.Load<AudioClip>("Audio/Code_A_Codes/F#m_code_voice");
+        aryAudioClips_Akey_Code[6] = Resources.Load<AudioClip>("Audio/Code_A_Codes/G_code_voice");
+
+        //= Code: E Major ====================================================================================
+        aryAudioClips_Ekey_Code[0] = Resources.Load<AudioClip>("Audio/Code_E_Codes/E_code_voice");
+        aryAudioClips_Ekey_Code[1] = Resources.Load<AudioClip>("Audio/Code_E_Codes/F#m_code_voice");
+        aryAudioClips_Ekey_Code[2] = Resources.Load<AudioClip>("Audio/Code_E_Codes/G#m_code_voice");
+        aryAudioClips_Ekey_Code[3] = Resources.Load<AudioClip>("Audio/Code_E_Codes/A_code_voice");
+        aryAudioClips_Ekey_Code[4] = Resources.Load<AudioClip>("Audio/Code_E_Codes/B_code_voice");
+        aryAudioClips_Ekey_Code[5] = Resources.Load<AudioClip>("Audio/Code_E_Codes/C#m_code_voice");
+        aryAudioClips_Ekey_Code[6] = Resources.Load<AudioClip>("Audio/Code_E_Codes/D_code_voice");
+
+/*
+        //= Code: % Major ====================================================================================
+        aryAudioClips_%key_Code[0] = Resources.Load<AudioClip>("Audio/Code_%_Codes/_code");
+        aryAudioClips_%key_Code[1] = Resources.Load<AudioClip>("Audio/Code_%_Codes/_code");
+        aryAudioClips_%key_Code[2] = Resources.Load<AudioClip>("Audio/Code_%_Codes/_code");
+        aryAudioClips_%key_Code[3] = Resources.Load<AudioClip>("Audio/Code_%_Codes/_code");
+        aryAudioClips_%key_Code[4] = Resources.Load<AudioClip>("Audio/Code_%_Codes/_code");
+        aryAudioClips_%key_Code[5] = Resources.Load<AudioClip>("Audio/Code_%_Codes/_code");
+        aryAudioClips_%key_Code[6] = Resources.Load<AudioClip>("Audio/Code_%_Codes/_code");
+*/
+
 
         /////////////////////////////////////////////////////////////////////////////////////////
         // 현재는 C4~B4 한 옥타브만 하는데, 나중에는 더 생길수도.. 그러면, 머티리얼 리소스 로드하는 것처럼 해야할지도..
@@ -177,6 +251,11 @@ public class ContentsManager : MonoBehaviour
         AudioClip_Error = Resources.Load<AudioClip>("Audio/KbdKeyTap");
 
 
+    }
+
+
+    private void SetScaleAndCodeData_all()
+    {
 
         this.dicCode_byKeyAndDoNum = new Dictionary<eAVAILABLEKEYS, Dictionary<eDO_NUMBER, string>>();
 
@@ -211,6 +290,53 @@ public class ContentsManager : MonoBehaviour
                                                             };
         this.dicCode_byKeyAndDoNum.Add(eAVAILABLEKEYS.G, dic_G_KeyFamily);
 
+        Dictionary<eDO_NUMBER, string> dic_F_KeyFamily = new Dictionary<eDO_NUMBER, string>
+                                                            {
+                                                                {eDO_NUMBER._1do, e_F_KEYCODES.F.ToString()},
+                                                                {eDO_NUMBER._2do, e_F_KEYCODES.Gm.ToString()},
+                                                                {eDO_NUMBER._3do, e_F_KEYCODES.Am.ToString()},
+                                                                {eDO_NUMBER._4do, e_F_KEYCODES.Bb.ToString()},
+                                                                {eDO_NUMBER._5do, e_F_KEYCODES.C.ToString()},
+                                                                {eDO_NUMBER._6do, e_F_KEYCODES.Dm.ToString()},
+                                                                {eDO_NUMBER._7do, e_F_KEYCODES.Eb.ToString()}
+                                                            };
+        this.dicCode_byKeyAndDoNum.Add(eAVAILABLEKEYS.F, dic_F_KeyFamily);
+
+        Dictionary<eDO_NUMBER, string> dic_D_KeyFamily = new Dictionary<eDO_NUMBER, string>
+                                                            {
+                                                                {eDO_NUMBER._1do, e_D_KEYCODES.D.ToString()},
+                                                                {eDO_NUMBER._2do, e_D_KEYCODES.Em.ToString()},
+                                                                {eDO_NUMBER._3do, e_D_KEYCODES.Fsharpm.ToString()},
+                                                                {eDO_NUMBER._4do, e_D_KEYCODES.G.ToString()},
+                                                                {eDO_NUMBER._5do, e_D_KEYCODES.A.ToString()},
+                                                                {eDO_NUMBER._6do, e_D_KEYCODES.Bm.ToString()},
+                                                                {eDO_NUMBER._7do, e_D_KEYCODES.C.ToString()}
+                                                            };
+        this.dicCode_byKeyAndDoNum.Add(eAVAILABLEKEYS.D, dic_D_KeyFamily);
+
+        Dictionary<eDO_NUMBER, string> dic_A_KeyFamily = new Dictionary<eDO_NUMBER, string>
+                                                            {
+                                                                {eDO_NUMBER._1do, e_A_KEYCODES.A.ToString()},
+                                                                {eDO_NUMBER._2do, e_A_KEYCODES.Bm.ToString()},
+                                                                {eDO_NUMBER._3do, e_A_KEYCODES.Csharpm.ToString()},
+                                                                {eDO_NUMBER._4do, e_A_KEYCODES.D.ToString()},
+                                                                {eDO_NUMBER._5do, e_A_KEYCODES.E.ToString()},
+                                                                {eDO_NUMBER._6do, e_A_KEYCODES.Fsharpm.ToString()},
+                                                                {eDO_NUMBER._7do, e_A_KEYCODES.G.ToString()}
+                                                            };
+        this.dicCode_byKeyAndDoNum.Add(eAVAILABLEKEYS.A, dic_A_KeyFamily);
+
+        Dictionary<eDO_NUMBER, string> dic_E_KeyFamily = new Dictionary<eDO_NUMBER, string>
+                                                            {
+                                                                {eDO_NUMBER._1do, e_E_KEYCODES.E.ToString()},
+                                                                {eDO_NUMBER._2do, e_E_KEYCODES.Fsharpm.ToString()},
+                                                                {eDO_NUMBER._3do, e_E_KEYCODES.Gsharpm.ToString()},
+                                                                {eDO_NUMBER._4do, e_E_KEYCODES.A.ToString()},
+                                                                {eDO_NUMBER._5do, e_E_KEYCODES.B.ToString()},
+                                                                {eDO_NUMBER._6do, e_E_KEYCODES.Csharpm.ToString()},
+                                                                {eDO_NUMBER._7do, e_E_KEYCODES.D.ToString()}
+                                                            };
+        this.dicCode_byKeyAndDoNum.Add(eAVAILABLEKEYS.E, dic_E_KeyFamily);
 /*
         Dictionary<eDO_NUMBER, string> dic_%_KeyFamily = new Dictionary<eDO_NUMBER, string>
                                                             {
@@ -286,6 +412,74 @@ public class ContentsManager : MonoBehaviour
                                                     {ePIANOKEYS.B, 3}
                                                 };
         this.dicScale_byKeyAndPianoKeys.Add(eAVAILABLEKEYS.G, dic_G_KeyScales);
+
+        Dictionary<ePIANOKEYS, int> dic_F_KeyScales = new Dictionary<ePIANOKEYS, int> // F major
+                                                {
+                                                    {ePIANOKEYS.C, 5},
+                                                    {ePIANOKEYS.Db, 0},
+                                                    {ePIANOKEYS.D, 6},
+                                                    {ePIANOKEYS.Eb, 0},
+                                                    {ePIANOKEYS.E, 7},
+                                                    {ePIANOKEYS.F, 1},
+                                                    {ePIANOKEYS.Fsharp, 0},
+                                                    {ePIANOKEYS.G, 2},
+                                                    {ePIANOKEYS.Ab, 0},
+                                                    {ePIANOKEYS.A, 3},
+                                                    {ePIANOKEYS.Bb, 4},
+                                                    {ePIANOKEYS.B, 0}
+                                                };
+        this.dicScale_byKeyAndPianoKeys.Add(eAVAILABLEKEYS.F, dic_F_KeyScales);
+
+        Dictionary<ePIANOKEYS, int> dic_D_KeyScales = new Dictionary<ePIANOKEYS, int> // D major
+                                                {
+                                                    {ePIANOKEYS.C, 0},
+                                                    {ePIANOKEYS.Db, 7},
+                                                    {ePIANOKEYS.D, 1},
+                                                    {ePIANOKEYS.Eb, 0},
+                                                    {ePIANOKEYS.E, 2},
+                                                    {ePIANOKEYS.F, 0},
+                                                    {ePIANOKEYS.Fsharp, 3},
+                                                    {ePIANOKEYS.G, 4},
+                                                    {ePIANOKEYS.Ab, 0},
+                                                    {ePIANOKEYS.A, 5},
+                                                    {ePIANOKEYS.Bb, 0},
+                                                    {ePIANOKEYS.B, 6}
+                                                };
+        this.dicScale_byKeyAndPianoKeys.Add(eAVAILABLEKEYS.D, dic_D_KeyScales);
+
+        Dictionary<ePIANOKEYS, int> dic_A_KeyScales = new Dictionary<ePIANOKEYS, int> // A major
+                                                {
+                                                    {ePIANOKEYS.C, 0},
+                                                    {ePIANOKEYS.Db, 3},
+                                                    {ePIANOKEYS.D, 4},
+                                                    {ePIANOKEYS.Eb, 0},
+                                                    {ePIANOKEYS.E, 5},
+                                                    {ePIANOKEYS.F, 0},
+                                                    {ePIANOKEYS.Fsharp, 6},
+                                                    {ePIANOKEYS.G, 0},
+                                                    {ePIANOKEYS.Ab, 7},
+                                                    {ePIANOKEYS.A, 1},
+                                                    {ePIANOKEYS.Bb, 0},
+                                                    {ePIANOKEYS.B, 2}
+                                                };
+        this.dicScale_byKeyAndPianoKeys.Add(eAVAILABLEKEYS.A, dic_A_KeyScales);
+
+        Dictionary<ePIANOKEYS, int> dic_E_KeyScales = new Dictionary<ePIANOKEYS, int> // E major
+                                                {
+                                                    {ePIANOKEYS.C, 0},
+                                                    {ePIANOKEYS.Db, 6},
+                                                    {ePIANOKEYS.D, 0},
+                                                    {ePIANOKEYS.Eb, 7},
+                                                    {ePIANOKEYS.E, 1},
+                                                    {ePIANOKEYS.F, 0},
+                                                    {ePIANOKEYS.Fsharp, 2},
+                                                    {ePIANOKEYS.G, 0},
+                                                    {ePIANOKEYS.Ab, 3},
+                                                    {ePIANOKEYS.A, 4},
+                                                    {ePIANOKEYS.Bb, 0},
+                                                    {ePIANOKEYS.B, 5}
+                                                };
+        this.dicScale_byKeyAndPianoKeys.Add(eAVAILABLEKEYS.E, dic_E_KeyScales);
 
 /*
         Dictionary<ePIANOKEYS, int> dic_%_KeyScales = new Dictionary<ePIANOKEYS, int> // % major
@@ -386,6 +580,109 @@ public class ContentsManager : MonoBehaviour
         }
         return acItsClip;
     }    
+
+    private AudioClip AmI_Fkey_CodeMode_Retrieve_AudioClip(string sMyName)
+    {
+        // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
+        AudioClip acItsClip = null;
+        //-----------
+        // F 키
+        switch( sMyName )
+        {
+            case "_1do": acItsClip = this.aryAudioClips_Fkey_Code[0]; break;
+            case "_2do": acItsClip = this.aryAudioClips_Fkey_Code[1]; break;
+            case "_3do": acItsClip = this.aryAudioClips_Fkey_Code[2]; break;
+            case "_4do": acItsClip = this.aryAudioClips_Fkey_Code[3]; break;
+            case "_5do": acItsClip = this.aryAudioClips_Fkey_Code[4]; break;
+            case "_6do": acItsClip = this.aryAudioClips_Fkey_Code[5]; break;
+            case "_7do": acItsClip = this.aryAudioClips_Fkey_Code[6]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }    
+
+    private AudioClip AmI_Dkey_CodeMode_Retrieve_AudioClip(string sMyName)
+    {
+        // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
+        AudioClip acItsClip = null;
+        //-----------
+        // D 키
+        switch( sMyName )
+        {
+            case "_1do": acItsClip = this.aryAudioClips_Dkey_Code[0]; break;
+            case "_2do": acItsClip = this.aryAudioClips_Dkey_Code[1]; break;
+            case "_3do": acItsClip = this.aryAudioClips_Dkey_Code[2]; break;
+            case "_4do": acItsClip = this.aryAudioClips_Dkey_Code[3]; break;
+            case "_5do": acItsClip = this.aryAudioClips_Dkey_Code[4]; break;
+            case "_6do": acItsClip = this.aryAudioClips_Dkey_Code[5]; break;
+            case "_7do": acItsClip = this.aryAudioClips_Dkey_Code[6]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }    
+
+    private AudioClip AmI_Akey_CodeMode_Retrieve_AudioClip(string sMyName)
+    {
+        // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
+        AudioClip acItsClip = null;
+        //-----------
+        // A 키
+        switch( sMyName )
+        {
+            case "_1do": acItsClip = this.aryAudioClips_Akey_Code[0]; break;
+            case "_2do": acItsClip = this.aryAudioClips_Akey_Code[1]; break;
+            case "_3do": acItsClip = this.aryAudioClips_Akey_Code[2]; break;
+            case "_4do": acItsClip = this.aryAudioClips_Akey_Code[3]; break;
+            case "_5do": acItsClip = this.aryAudioClips_Akey_Code[4]; break;
+            case "_6do": acItsClip = this.aryAudioClips_Akey_Code[5]; break;
+            case "_7do": acItsClip = this.aryAudioClips_Akey_Code[6]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }    
+
+    private AudioClip AmI_Ekey_CodeMode_Retrieve_AudioClip(string sMyName)
+    {
+        // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
+        AudioClip acItsClip = null;
+        //-----------
+        // E 키
+        switch( sMyName )
+        {
+            case "_1do": acItsClip = this.aryAudioClips_Ekey_Code[0]; break;
+            case "_2do": acItsClip = this.aryAudioClips_Ekey_Code[1]; break;
+            case "_3do": acItsClip = this.aryAudioClips_Ekey_Code[2]; break;
+            case "_4do": acItsClip = this.aryAudioClips_Ekey_Code[3]; break;
+            case "_5do": acItsClip = this.aryAudioClips_Ekey_Code[4]; break;
+            case "_6do": acItsClip = this.aryAudioClips_Ekey_Code[5]; break;
+            case "_7do": acItsClip = this.aryAudioClips_Ekey_Code[6]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }    
+
+/*
+    private AudioClip AmI_%key_CodeMode_Retrieve_AudioClip(string sMyName)
+    {
+        // 한꺼번에 해도 되지만, 보기 산만하니까, 키별로 나누어서..
+        AudioClip acItsClip = null;
+        //-----------
+        // % 키
+        switch( sMyName )
+        {
+            case "_1do": acItsClip = this.aryAudioClips_%key_Code[0]; break;
+            case "_2do": acItsClip = this.aryAudioClips_%key_Code[1]; break;
+            case "_3do": acItsClip = this.aryAudioClips_%key_Code[2]; break;
+            case "_4do": acItsClip = this.aryAudioClips_%key_Code[3]; break;
+            case "_5do": acItsClip = this.aryAudioClips_%key_Code[4]; break;
+            case "_6do": acItsClip = this.aryAudioClips_%key_Code[5]; break;
+            case "_7do": acItsClip = this.aryAudioClips_%key_Code[6]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }    
+*/
+
     //==================================================
     //= 단음 (스케일) 모드 ==============================
     private AudioClip AmI_Ckey_ScaleMode_Retrieve_AudioClip(string sMyName)
@@ -428,6 +725,136 @@ public class ContentsManager : MonoBehaviour
         return acItsClip;
     }
 
+    private AudioClip AmI_Fkey_ScaleMode_Retrieve_AudioClip(string sMyName)
+    {
+        AudioClip acItsClip = null;
+        //-----------
+        // F 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            //================
+            // 여기서 쓰는 이름은, 이 함수 ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey
+            // 에서 변환한 키 이름 기준으로 case를 구성해야 한다!!!
+            //================
+            // 이게 이렇게 건너 뛰는 이유는, 키 구분 없이, 12음 전체 구성으로 음원이 되어 있기 떄문. 
+            // Ckey_Scale은 그대로 다 두고 인덱스만 다르게 해서 키의 음을 구성. 
+            case "C4": acItsClip = this.aryAudioClips_Ckey_Scale[0]; break;
+            case "D4": acItsClip = this.aryAudioClips_Ckey_Scale[2]; break; 
+            case "E4": acItsClip = this.aryAudioClips_Ckey_Scale[4]; break;
+            case "F4": acItsClip = this.aryAudioClips_Ckey_Scale[5]; break; 
+            case "G4": acItsClip = this.aryAudioClips_Ckey_Scale[7]; break;
+            case "A4": acItsClip = this.aryAudioClips_Ckey_Scale[9]; break;
+            case "B4b": acItsClip = this.aryAudioClips_Ckey_Scale[10]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }
+
+    private AudioClip AmI_Dkey_ScaleMode_Retrieve_AudioClip(string sMyName)
+    {
+        AudioClip acItsClip = null;
+        //-----------
+        // D 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            //================
+            // 여기서 쓰는 이름은, 이 함수 ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey
+            // 에서 변환한 키 이름 기준으로 case를 구성해야 한다!!!
+            //================
+            // 이게 이렇게 건너 뛰는 이유는, 키 구분 없이, 12음 전체 구성으로 음원이 되어 있기 떄문. 
+            // Ckey_Scale은 그대로 다 두고 인덱스만 다르게 해서 키의 음을 구성. 
+            case "C4#": acItsClip = this.aryAudioClips_Ckey_Scale[1]; break;
+            case "D4": acItsClip = this.aryAudioClips_Ckey_Scale[2]; break; 
+            case "E4": acItsClip = this.aryAudioClips_Ckey_Scale[4]; break;
+            case "F4#": acItsClip = this.aryAudioClips_Ckey_Scale[6]; break; 
+            case "G4": acItsClip = this.aryAudioClips_Ckey_Scale[7]; break;
+            case "A4": acItsClip = this.aryAudioClips_Ckey_Scale[9]; break;
+            case "B4": acItsClip = this.aryAudioClips_Ckey_Scale[11]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }
+
+    private AudioClip AmI_Akey_ScaleMode_Retrieve_AudioClip(string sMyName)
+    {
+        AudioClip acItsClip = null;
+        //-----------
+        // A 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            //================
+            // 여기서 쓰는 이름은, 이 함수 ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey
+            // 에서 변환한 키 이름 기준으로 case를 구성해야 한다!!!
+            //================
+            // 이게 이렇게 건너 뛰는 이유는, 키 구분 없이, 12음 전체 구성으로 음원이 되어 있기 떄문. 
+            // Ckey_Scale은 그대로 다 두고 인덱스만 다르게 해서 키의 음을 구성. 
+            case "C4#": acItsClip = this.aryAudioClips_Ckey_Scale[1]; break;
+            case "D4": acItsClip = this.aryAudioClips_Ckey_Scale[2]; break; 
+            case "E4": acItsClip = this.aryAudioClips_Ckey_Scale[4]; break;
+            case "F4#": acItsClip = this.aryAudioClips_Ckey_Scale[6]; break; 
+            case "G4#": acItsClip = this.aryAudioClips_Ckey_Scale[8]; break;
+            case "A4": acItsClip = this.aryAudioClips_Ckey_Scale[9]; break;
+            case "B4": acItsClip = this.aryAudioClips_Ckey_Scale[11]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }
+
+    private AudioClip AmI_Ekey_ScaleMode_Retrieve_AudioClip(string sMyName)
+    {
+        AudioClip acItsClip = null;
+        //-----------
+        // E 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            //================
+            // 여기서 쓰는 이름은, 이 함수 ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey
+            // 에서 변환한 키 이름 기준으로 case를 구성해야 한다!!!
+            //================
+            // 이게 이렇게 건너 뛰는 이유는, 키 구분 없이, 12음 전체 구성으로 음원이 되어 있기 떄문. 
+            // Ckey_Scale은 그대로 다 두고 인덱스만 다르게 해서 키의 음을 구성. 
+            case "C4#": acItsClip = this.aryAudioClips_Ckey_Scale[1]; break;
+            case "D4#": acItsClip = this.aryAudioClips_Ckey_Scale[3]; break; 
+            case "E4": acItsClip = this.aryAudioClips_Ckey_Scale[4]; break;
+            case "F4#": acItsClip = this.aryAudioClips_Ckey_Scale[6]; break; 
+            case "G4#": acItsClip = this.aryAudioClips_Ckey_Scale[8]; break;
+            case "A4": acItsClip = this.aryAudioClips_Ckey_Scale[9]; break;
+            case "B4": acItsClip = this.aryAudioClips_Ckey_Scale[11]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }
+    /*
+    private AudioClip AmI_%key_ScaleMode_Retrieve_AudioClip(string sMyName)
+    {
+        AudioClip acItsClip = null;
+        //-----------
+        // % 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            //================
+            // 여기서 쓰는 이름은, 이 함수 ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey
+            // 에서 변환한 키 이름 기준으로 case를 구성해야 한다!!!
+            //================
+            // 이게 이렇게 건너 뛰는 이유는, 키 구분 없이, 12음 전체 구성으로 음원이 되어 있기 떄문. 
+            // Ckey_Scale은 그대로 다 두고 인덱스만 다르게 해서 키의 음을 구성. 
+            case "4": acItsClip = this.aryAudioClips_Ckey_Scale[]; break;
+            case "4": acItsClip = this.aryAudioClips_Ckey_Scale[]; break; 
+            case "4": acItsClip = this.aryAudioClips_Ckey_Scale[]; break;
+            case "4": acItsClip = this.aryAudioClips_Ckey_Scale[]; break; 
+            case "4": acItsClip = this.aryAudioClips_Ckey_Scale[]; break;
+            case "4": acItsClip = this.aryAudioClips_Ckey_Scale[]; break;
+            case "4": acItsClip = this.aryAudioClips_Ckey_Scale[]; break;
+            default: acItsClip = this.AudioClip_Error; break;
+        }
+        return acItsClip;
+    }
+    */
 #endregion
 
 #region Private Methods for the Musical notation image materials
@@ -473,6 +900,107 @@ public class ContentsManager : MonoBehaviour
         return maItsMaterial;
     }
 
+    private Material AmI_Fkey_ScaleMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        // F 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            case "F4": maItsMaterial = this.matFkey_ScoreImage[0]; break;
+            case "G4": maItsMaterial = this.matFkey_ScoreImage[1]; break;
+            case "A4": maItsMaterial = this.matFkey_ScoreImage[2]; break;
+            case "B4b": maItsMaterial = this.matFkey_ScoreImage[3]; break;
+            case "C4": maItsMaterial = this.matFkey_ScoreImage[4]; break;
+            case "D4": maItsMaterial = this.matFkey_ScoreImage[5]; break;
+            case "E4": maItsMaterial = this.matFkey_ScoreImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Dkey_ScaleMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        // D 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            case "D4": maItsMaterial = this.matDkey_ScoreImage[0]; break;
+            case "E4": maItsMaterial = this.matDkey_ScoreImage[1]; break;
+            case "F4#": maItsMaterial = this.matDkey_ScoreImage[2]; break;
+            case "G4": maItsMaterial = this.matDkey_ScoreImage[3]; break;
+            case "A4": maItsMaterial = this.matDkey_ScoreImage[4]; break;
+            case "B4": maItsMaterial = this.matDkey_ScoreImage[5]; break;
+            case "C4#": maItsMaterial = this.matDkey_ScoreImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Akey_ScaleMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        // A 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            case "A4": maItsMaterial = this.matAkey_ScoreImage[0]; break;
+            case "B4": maItsMaterial = this.matAkey_ScoreImage[1]; break;
+            case "C4#": maItsMaterial = this.matAkey_ScoreImage[2]; break;
+            case "D4": maItsMaterial = this.matAkey_ScoreImage[3]; break;
+            case "E4": maItsMaterial = this.matAkey_ScoreImage[4]; break;
+            case "F4#": maItsMaterial = this.matAkey_ScoreImage[5]; break;
+            case "G4#": maItsMaterial = this.matAkey_ScoreImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Ekey_ScaleMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        // E 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            case "E4": maItsMaterial = this.matEkey_ScoreImage[0]; break;
+            case "F4#": maItsMaterial = this.matEkey_ScoreImage[1]; break;
+            case "G4#": maItsMaterial = this.matEkey_ScoreImage[2]; break;
+            case "A4": maItsMaterial = this.matEkey_ScoreImage[3]; break;
+            case "B4": maItsMaterial = this.matEkey_ScoreImage[4]; break;
+            case "C4#": maItsMaterial = this.matEkey_ScoreImage[5]; break;
+            case "D4#": maItsMaterial = this.matEkey_ScoreImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    /*
+    private Material AmI_%key_ScaleMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        // % 키: 단음
+        //-----------
+        switch( sMyName )
+        {
+            case "4": maItsMaterial = this.mat%key_ScoreImage[0]; break;
+            case "4": maItsMaterial = this.mat%key_ScoreImage[1]; break;
+            case "4": maItsMaterial = this.mat%key_ScoreImage[2]; break;
+            case "4": maItsMaterial = this.mat%key_ScoreImage[3]; break;
+            case "4": maItsMaterial = this.mat%key_ScoreImage[4]; break;
+            case "4": maItsMaterial = this.mat%key_ScoreImage[5]; break;
+            case "4#": maItsMaterial = this.mat%key_ScoreImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+    */
 #endregion
 
 #region Private Methods for etc functions
@@ -481,7 +1009,7 @@ public class ContentsManager : MonoBehaviour
 
 #region Popular methods to retirve content related information.
 
-    public string ParsingTheTappedPianoKey(string sPianoKeyNameWithPositionNumber)
+    public string ParsingTheTappedPianoKey(string sTappedPianoKeyNameWithPositionNumber)
     {
         // 뭐하는 함수?
         // 스케일 모드의 피아노 키(오브젝트)값을 받아서, 
@@ -489,6 +1017,24 @@ public class ContentsManager : MonoBehaviour
         // 왜? 이 리턴값이 enum 인덱싱 하는데 쓰이므로...
         //
         // e.g. C4 => C, D4b => Db, F4# => Fsharp
+        // 
+        // 플러스.. 기능.. 23.08.08
+        // 이게 이런 경우도 해결해야 함. 
+        // e.g. C4# => Db 
+        // 
+        // 왜? D키 등을 추가하면서 , 사용자가 헛갈리지 말라고, D4b 건반을 C4# 으로 표시 및 오브젝트 이름을 바꾸는 함수를 썼는데.. 
+        // 여기서 문제가 되어서, 이렇게 이름이 변경된 건반을 (인트로모드에서) 탭하면, 
+        // C4#을 C#으로 (기존 이 함수에서) 만들어도, ePIANOKEYS 이넘 타입에 없으니 에러 브릭으로 생성됨. 
+        // 기능 추가를 해 보자..
+        // 
+        // 이 함수 참조: ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey
+        // 
+    
+        // 23.08.08
+        // C4# => Db 이런식으로 되돌려 준다. ePIANOKEYS 에 정의된 이름으로. 해당사항 없으면 그대로 리턴.
+        string sPianoKeyNameWithPositionNumber = this.ScaleMode_UserTapKeysName_CheckAnd_ReverseAlternativeKeyName_accordingToTheSelectedKey(sTappedPianoKeyNameWithPositionNumber);
+
+
         string sScaleAlphabet_withoutPositionNumber;
 
 
@@ -571,6 +1117,28 @@ public class ContentsManager : MonoBehaviour
                 sRandomNote  = ((e_G_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_G_SCALENOTES)).Length) )).ToString();
                 sRandomNote = this.CheckAndReplace_sharpString_with_sharpMark(sRandomNote);
                 break;
+            case eAVAILABLEKEYS.F:
+                sRandomNote  = ((e_F_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_F_SCALENOTES)).Length) )).ToString();
+                sRandomNote = this.CheckAndReplace_sharpString_with_sharpMark(sRandomNote);
+                break;    
+            case eAVAILABLEKEYS.D:
+                sRandomNote  = ((e_D_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_D_SCALENOTES)).Length) )).ToString();
+                sRandomNote = this.CheckAndReplace_sharpString_with_sharpMark(sRandomNote);
+                break;
+            case eAVAILABLEKEYS.A:
+                sRandomNote  = ((e_A_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_A_SCALENOTES)).Length) )).ToString();
+                sRandomNote = this.CheckAndReplace_sharpString_with_sharpMark(sRandomNote);
+                break;
+            case eAVAILABLEKEYS.E:
+                sRandomNote  = ((e_E_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_E_SCALENOTES)).Length) )).ToString();
+                sRandomNote = this.CheckAndReplace_sharpString_with_sharpMark(sRandomNote);
+                break;            
+            /*
+            case eAVAILABLEKEYS.%:
+                sRandomNote  = ((e_%_SCALENOTES)( Random.Range(0, System.Enum.GetValues(typeof(e_%_SCALENOTES)).Length) )).ToString();
+                sRandomNote = this.CheckAndReplace_sharpString_with_sharpMark(sRandomNote);
+                break;
+            */
             default:
                 sRandomNote = "Err:Rnd"; // 랜덤 브릭 생성 오류.
                 break;
@@ -584,7 +1152,7 @@ public class ContentsManager : MonoBehaviour
         return sRandomNote;
     }
 
-    public string CheckAndReplace_sharpString_with_sharpMark(string sScaleBrickName)
+    public string CheckAndReplace_sharpString_with_sharpMark_OLD(string sScaleBrickName)
     {
         // 뭐하는 함수?
         // 스케일모드, 퀴즈 브릭 1개 모드 등에서, 
@@ -612,6 +1180,168 @@ public class ContentsManager : MonoBehaviour
 
     }
 
+    public string CheckAndReplace_sharpString_with_sharpMark(string sBrickName)
+    {
+        // 뭐하는 함수?
+        // 스케일모드 <이든 아니든>, 퀴즈 브릭 1개 모드 <이든 아니든> 등에서, 
+        // 무조건, (브릭) 이름에 sharp 이 들어가 있으면, 그것만 # 으로 바꾸어서 리턴해주는 함수. 
+        // 
+        // F4sharp 이렇게 (정의된 enum 값의 스트링변환에 따라) 생성된 퀴즈 브릭의 이름을, 
+        // F4# 이렇게 바꾸어 주는 함수. 
+        // 왜 필요함? 이게, enum 값만 # 이 안되고 문제일 뿐이지, 코드 내부는 다 # (e.g. F4# ) 포함한 걸로 돌아서..
+
+        // 입력 sBrickName 예시: F4sharp (G major 키 선택시.)
+        //                          : Fsharpm  (코드모드, D 메이져 스케일)
+        // 출력 sResult_BrickName 예시: F4# 
+        //                          : F#m (코드모드, D 메이져 스케일)
+        string sTargetToSerch = "sharp";
+        string sReplaceStr = "#";
+
+        string sResult_BrickName = null;
+
+        if( sBrickName.Contains(sTargetToSerch) )
+        {
+            string sBuffer = sBrickName;
+            sResult_BrickName = sBuffer.Replace(sTargetToSerch, sReplaceStr);
+
+        }else
+        {
+            sResult_BrickName = sBrickName;
+        }
+
+        return sResult_BrickName;
+
+    }
+
+    public string CheckAndReplace_sharpMark_with_sharpString(string sBrickName)
+    {
+        // 뭐하는 함수? : 위의 함수의 반대 역활.
+        // 스케일모드 <이든 아니든>, 퀴즈 브릭 1개 모드 <이든 아니든> 등에서, 
+        // 무조건, (브릭) 이름에 # 이 들어가 있으면, 그것만 sharp 으로 바꾸어서 리턴해주는 함수. 
+
+
+        // 출력 sBrickName 예시: F4# 
+        //                          : F#m (코드모드, D 메이져 스케일)
+        // 입력 sResult_BrickName 예시: F4sharp (G major 키 선택시.)
+        //                          : Fsharpm  (코드모드, D 메이져 스케일)
+
+        string sTargetToSerch = "#";
+        string sReplaceStr = "sharp";
+
+        string sResult_BrickName = null;
+
+        if( sBrickName.Contains(sTargetToSerch) )
+        {
+            string sBuffer = sBrickName;
+            sResult_BrickName = sBuffer.Replace(sTargetToSerch, sReplaceStr);
+
+        }else
+        {
+            sResult_BrickName = sBrickName;
+        }
+
+        return sResult_BrickName;
+
+    }
+
+    public string ScaleMode_UserTapKeysName_CheckAnd_PresentAlternativeKeyName_accordingToTheSelectedKey(string sObjectName)
+    {
+        // 뭐하는 함수?
+        // 피아노 키패드 중,
+        // D4b 을 C4#으로도 표시할 수 있는데, 
+        // 예를 들어, D major 키가 선택된 경우는, 이 키를 D4b 로 표시하는 것보다는 C4# 이 더 자연스럽다.. 아니 그래야 한다. 
+        // 그래서 그걸 해주는 함수. 
+        // 스케일 모드 플레이에서, 피아노 건반에 붙는 스크립트에서 호출하는 함수. 
+
+        string sResult_ObjectName = null;
+
+        switch( GameManager.Instance.eSelectedKey )
+        {
+            // 그대로. case eAVAILABLEKEYS.C: break;
+            // 그대로. case eAVAILABLEKEYS.F: break;
+            // 그대로. case eAVAILABLEKEYS.G: break;
+            case eAVAILABLEKEYS.D:
+                switch( sObjectName )
+                {
+                    case "D4b": sResult_ObjectName = "C4#"; break;
+                    default: sResult_ObjectName = sObjectName; break;
+                }
+                break;
+            case eAVAILABLEKEYS.A:
+                switch( sObjectName )
+                {
+                    case "D4b": sResult_ObjectName = "C4#"; break;
+                    case "A4b": sResult_ObjectName = "G4#"; break;
+                    default: sResult_ObjectName = sObjectName; break;
+                }
+                break;
+            case eAVAILABLEKEYS.E:
+                switch( sObjectName )
+                {
+                    case "D4b": sResult_ObjectName = "C4#"; break;
+                    case "E4b": sResult_ObjectName = "D4#"; break;
+                    case "A4b": sResult_ObjectName = "G4#"; break;
+                    default: sResult_ObjectName = sObjectName; break;
+                }
+                break;
+            default:
+                // 대부분의 경우는 그냥 변경하지 않고..
+                sResult_ObjectName = sObjectName;
+                break;
+        }
+
+        return sResult_ObjectName;
+
+    }
+
+    private string ScaleMode_UserTapKeysName_CheckAnd_ReverseAlternativeKeyName_accordingToTheSelectedKey(string sAlternativeObjectName)
+    {
+        // 뭐하는 함수?
+        // 위의 함수 기능을 반대로 해주는 함수. 
+        // e.g. 입력은 C4#  출력은 (ePIANOKEYS 이넘 타입에 있는) D4b 
+
+        string sResult_RestoredObjectName = null;
+
+        switch( GameManager.Instance.eSelectedKey )
+        {
+            // 그대로. case eAVAILABLEKEYS.C: break;
+            // 그대로. case eAVAILABLEKEYS.F: break;
+            // 그대로. case eAVAILABLEKEYS.G: break;
+            case eAVAILABLEKEYS.D:
+                switch( sAlternativeObjectName )
+                {
+                    case "C4#": sResult_RestoredObjectName = "D4b"; break;
+                    default: sResult_RestoredObjectName = sAlternativeObjectName; break;
+                }
+                break;
+            case eAVAILABLEKEYS.A:
+                switch( sAlternativeObjectName )
+                {
+                    case "C4#": sResult_RestoredObjectName = "D4b"; break;
+                    case "G4#": sResult_RestoredObjectName = "A4b"; break;
+                    default: sResult_RestoredObjectName = sAlternativeObjectName; break;
+                }
+                break;
+            case eAVAILABLEKEYS.E:
+                switch( sAlternativeObjectName )
+                {                    
+                    case "C4#": sResult_RestoredObjectName = "D4b"; break;
+                    case "D4#": sResult_RestoredObjectName = "E4b"; break;
+                    case "G4#": sResult_RestoredObjectName = "A4b"; break;
+                    default: sResult_RestoredObjectName = sAlternativeObjectName; break;
+                }
+                break;
+            default:
+                // 대부분의 경우는 그냥 변경하지 않고..
+                sResult_RestoredObjectName = sAlternativeObjectName;
+                break;
+        }
+
+        return sResult_RestoredObjectName;
+
+
+    }
+
 
 
     public AudioClip Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale(string sUserTappedObjectName)
@@ -629,13 +1359,35 @@ public class ContentsManager : MonoBehaviour
             switch( GameManager.Instance.eSelectedKey )
             {
                 case eAVAILABLEKEYS.C:
-                    Debug.Log("Retireve AudioClip: C key. TabppedObj: " + sUserTappedObjectName);
+                    if(Application.isEditor) Debug.Log("Retireve AudioClip: C key. TabppedObj: " + sUserTappedObjectName);
                     acResult_AudioClipData = AmI_Ckey_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
                     break;
                 case eAVAILABLEKEYS.G:
-                    Debug.Log("Retireve AudioClip: G key. TabppedObj: " + sUserTappedObjectName);
+                    if(Application.isEditor) Debug.Log("Retireve AudioClip: G key. TabppedObj: " + sUserTappedObjectName);
                     acResult_AudioClipData = AmI_Gkey_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
                     break;
+                case eAVAILABLEKEYS.F:
+                    if(Application.isEditor) Debug.Log("Retireve AudioClip: F key. TabppedObj: " + sUserTappedObjectName);
+                    acResult_AudioClipData = AmI_Fkey_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.D:
+                    if(Application.isEditor) Debug.Log("Retireve AudioClip: D key. TabppedObj: " + sUserTappedObjectName);
+                    acResult_AudioClipData = AmI_Dkey_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.A:
+                    if(Application.isEditor) Debug.Log("Retireve AudioClip: A key. TabppedObj: " + sUserTappedObjectName);
+                    acResult_AudioClipData = AmI_Akey_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.E:
+                    if(Application.isEditor) Debug.Log("Retireve AudioClip: E key. TabppedObj: " + sUserTappedObjectName);
+                    acResult_AudioClipData = AmI_Ekey_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                /*
+                case eAVAILABLEKEYS.%:
+                    if(Application.isEditor) Debug.Log("Retireve AudioClip: % key. TabppedObj: " + sUserTappedObjectName);
+                    acResult_AudioClipData = AmI_%key_CodeMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                */
                 default:
                     break;
             }
@@ -653,6 +1405,23 @@ public class ContentsManager : MonoBehaviour
                 case eAVAILABLEKEYS.G:
                     acResult_AudioClipData = AmI_Gkey_ScaleMode_Retrieve_AudioClip(sUserTappedObjectName);
                     break;
+                case eAVAILABLEKEYS.F:
+                    acResult_AudioClipData = AmI_Fkey_ScaleMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.D:
+                    acResult_AudioClipData = AmI_Dkey_ScaleMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.A:
+                    acResult_AudioClipData = AmI_Akey_ScaleMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.E:
+                    acResult_AudioClipData = AmI_Ekey_ScaleMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                /*
+                case eAVAILABLEKEYS.%:
+                    acResult_AudioClipData = AmI_%key_ScaleMode_Retrieve_AudioClip(sUserTappedObjectName);
+                    break;
+                */
                 default:
                     break;
             }
@@ -678,6 +1447,23 @@ public class ContentsManager : MonoBehaviour
             case eAVAILABLEKEYS.G:
                 maResult_NotationMaterialData = AmI_Gkey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);
                 break;
+            case eAVAILABLEKEYS.F:
+                maResult_NotationMaterialData = AmI_Fkey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                break;
+            case eAVAILABLEKEYS.D:
+                maResult_NotationMaterialData = AmI_Dkey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                break;
+            case eAVAILABLEKEYS.A:
+                maResult_NotationMaterialData = AmI_Akey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                break;
+            case eAVAILABLEKEYS.E:
+                maResult_NotationMaterialData = AmI_Ekey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                break;
+            /*
+            case eAVAILABLEKEYS.%:
+                maResult_NotationMaterialData = AmI_%key_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                break;
+            */
             default:
                 break;
         }

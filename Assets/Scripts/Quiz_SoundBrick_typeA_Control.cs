@@ -51,6 +51,11 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         this.sMyDictionariedCodeName
             = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sWhatDoNumber)];
 
+        // F#m 이런 코드의 enum 타입은 Fsharpm 이다. 
+        // 딕셔너리로 찾은, Fsharpm 과 같은 스트링을, F#m 이렇게 바꾸어 주어야, 피아노 건반 탭한 것과 비교 및 화면 표시등에 사용할 수 있다. 
+        // ( F#m 인데. Fsharpm 이렇게 표시되면 어색함..)
+        this.sMyDictionariedCodeName = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark( this.sMyDictionariedCodeName );
+
         if(Application.isEditor) Debug.Log("Quiz brick name. Original: " + this.name + ". Parsed: " + this.sMyDictionariedCodeName);
 
         // sCodeMode_Tapped_Keypad_inTermsOfTheSelectedKey

@@ -106,6 +106,10 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
         // 그래서 변환해서 바로 인덱싱 하면 됨.
         string sTappedCodeName_inTermsOfTheSelectedKey = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sTappedKeyObjectName)];
 
+        // F#m 이런 코드의 enum 타입은 Fsharpm 이다. 
+        // 딕셔너리로 찾은, Fsharpm 과 같은 스트링을, F#m 이렇게 바꾸어 주어야, 피아노 건반 탭한 것과 비교 및 화면 표시등에 사용할 수 있다. 
+        // ( F#m 인데. Fsharpm 이렇게 표시되면 어색함..)
+        sTappedCodeName_inTermsOfTheSelectedKey = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark( sTappedCodeName_inTermsOfTheSelectedKey );
 
 
         //if( ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 

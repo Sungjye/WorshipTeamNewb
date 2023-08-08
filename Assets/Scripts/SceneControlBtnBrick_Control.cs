@@ -22,9 +22,12 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
             switch( sCurrentSceneName )
             {
                 case "02-01_Code_Intro":
+                    
                     this.sGoToThisScene = "01-02_KeyList";
                     break;
                 case "02-02_Scale_Intro_a":
+                    // 이걸 안날리면 리스트 빈 오브젝트를 담고 있다. 단음 화음 쌓기, 점수주기 로직관련.
+                    GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Clear();
                     this.sGoToThisScene = "01-02_KeyList";
                     break; 
                 //-----------------------------------------
@@ -65,9 +68,12 @@ public class SceneControlBtnBrick_Control : MonoBehaviour
             switch( sCurrentSceneName )
             {
                 case "02-01_Code_Intro":
+                    
                     this.sGoToThisScene = "03-01_Code_PickNumber";                    
                     break;
                 case "02-02_Scale_Intro_a":
+                    // 이걸 안날리면 리스트 빈 오브젝트를 담고 있다. 단음 화음 쌓기, 점수주기 로직관련.
+                    GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Clear();
                     this.sGoToThisScene = "03-01_Scale_PickNote";
                     break; 
                 //-----------------------------------------
