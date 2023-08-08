@@ -63,6 +63,7 @@ public class KeyListControl : MonoBehaviour
         if( GameManager.Instance.bIsRecogKeysMode == true )
         {
             SceneManager.LoadScene("04-01_Scale_RecogKeys");
+            GameManager.Instance.bIsRecogKeysMode = false; // 리셋해줘야 또 쓰지. 안그러면 이 모드로만 감..
         }else
         {
             SceneManager.LoadScene("02-02_Scale_Intro_a");
@@ -79,6 +80,7 @@ public class KeyListControl : MonoBehaviour
         if( GameManager.Instance.bIsRecogKeysMode == true )
         {
             SceneManager.LoadScene("04-01_Code_RecogKeys");
+            GameManager.Instance.bIsRecogKeysMode = false; // 리셋해줘야 또 쓰지. 안그러면 이 모드로만 감..
         }else
         {
             SceneManager.LoadScene("02-01_Code_Intro");

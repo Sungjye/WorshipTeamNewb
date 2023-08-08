@@ -147,8 +147,13 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
         this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( sMyName.Substring(17) );
 
         // 공용화. 23.08.07
-        this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material 
+        // 프룻 브릭일 경우는 TMP 자식 1개만 있고, 머티리얼이 없다. 그래서 분기 처리. 
+        // 이걸 그냥 하면 TMP가 마젠타 컬러 박스가 됨. 
+        if( this.transform.childCount == 2) // 0: 머티리얼, 1: TMP
+        {
+            this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material 
                             = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_Scale( sMyName.Substring(17) );
+        }
 
         brickSpeaker.Play();
 

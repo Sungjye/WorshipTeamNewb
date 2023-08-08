@@ -19,7 +19,8 @@ using System.Linq; // 23.07.07 딕셔너리내의 셀렉트를 사용해보기 �
 //---------------------------------------
 // [스케일, 코드 값 관련 공통]
 public enum eMUSICMODE {Scale, Code}; // 음 연습인지, 코드 연습인지. 
-public enum eAVAILABLEKEYS {C, G, D, A, E, F, Bb}; // 플레이 가능한 키 코드들. 즉, C key...
+//public enum eAVAILABLEKEYS {C, G, D, A, E, F, Bb}; // 플레이 가능한 키 코드들. 즉, C key...
+public enum eAVAILABLEKEYS {C, G}; // 플레이 가능한 키 코드들. 즉, C key...
 //---------------------------------------
 
 //---------------------------------------
@@ -475,33 +476,7 @@ public class ContentsManager : MonoBehaviour
 #endregion
 
 #region Private Methods for etc functions
-    private string CheckAndReplace_sharpString_with_sharpMark(string sScaleBrickName)
-    {
-        // 뭐하는 함수?
-        // 스케일모드, 퀴즈 브릭 1개 모드 등에서, 
-        // F4sharp 이렇게 (정의된 enum 값의 스트링변환에 따라) 생성된 퀴즈 브릭의 이름을, 
-        // F4# 이렇게 바꾸어 주는 함수. 
-        // 왜 필요함? 이게, enum 값만 # 이 안되고 문제일 뿐이지, 코드 내부는 다 # (e.g. F4# ) 포함한 걸로 돌아서..
 
-        // 입력 sScaleBrickName 예시: F4sharp (G major 키 선택시.)
-        // 출력 sResult_scaleBrickName 예시: F4# 
-
-        string sResult_scaleBrickName = null;
-
-        if( sScaleBrickName.Length > 3) // 글자수가 3개 이상이라면 sharp 이 붙은거다. 샵이 없다면, D4b 이렇게가 최대 길이.
-        {
-            string sIsSharpStr = sScaleBrickName.Substring( sScaleBrickName.Length - 5, 5 ); 
-            if( sIsSharpStr == "sharp" ) sResult_scaleBrickName = ( sScaleBrickName.Substring( 0, 2 ) + "#" ); 
-            else sResult_scaleBrickName = sScaleBrickName;
-
-        }else
-        {
-            sResult_scaleBrickName = sScaleBrickName;
-        }
-
-        return sResult_scaleBrickName;
-
-    }
 #endregion
 
 #region Popular methods to retirve content related information.
@@ -609,7 +584,33 @@ public class ContentsManager : MonoBehaviour
         return sRandomNote;
     }
 
+    public string CheckAndReplace_sharpString_with_sharpMark(string sScaleBrickName)
+    {
+        // 뭐하는 함수?
+        // 스케일모드, 퀴즈 브릭 1개 모드 등에서, 
+        // F4sharp 이렇게 (정의된 enum 값의 스트링변환에 따라) 생성된 퀴즈 브릭의 이름을, 
+        // F4# 이렇게 바꾸어 주는 함수. 
+        // 왜 필요함? 이게, enum 값만 # 이 안되고 문제일 뿐이지, 코드 내부는 다 # (e.g. F4# ) 포함한 걸로 돌아서..
 
+        // 입력 sScaleBrickName 예시: F4sharp (G major 키 선택시.)
+        // 출력 sResult_scaleBrickName 예시: F4# 
+
+        string sResult_scaleBrickName = null;
+
+        if( sScaleBrickName.Length > 3) // 글자수가 3개 이상이라면 sharp 이 붙은거다. 샵이 없다면, D4b 이렇게가 최대 길이.
+        {
+            string sIsSharpStr = sScaleBrickName.Substring( sScaleBrickName.Length - 5, 5 ); 
+            if( sIsSharpStr == "sharp" ) sResult_scaleBrickName = ( sScaleBrickName.Substring( 0, 2 ) + "#" ); 
+            else sResult_scaleBrickName = sScaleBrickName;
+
+        }else
+        {
+            sResult_scaleBrickName = sScaleBrickName;
+        }
+
+        return sResult_scaleBrickName;
+
+    }
 
 
 

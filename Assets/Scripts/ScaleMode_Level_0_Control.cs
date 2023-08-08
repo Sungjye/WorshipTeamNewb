@@ -191,12 +191,12 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
                 // 간식을 인스턴 시에잇. 
                 instCodeBrick = Instantiate(gmobjFruitBrickPrefab, new Vector3(0f, 6f, 0f), Quaternion.identity);
 
-                instCodeBrick.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = this.name;
-
                 //-------------------------------------------
                 // 해당 스케일이 아니더라도, 인스턴시에잇된 오브젝트 자체의 이름을 정해야, 화음 확인에 대해서 일반적인 코드가 된다. 
                 // 인스턴시에잇된 (하늘에서 떨어지는) 스케일 브릭 + 현재선택된 키, 사용자가 누른 어떤 키인지를 나타내는 값.
                 instCodeBrick.name = "instScaleBrick_" + GameManager.Instance.eSelectedKey.ToString()+ "_" + this.name; // 디스.네임은, 건반의 고유이름.
+
+                instCodeBrick.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text = this.name;
 
             }
             

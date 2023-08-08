@@ -87,11 +87,12 @@ public class ScaleMode_Level_RecogKeys_PlayManager : MonoBehaviour
         // 현재 가용한 키 중에서, 랜덤하게 특정 키를 가져온다. 
         // 현재는, 음원이 다 준비 안되어 있어서, 일단, 주석 처리. 
             // 스트링용. string sRamdonlySelectedKey_inString = ((eAVAILABLEKEYS)( Random.Range(0, System.Enum.GetValues(typeof(eAVAILABLEKEYS)).Length) )).ToString();
-        //eAVAILABLEKEYS eRamdonlySelectedKey = (eAVAILABLEKEYS)( Random.Range(0, System.Enum.GetValues(typeof(eAVAILABLEKEYS)).Length) );
-        eAVAILABLEKEYS eRamdonlySelectedKey = eAVAILABLEKEYS.C; // Tentative
-
+        eAVAILABLEKEYS eRamdonlySelectedKey = (eAVAILABLEKEYS)( Random.Range(0, System.Enum.GetValues(typeof(eAVAILABLEKEYS)).Length) );
+        //eAVAILABLEKEYS eRamdonlySelectedKey = eAVAILABLEKEYS.C; // Tentative
 
         GameManager.Instance.eSelectedKey = eRamdonlySelectedKey; // 음원 플레이 등에 사용되므로, 이 싱글톤 변수에 넣어주고 이것을 기준으로 플레이.
+
+        if(Application.isEditor) Debug.Log($"SELECTED KEY: {GameManager.Instance.eSelectedKey}");
         
         string sBrickNameToInstantiate = null;
         for(int nNoteIndex = 0; nNoteIndex<nNumOfBricks; nNoteIndex++)
@@ -105,10 +106,18 @@ public class ScaleMode_Level_RecogKeys_PlayManager : MonoBehaviour
             {
                 case eAVAILABLEKEYS.C:
                     sBrickNameToInstantiate = ((e_C_SCALENOTES)(nNoteIndex)).ToString();
+                    // 예는 샵이 없어서 안해도 될듯?
                     break;
+                case eAVAILABLEKEYS.G:
+                    sBrickNameToInstantiate = ((e_G_SCALENOTES)(nNoteIndex)).ToString();
+                    // 이 키는 enum 타입에 sharp 이 있어서 이걸 사용해야 함. 
+                    sBrickNameToInstantiate = ContentsManager.Instance.CheckAndReplace_sharpString_with_sharpMark(sBrickNameToInstantiate);
+                    break;
+/*                    
                 case eAVAILABLEKEYS.F:
                     sBrickNameToInstantiate = ((e_F_SCALENOTES)(nNoteIndex)).ToString();
                     break;
+*/
                 default:
                     // 없는 키라면? 음.. C키로?
                     sBrickNameToInstantiate = ((e_C_SCALENOTES)(nNoteIndex)).ToString();
