@@ -64,6 +64,8 @@ public class GameManager : MonoBehaviour
     private eSCORING_POLICY eSelectedScoringPolicy;
     private Dictionary<eSCORING_POLICY, Dictionary<eSCORING_CASEID, long>> dicScoringTable;
 
+    public GameObject gmobjScorePanel; // 점수 표시 패널. 현재 활성화된 scene에 붙어 있는 점수 패널을 (각 scene의 start에서) 찾아서 붙인다. 
+
     // 최대치 넘는지 체크 필요함. 
     public long nl_NoteScore, nl_CodeScore;
     
@@ -99,6 +101,10 @@ public class GameManager : MonoBehaviour
 
 
     #region Score System Related variable initialization.
+        
+        this.gmobjScorePanel = null; // 점수 표시 패널. 현재 활성화된 scene에 붙어 있는 점수 패널을 (각 scene의 start에서) 찾아서 붙인다. 
+
+
         // 최대치 넘는지 체크 필요함. 
         this.nl_NoteScore = 0; //1234567;
         this.nl_CodeScore = 0; // 1234567;
@@ -239,7 +245,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void ScoreSystem_PleaseUpdateTheScore(GameObject gmobjDisplayPanel, eSCORING_CASEID eCaseID)
+    // 디스플레이 패널 싱글톤화. public void ScoreSystem_PleaseUpdateTheScore(GameObject gmobjDisplayPanel, eSCORING_CASEID eCaseID)
+    public void ScoreSystem_PleaseUpdateTheScore(eSCORING_CASEID eCaseID)
     {
         // 뭐하는 함수?
         // 스코어를 획득/잃는 상황에서 호출되는 메써드. 
@@ -247,6 +254,8 @@ public class GameManager : MonoBehaviour
         // 현재 노트모드 or 코드모드 를 확인 
         // 케이스ID에 따라서, 해당 모드의 점수를 가/감 연산. 
         // 받은 패널 오프젝트의 스크립트 메써드 중, 화면 업데이트 메써드를 호출해 줌. 
+
+        if( this.gmobjScorePanel == null ) return; // 실수 방지. 
 
         //===============================
         // 상황에 따른 스코어 계산: 가감.
@@ -257,7 +266,7 @@ public class GameManager : MonoBehaviour
         // (현재 active 되어 있는 스코어 보드중)
         // note 점수 or code 점수 패널에 점수 리프레쉬. 
         //===============================
-        gmobjDisplayPanel.GetComponent<Score_Panel_DisplayManager>().RefreshScores();
+        this.gmobjScorePanel.GetComponent<Score_Panel_DisplayManager>().RefreshScores();
 
 
     }
@@ -322,12 +331,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void ScoreSystem_ScaleMode_Intro_CheckAndApplyScore__BasicHarmonies(GameObject gmobjDisplayPanel)
+    //public void ScoreSystem_ScaleMode_Intro_CheckAndApplyScore__BasicHarmonies(GameObject gmobjDisplayPanel)
+    public void ScoreSystem_ScaleMode_Intro_CheckAndApplyScore__BasicHarmonies()
     {
         // 뭐하는 함수?
         // 스케일 모드, 인트로(연습) 모드에서, 
         // 기본 화음을 쌓았는지 확인하고, 
         // 쌓았다면 점수를 주는 함수. 
+
+        if( this.gmobjScorePanel == null ) return; // 실수 방지. 
 
         bool[] bWhaEum = new bool[] {false, false, false, false, false, false, false, false}; // 화음번호가 1부터 시작하므로, 7개+1개 .
 
@@ -372,7 +384,7 @@ public class GameManager : MonoBehaviour
 
           // 화음 해당음 연타 치팅 ^^ 을 방지하려면!
           if( this.li_gmobj_CurrentlyExistingBricks.Count == 3 )
-            this.ScoreSystem_PleaseUpdateTheScore( gmobjDisplayPanel, eSCORING_CASEID.SM_ITR_1 );
+            this.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_ITR_1 );
         }
 
         //==================================
@@ -391,7 +403,7 @@ public class GameManager : MonoBehaviour
 
           // 화음 해당음 연타 치팅 ^^ 을 방지하려면!
           if( this.li_gmobj_CurrentlyExistingBricks.Count == 3 )
-            this.ScoreSystem_PleaseUpdateTheScore( gmobjDisplayPanel, eSCORING_CASEID.SM_ITR_1 );
+            this.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_ITR_1 );
         }
 
         //==================================
@@ -410,7 +422,7 @@ public class GameManager : MonoBehaviour
 
           // 화음 해당음 연타 치팅 ^^ 을 방지하려면!
           if( this.li_gmobj_CurrentlyExistingBricks.Count == 3 )
-            this.ScoreSystem_PleaseUpdateTheScore( gmobjDisplayPanel, eSCORING_CASEID.SM_ITR_1 );
+            this.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_ITR_1 );
         }
 
 /*

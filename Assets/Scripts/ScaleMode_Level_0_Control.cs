@@ -20,7 +20,7 @@ using TMPro;
 
 public class ScaleMode_Level_0_Control : MonoBehaviour
 {
-    public GameObject gmobjScorePanel; // 점수 표시 패널. 
+    //public GameObject gmobjScorePanel; // 점수 표시 패널. 
 
     public GameObject gmobjScaleBrickPrefab;
     public GameObject gmobjFruitBrickPrefab;
@@ -32,6 +32,14 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
     private Vector3 vOrigianlSize;
     private Coroutine crPopEffect;
 
+
+    void Awake()
+    {
+        // 딱 한번만 하게.. 건반에 다 붙는 스크립트니.. 가 안되는 구나. 
+        // 꼼수로.. 
+        if( this.name == "C4" ) GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
+
+    }
 
 
     // Start is called before the first frame update
@@ -236,7 +244,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
     private void CheckIfScored()
     {
 
-        GameManager.Instance.ScoreSystem_ScaleMode_Intro_CheckAndApplyScore__BasicHarmonies( this.gmobjScorePanel );
+        GameManager.Instance.ScoreSystem_ScaleMode_Intro_CheckAndApplyScore__BasicHarmonies();
 
     }
 

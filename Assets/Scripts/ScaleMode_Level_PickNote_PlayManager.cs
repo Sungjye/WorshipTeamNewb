@@ -31,9 +31,12 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
 
     private GameObject gmobjCurrentBrick; // 현재 생성되어 있는 브릭
 
+
     void Awake()
     {
         this.SpawnNewBrick();
+
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
     }
 
     private void SpawnNewBrick()
@@ -124,6 +127,8 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
 
                 // 여기서 이 맞는 브릭은 사라지게 함. 
                 this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeB_Control>().SetMe_asCorrect(); 
+
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_PN_0 );
 
                 // 맞으면 다음 브릭 생성!
                 //this.SpawnNewBrick();

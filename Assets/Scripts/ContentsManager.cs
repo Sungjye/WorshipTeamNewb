@@ -1471,6 +1471,48 @@ public class ContentsManager : MonoBehaviour
         return maResult_NotationMaterialData;
     }
 
+
+    public string GetTheChosenKeySacleText_toDisplay()
+    {
+        // 뭐하는 함수?
+        // 현재 선택된 키를, 표시하기 위한 이름으로 가져오는 함수. 
+        // e.g. eAVAILABLEKEYS.G  라면, G major
+
+        string sSelectedKeyName = null;
+
+        switch( GameManager.Instance.eSelectedKey )
+        {
+            case eAVAILABLEKEYS.C:
+                sSelectedKeyName = "C major";
+                break;
+            case eAVAILABLEKEYS.G:
+                sSelectedKeyName = "G major";
+                break;
+            case eAVAILABLEKEYS.F:
+                sSelectedKeyName = "F major";
+                break;
+            case eAVAILABLEKEYS.D:
+                sSelectedKeyName = "D major";
+                break;
+            case eAVAILABLEKEYS.A:
+                sSelectedKeyName = "A major";
+                break;
+            case eAVAILABLEKEYS.E:
+                sSelectedKeyName = "E major";
+                break;
+            /*
+            case eAVAILABLEKEYS.%:
+                
+                break;
+            */
+            default:
+                break;
+        }
+
+        return sSelectedKeyName;
+
+    }
+
 #endregion
 
 

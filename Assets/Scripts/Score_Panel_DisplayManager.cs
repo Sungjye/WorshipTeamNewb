@@ -8,6 +8,7 @@
 // : 시작할 때 표시하고, 스코어 업데이트 함수가 불리면 표시함. 
 // 
 // 2023.07.27. sjjo. Initial.
+// 2023.08.14. sjjo. 무슨 키인지 표시하는 모드 child 추가. 
 // 
 //===================================================================================
 using System.Collections;
@@ -23,8 +24,11 @@ public class Score_Panel_DisplayManager : MonoBehaviour
 
     private GameObject gmobjNoteScorePanel;
     private GameObject gmobjCodeScorePanel;
+    private GameObject gmobjChosenKeyScalePanel;
+
     private GameObject gmobjNoteScoreText;
     private GameObject gmobjCodeScoreText;
+    private GameObject gmobjChosenKeyScaleText;
 
     private string sDISPLAYFORMAT;
 
@@ -35,9 +39,12 @@ public class Score_Panel_DisplayManager : MonoBehaviour
 
         this.gmobjNoteScorePanel = this.transform.GetChild(0).gameObject;
         this.gmobjCodeScorePanel = this.transform.GetChild(1).gameObject;
+        this.gmobjChosenKeyScalePanel = this.transform.GetChild(2).gameObject;
 
         this.gmobjNoteScoreText = this.transform.GetChild(0).GetChild(1).gameObject;
         this.gmobjCodeScoreText = this.transform.GetChild(1).GetChild(1).gameObject;
+        this.gmobjChosenKeyScaleText = this.transform.GetChild(2).GetChild(0).gameObject;
+
 
         //this.gmobjNoteScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
         //this.gmobjCodeScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
@@ -50,6 +57,9 @@ public class Score_Panel_DisplayManager : MonoBehaviour
         // 일단 시작하면서 점수를 업데이트 해준다. 
         this.RefreshScores();
 
+
+        
+
     }
 
     public void RefreshScores()
@@ -59,6 +69,11 @@ public class Score_Panel_DisplayManager : MonoBehaviour
 
         if( this.gmobjNoteScorePanel.activeSelf ) this.gmobjNoteScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
         if( this.gmobjCodeScorePanel.activeSelf ) this.gmobjCodeScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
+
+        // 선택된 키를 표시해야 하는 모드인 경우 표시를 해준다. 
+        if( this.gmobjChosenKeyScalePanel.activeSelf ) 
+                this.gmobjChosenKeyScaleText.GetComponent<TextMeshProUGUI>().text = ContentsManager.Instance.GetTheChosenKeySacleText_toDisplay();
+
     }
 
 
@@ -80,29 +95,47 @@ public class Score_Panel_DisplayManager : MonoBehaviour
 
         switch( SceneManager.GetActiveScene().name )
         {
+            //-- Key List Scene.
+            case "01-02_KeyList":
+                gmobjNoteScorePanel.SetActive(true);
+                gmobjCodeScorePanel.SetActive(true);
+                gmobjChosenKeyScalePanel.SetActive(false);
+                break;
+            //-- Scale 단음
             case "02-02_Scale_Intro_a":
             case "03-01_Scale_PickNote":
             case "03-02_Scale_PickPatNotes":
                 gmobjNoteScorePanel.SetActive(true);
                 gmobjCodeScorePanel.SetActive(false);
+                gmobjChosenKeyScalePanel.SetActive(true);
                 break;
-            
+            case "04-01_Scale_RecogKeys": // 키 알아맞추기 모드는 별도!
+                gmobjNoteScorePanel.SetActive(true);
+                gmobjCodeScorePanel.SetActive(false);
+                gmobjChosenKeyScalePanel.SetActive(false);
+                break;
+            //-- Code 코드
             case "02-01_Code_Intro":
             case "03-01_Code_PickNumber":
             case "03-02_Code_PickPatNumber":
             case "03-03_Code_MatchSound":
                 gmobjNoteScorePanel.SetActive(false);
                 gmobjCodeScorePanel.SetActive(true);
+                gmobjChosenKeyScalePanel.SetActive(true);
+                break;            
+            case "04-01_Code_RecogKeys": // 키 알아맞추기 모드는 별도!
+                gmobjNoteScorePanel.SetActive(false);
+                gmobjCodeScorePanel.SetActive(true);
+                gmobjChosenKeyScalePanel.SetActive(false);
                 break;
             default:
                 // Show both of them.
                 break;
         }
-        
-    
-
-
+          
     }
+
+
 
 
 }

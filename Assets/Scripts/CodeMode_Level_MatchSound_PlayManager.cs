@@ -21,7 +21,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using TMPro;
+//using TMPro;
 
 public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 {
@@ -35,7 +35,7 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
     private int nTentativeNumOfBricks;
 
-    public TextMeshProUGUI tmpGuideText;
+    //public TextMeshProUGUI tmpGuideText;
 
     #region Declare list variables to scramble _do codes
     private List<string> sCode_doList_inOrder; // 몇도인지 도를 순서대로 다 넣는 리스트. 
@@ -55,7 +55,7 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
         this.SpawnNewBrickS();
 
-        this.tmpGuideText = GameObject.Find("GuideText").GetComponent<TextMeshProUGUI>();
+        //this.tmpGuideText = GameObject.Find("GuideText").GetComponent<TextMeshProUGUI>();
 
     }
 
@@ -63,7 +63,7 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
     {
 
         //this.tmpGuideText.text = "Drag-and-drop the correct sound brick to this code below.";
-        this.tmpGuideText.text = "<size=120%>Drag-and-drop</size>\n the correct sound brick\nto this code below.";
+        //this.tmpGuideText.text = "<size=120%>Drag-and-drop</size>\n the correct sound brick\nto this code below.";
 
         
 
