@@ -36,7 +36,7 @@ public class CodeMode_Level_0_Control : MonoBehaviour
     private Vector3 vOrigianlSize;
     private Coroutine crPopEffect;
 
-/*
+/* 이건 뭐 점수줄 상황이 없음.  23.08.15. 
     void Awake()
     {
         // 딱 한번만 하게.. 탭 브릭에 다 붙는 스크립트니.. 가 안되는 구나. 

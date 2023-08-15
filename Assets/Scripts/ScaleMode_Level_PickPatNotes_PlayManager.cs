@@ -41,6 +41,8 @@ public class ScaleMode_Level_PickPatNotes_PlayManager : MonoBehaviour
 
         this.SpawnNewBrickS();
 
+        // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
 
     }
 
@@ -200,6 +202,8 @@ public class ScaleMode_Level_PickPatNotes_PlayManager : MonoBehaviour
                 // 맞으면 인덱스 증가. 
                 this.nUserFocusIndex++;
 
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_PPN_0 );
+
             }else
             {
                 // 틀렸음. 
@@ -210,6 +214,8 @@ public class ScaleMode_Level_PickPatNotes_PlayManager : MonoBehaviour
                 // 1단계. 틀리면 그냥 틀렸다고 표시만 해줌. 
                 // 나중에는 브릭들 무너지고.. 없어지고, 새로 시작.. ? ^^;
                 gmobjFocusedBrick.GetComponent<Quiz_SoundBrick_typeB2_Control>().SetMe_asWrong();
+
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_PPN_6 );
 
             }
 
@@ -225,6 +231,8 @@ public class ScaleMode_Level_PickPatNotes_PlayManager : MonoBehaviour
             {
 
                 // 끝까지 (다 맞춰서) 간 경우. 
+
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_PPN_1 );
 
                 //-------------------
                 // 브릭을 다 없애고,

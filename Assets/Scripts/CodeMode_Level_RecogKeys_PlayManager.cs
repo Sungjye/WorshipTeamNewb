@@ -33,6 +33,8 @@ public class CodeMode_Level_RecogKeys_PlayManager : MonoBehaviour
 
         this.SpawnNewBrickS();
 
+        // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
 
     }
 
@@ -152,7 +154,7 @@ public class CodeMode_Level_RecogKeys_PlayManager : MonoBehaviour
                 quizBrickObjs.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asCorrect();
             }
 
-
+            GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_RK_0 );
 
         }else
         {
@@ -162,6 +164,8 @@ public class CodeMode_Level_RecogKeys_PlayManager : MonoBehaviour
             {
                 quizBrickObjs.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asWrong();
             }
+
+            GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_RK_6 );
 
         }
 

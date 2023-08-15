@@ -39,6 +39,10 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
     void Awake()
     {
         this.SpawnNewBrick();
+
+        // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
+
     }
 
     private void SpawnNewBrick()
@@ -121,6 +125,8 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
             // 여기서 이 맞는 브릭은 사라지게 함. 
             this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asCorrect(); 
 
+            GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_PN_0 );
+
             // 맞으면 다음 브릭 생성!
             //this.SpawnNewBrick();
             Invoke("SpawnNewBrick", 0.7f);
@@ -131,6 +137,8 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
                             + " Tapped: " + sTappedCodeName_inTermsOfTheSelectedKey);
 
             this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asWrong();
+
+            GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_PN_6 );
 
         }
 

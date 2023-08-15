@@ -33,12 +33,21 @@ public enum eSCORING_CASEID {
                                 // 스케일 모드 (단음 모드)
                                  SM_ITR_0, SM_ITR_1   // Scale Mode. Intro : 그냥 플레이 하기. 
                                , SM_PN_0, SM_PN_1     // Scale Mode. PickNote : 단음 1개 맞추기. 
+                                        , SM_PN_6     //                      : 틀렸을 때. 
                                , SM_PPN_0, SM_PPN_1   // Scale Mode. PickPatNote : 단음 여러개 쌓은것 맞추기.
+                                        , SM_PPN_6     //                      : 틀렸을 때. 
+                               , SM_RK_0, SM_RK_1     // Scale Mode. Recognize Keys: 키 맞추기
+                                        , SM_RK_6     //                      : 틀렸을 때. 
                                // 코드 모드
                                , CM_ITR_0, CM_ITR_1     // Code Mode. Intro : 그냥 플레이 하기.
                                , CM_PN_0, CM_PN_1       // Code Mode. PickNumber : 코드 1개 맞추기.
+                                        , CM_PN_6       //                       : 틀렸을 때. 
                                , CM_PPN_0, CM_PPN_1     // Code Mode. PickPatNumber : 코드 여러개 쌓은것 맞추기.
+                                        , CM_PPN_6      //                       : 틀렸을 때.
                                , CM_MS_0, CM_MS_1       // Code Mode. MatchSound : 텍스트 코드를 보고, (키패드의) 소리를 듣고 맞추기.
+                                        , CM_MS_6     //                      : 틀렸을 때. 
+                               , CM_RK_0, CM_RK_1     // Code Mode. Recognize Keys: 키 맞추기
+                                        , CM_RK_6     //                      : 틀렸을 때. 
                             };
 
 //---------------------------------------------------------
@@ -80,6 +89,7 @@ public class GameManager : MonoBehaviour
         {
 
             // Ref. 1
+
             //이 클래스 인스턴스가 탄생했을 때 전역변수 instance에 게임매니저 인스턴스가 담겨있지 않다면, 자신을 넣어준다.
             instance = this;
             
@@ -188,23 +198,36 @@ public class GameManager : MonoBehaviour
                                                             ,{eSCORING_CASEID.SM_ITR_1, 3}
                                                             // Score Mode: Pick Note.
                                                             ,{eSCORING_CASEID.SM_PN_0, 1}
-                                                            ,{eSCORING_CASEID.SM_PN_1, 1}
+                                                            ,{eSCORING_CASEID.SM_PN_1, 2}
+                                                            ,{eSCORING_CASEID.SM_PN_6, -1} // 23.08.15
                                                             // Score Mode: Pick Pattern Note.
                                                             ,{eSCORING_CASEID.SM_PPN_0, 1}
-                                                            ,{eSCORING_CASEID.SM_PPN_1, 1} 
+                                                            ,{eSCORING_CASEID.SM_PPN_1, 2} 
+                                                            ,{eSCORING_CASEID.SM_PPN_6, -1} // 23.08.15
+                                                            // Score Mode; Recognize Keys.
+                                                            ,{eSCORING_CASEID.SM_RK_0, 1}
+                                                            ,{eSCORING_CASEID.SM_RK_1, 3} 
+                                                            ,{eSCORING_CASEID.SM_RK_6, -1}
                                                             //-------------------------------
                                                             // Code Mode: InTRo.
                                                             ,{eSCORING_CASEID.CM_ITR_0, 1}
                                                             ,{eSCORING_CASEID.CM_ITR_1, 1}
                                                             // Code Mode: Pick Number.
                                                             ,{eSCORING_CASEID.CM_PN_0, 1}
-                                                            ,{eSCORING_CASEID.CM_PN_1, 1}
+                                                            ,{eSCORING_CASEID.CM_PN_1, 2}
+                                                            ,{eSCORING_CASEID.CM_PN_6, -1}
                                                             // Code Mode: Pick Pattern Number.
                                                             ,{eSCORING_CASEID.CM_PPN_0, 1}
-                                                            ,{eSCORING_CASEID.CM_PPN_1, 1}
+                                                            ,{eSCORING_CASEID.CM_PPN_1, 2}
+                                                            ,{eSCORING_CASEID.CM_PPN_6, -1}
                                                             // Code Mode: Match Sound.
                                                             ,{eSCORING_CASEID.CM_MS_0, 1}
-                                                            ,{eSCORING_CASEID.CM_MS_1, 1}
+                                                            ,{eSCORING_CASEID.CM_MS_1, 3}
+                                                            ,{eSCORING_CASEID.CM_MS_6, -1}
+                                                            // Code Mode; Recognize Keys.
+                                                            ,{eSCORING_CASEID.CM_RK_0, 1}
+                                                            ,{eSCORING_CASEID.CM_RK_1, 3} 
+                                                            ,{eSCORING_CASEID.CM_RK_6, -1}
                                                         };
 
         this.dicScoringTable.Add(eSCORING_POLICY.POLICY_1_BASIC, dicPolicyBasic_ScoreTable);
@@ -215,27 +238,40 @@ public class GameManager : MonoBehaviour
         Dictionary<eSCORING_CASEID, long> dicPolicyAggressive_ScoreTable = new Dictionary<eSCORING_CASEID, long>
                                                         {
                                                             // Score Mode: InTRo.
-                                                             {eSCORING_CASEID.SM_ITR_0, 2}
-                                                            ,{eSCORING_CASEID.SM_ITR_1, 2}
+                                                             {eSCORING_CASEID.SM_ITR_0, 1}
+                                                            ,{eSCORING_CASEID.SM_ITR_1, 3}
                                                             // Score Mode: Pick Note.
-                                                            ,{eSCORING_CASEID.SM_PN_0, 2}
-                                                            ,{eSCORING_CASEID.SM_PN_1, 2}
+                                                            ,{eSCORING_CASEID.SM_PN_0, 1}
+                                                            ,{eSCORING_CASEID.SM_PN_1, 4}
+                                                            ,{eSCORING_CASEID.SM_PN_6, -2} // Yes, it's an example.
                                                             // Score Mode: Pick Pattern Note.
-                                                            ,{eSCORING_CASEID.SM_PPN_0, 2}
-                                                            ,{eSCORING_CASEID.SM_PPN_1, 2}
+                                                            ,{eSCORING_CASEID.SM_PPN_0, 1}
+                                                            ,{eSCORING_CASEID.SM_PPN_1, 2} 
+                                                            ,{eSCORING_CASEID.SM_PPN_6, -1} // 23.08.15
+                                                            // Score Mode; Recognize Keys.
+                                                            ,{eSCORING_CASEID.SM_RK_0, 1}
+                                                            ,{eSCORING_CASEID.SM_RK_1, 3} 
+                                                            ,{eSCORING_CASEID.SM_RK_6, -1}
                                                             //-------------------------------
                                                             // Code Mode: InTRo.
-                                                            ,{eSCORING_CASEID.CM_ITR_0, 2}
-                                                            ,{eSCORING_CASEID.CM_ITR_1, 2}
+                                                            ,{eSCORING_CASEID.CM_ITR_0, 1}
+                                                            ,{eSCORING_CASEID.CM_ITR_1, 1}
                                                             // Code Mode: Pick Number.
-                                                            ,{eSCORING_CASEID.CM_PN_0, 2}
+                                                            ,{eSCORING_CASEID.CM_PN_0, 1}
                                                             ,{eSCORING_CASEID.CM_PN_1, 2}
+                                                            ,{eSCORING_CASEID.CM_PN_6, -1}
                                                             // Code Mode: Pick Pattern Number.
-                                                            ,{eSCORING_CASEID.CM_PPN_0, 2}
+                                                            ,{eSCORING_CASEID.CM_PPN_0, 1}
                                                             ,{eSCORING_CASEID.CM_PPN_1, 2}
+                                                            ,{eSCORING_CASEID.CM_PPN_6, -1}
                                                             // Code Mode: Match Sound.
-                                                            ,{eSCORING_CASEID.CM_MS_0, 2}
-                                                            ,{eSCORING_CASEID.CM_MS_1, 2}
+                                                            ,{eSCORING_CASEID.CM_MS_0, 1}
+                                                            ,{eSCORING_CASEID.CM_MS_1, 3}
+                                                            ,{eSCORING_CASEID.CM_MS_6, -1}
+                                                            // Code Mode; Recognize Keys.
+                                                            ,{eSCORING_CASEID.CM_RK_0, 1}
+                                                            ,{eSCORING_CASEID.CM_RK_1, 3} 
+                                                            ,{eSCORING_CASEID.CM_RK_6, -1}
                                                         };
 
         this.dicScoringTable.Add(eSCORING_POLICY.POLICY_2_AGGRESSIVE, dicPolicyAggressive_ScoreTable); // TENTATIVE!

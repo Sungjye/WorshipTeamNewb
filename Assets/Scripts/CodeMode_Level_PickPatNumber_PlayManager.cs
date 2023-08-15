@@ -42,6 +42,8 @@ public class CodeMode_Level_PickPatNumber_PlayManager : MonoBehaviour
 
         this.SpawnNewBrickS();
 
+        // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
 
     }
 
@@ -191,6 +193,8 @@ public class CodeMode_Level_PickPatNumber_PlayManager : MonoBehaviour
                 // 맞으면 인덱스 증가. 
                 this.nUserFocusIndex++;
 
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_PPN_0 );
+
             }else
             {
                 // 틀렸음. 
@@ -201,6 +205,8 @@ public class CodeMode_Level_PickPatNumber_PlayManager : MonoBehaviour
                 // 1단계. 틀리면 그냥 틀렸다고 표시만 해줌. 
                 // 나중에는 브릭들 무너지고.. 없어지고, 새로 시작.. ? ^^;
                 gmobjFocusedBrick.GetComponent<Quiz_SoundBrick_typeA2_Control>().SetMe_asWrong();
+
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_PPN_6 );
 
             }
 
@@ -220,6 +226,8 @@ public class CodeMode_Level_PickPatNumber_PlayManager : MonoBehaviour
                 //-------------------
                 // 브릭을 다 없애고,
                 this.SweepAway_allBricks();
+
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_PPN_1 );
 
                 //--------------------
                 // 잠시 기다렸다가, 다시 또 브릭세트 생성!

@@ -36,7 +36,8 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
     {
         this.SpawnNewBrick();
 
-        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
+        // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
     }
 
     private void SpawnNewBrick()
@@ -146,6 +147,8 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
                 }
 
                 this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeB_Control>().SetMe_asWrong();
+
+                GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.SM_PN_6 );
 
             }
 

@@ -23,12 +23,14 @@ public class GuideText_DisplayManager : MonoBehaviour
     {
         this.tmpGuideText = GetComponent<TextMeshProUGUI>();
 
+        this.tmpGuideText.text = this.GetGuideText_accordingToTheScene();
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        this.tmpGuideText.text = this.GetGuideText_accordingToTheScene();
+//        this.tmpGuideText.text = this.GetGuideText_accordingToTheScene();
 
     }
 
