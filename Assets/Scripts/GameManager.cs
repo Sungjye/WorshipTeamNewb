@@ -15,7 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+using TMPro;
 
 //---------------------------------------------------------
 // [스코어 시스템. Scoring Policy]
@@ -469,6 +469,35 @@ public class GameManager : MonoBehaviour
         int nCorrespondentKeyValue = ContentsManager.Instance.dicScale_byKeyAndPianoKeys[GameManager.Instance.eSelectedKey][eTappedPianoKey];
 */
     }
+
+#endregion
+
+#region On-Screen debug function realted.
+
+public GameObject DebugMsgOnScreen_Setup()
+{
+    GameObject gmobjSearched_debugTextObj = GameObject.Find("LevelGuideText_typeA");
+
+    return gmobjSearched_debugTextObj;
+}
+
+public void DebugMsgOnScreen(GameObject gmobjTargetTextObj, string sWhatToDisplay)
+{
+    // 뭐하는 함수?
+    // 각 개별의 scene 플레이매니져 스크립트에서 호출되어서,
+    // 인자로 받은 그 scene의 디버그 메시지 창에 념겨받은 디버그 텍스트를 표시한다. 
+
+    // 왜 이렇게 별도로 만듦?
+    // 나중에 릴리즈 버전 만들때는 이것을 그냥 return 으로 끝낼 수 있으니. 
+
+    if( gmobjTargetTextObj != null)
+        gmobjTargetTextObj.GetComponent<TextMeshProUGUI>().text = "<color=#ff0000ff>" + sWhatToDisplay + "</color>";
+    
+
+
+
+
+}
 
 #endregion
 

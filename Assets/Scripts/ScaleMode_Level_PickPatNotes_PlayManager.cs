@@ -31,6 +31,8 @@ public class ScaleMode_Level_PickPatNotes_PlayManager : MonoBehaviour
 
     private int nTentativeNumOfBricks;
 
+    public GameObject gmobjDebugText;
+
     void Awake()
     {
         this.liGmobjCurrentBrick = new List<GameObject>();
@@ -43,6 +45,9 @@ public class ScaleMode_Level_PickPatNotes_PlayManager : MonoBehaviour
 
         // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
         GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
+
+        //LevelGuideText_typeA
+        this.gmobjDebugText = GameManager.Instance.DebugMsgOnScreen_Setup();
 
     }
 
@@ -178,8 +183,15 @@ public class ScaleMode_Level_PickPatNotes_PlayManager : MonoBehaviour
         //if( this.nUserFocusIndex < this.liGmobjCurrentBrick.Count) 
         //{
 
+            if( (this.nUserFocusIndex < 0) || (this.nUserFocusIndex >= this.liGmobjCurrentBrick.Count) )
+            {
+                GameManager.Instance.DebugMsgOnScreen(this.gmobjDebugText, $"Out of index: {this.nUserFocusIndex} of {this.liGmobjCurrentBrick.Count}" );
+                //this.gmobjDebugText
+            }
+
             // 현재 포커스된 오브젝트를 가져와서.. 
             GameObject gmobjFocusedBrick = this.liGmobjCurrentBrick[this.nUserFocusIndex];
+
 
 
             //if( ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
