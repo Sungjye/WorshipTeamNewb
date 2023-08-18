@@ -17,6 +17,12 @@ using UnityEngine;
 
 using TMPro;
 
+#region EthanKorTest
+using System;
+using System.Linq;
+using System.IO; // 여기서 저장을 하므로, 여기서 선언.. 
+#endregion
+
 //---------------------------------------------------------
 // [스코어 시스템. Scoring Policy]
 // : 스코어링 폴리시를 몇가지 정할 수 있어야.. 스코어링에 의한 동기부여 효과는 처음 해보브로..
@@ -82,6 +88,29 @@ public class GameManager : MonoBehaviour
 
 #endregion
 
+#region EthanKorTest
+    public static readonly string sChoSung = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
+    public static readonly string sJungSung = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ";
+    public static readonly string sJONGSung = " ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ";
+
+    public static readonly string[] sArCho = {"ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"};
+    public static readonly string[] sArJung = {"ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅗ","ㅘ","ㅙ","ㅚ","ㅛ","ㅜ","ㅝ","ㅞ","ㅟ","ㅠ","ㅡ","ㅢ","ㅣ"};
+    public static readonly string[] sArJONG = {" ","ㄱ","ㄲ","ㄳ","ㄴ","ㄵ","ㄶ","ㄷ","ㄹ","ㄺ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"};
+    //public static readonly string[] sArJong = " ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ";
+
+    // 이든이가 배열한 순서.
+    public static readonly string[] sAr_ET_Cho = {"ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"};
+    public static readonly string[] sAr_ET_Jung = {"ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅢ","ㅚ","ㅝ","ㅙ"};
+    public static readonly string[] sAr_ET_JONG = {" ","ㄱ","ㄲ","ㄳ","ㄴ","ㄶ","ㄵ","ㄷ","ㄹ","ㄺ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"};
+
+    private static readonly ushort 유니코드첫한국어 = 0xAC00;
+    private static readonly ushort 유니코드마지막한국어 = 0xD79F;
+
+
+    public string sLocalSavePath;
+    public string sFilename;
+#endregion
+
     void Awake()
     {
 
@@ -142,6 +171,16 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
+#region EthanKorTest
+        sLocalSavePath = Application.persistentDataPath + "/"; // Ref. https://coding-of-today.tistory.com/178?category=984992 
+
+        //sFilename = "versesOfLifeData.json";
+        // 22.11.08. 앱이름, MyVerses로 바꾸기 위해. 
+        this.sFilename = "Ethan_Data.txt";
+
+
+        this.Ethan_Kor_Test();
+#endregion
 
     }
 
@@ -501,5 +540,235 @@ public void DebugMsgOnScreen(GameObject gmobjTargetTextObj, string sWhatToDispla
 
 #endregion
 
+#region EthanKorTest
+    private void Ethan_Kor_Test()
+    {
+
+        char cResult;
+
+        //cResult = 글자만들기( sChoSung[0], sJungSung[0], sJONGSung[0]);
+        cResult = Jo_MakeHangul( "ㄷ", "ㅏ", "ㄹ");
+
+        //cResult = 글자만들기( sChoSung.Substring(2, 1), sJungSung.Substring(1, 1), sJONGSung.Substring(1, 1));
+
+
+        //Debug.Log("ETHAN 1: " + sChoSung.IndexOf("ㅁ").ToString());
+
+        Debug.Log("ETHAN 2: " + cResult.ToString() +", "+ sChoSung.Length.ToString() + ", " + sChoSung.Substring(2, 1));
+
+/*
+        for(int ChoIdx=0; ChoIdx<sChoSung.Length; ChoIdx++ )
+        {
+            for(int JungIdx=0; JungIdx<sJungSung.Length; JungIdx++ )
+            {
+                char cR = 글자만들기( sChoSung.Substring(ChoIdx, 1), 
+                                    sJungSung.Substring(JungIdx, 1), 
+                                    sJONGSung.Substring(0, 1)
+                                    );
+                Debug.Log("ETHAN: " + cR.ToString() );
+            }
+        }
+    */    
+
+
+        if((sArCho.Length != sAr_ET_Cho.Length) || (sArJung.Length != sAr_ET_Jung.Length) || (sArJONG.Length != sAr_ET_JONG.Length) )
+        {
+            Debug.Log("ETHAN: Check the length!!!");
+        //    return;
+        }
+
+        /*
+        //=======================================
+        // 유니코드 숫자 증가 기준으로 뽑기. 
+        for(int ChoIdx=0; ChoIdx<sArCho.Length; ChoIdx++ )
+        {
+            for(int JungIdx=0; JungIdx<sArJung.Length; JungIdx++ )
+            {
+                //int a, b, c;
+
+                int nUcode = 유니코드첫한국어 + (ChoIdx * 21 + JungIdx) * 28 + 0;
+                char cTemp = Convert.ToChar(nUcode);
+
+                Debug.Log("ETHAN: " + cTemp.ToString() );
+            }
+        }        
+        //=======================================
+        */
+
+        string sDataToSave = null;
+        string sBreakChar = "\n";
+        //=======================================
+        // 이든이가 정의한, 기준으로 뽑기. 
+        for(int ChoIdx=0; ChoIdx<sAr_ET_Cho.Length; ChoIdx++ )
+        {
+            for(int JungIdx=0; JungIdx<sAr_ET_Jung.Length; JungIdx++ )
+            {
+                for(int JONGIdx=0; JONGIdx<sAr_ET_JONG.Length; JONGIdx++ )
+                {
+                    char cTemp = Jo_MakeHangul(
+                                                sAr_ET_Cho[ChoIdx]
+                                                , sAr_ET_Jung[JungIdx]
+                                                , sAr_ET_JONG[JONGIdx] // tentative.
+                                                );
+
+                    Debug.Log("ETHAN: " + cTemp.ToString() );
+
+                    sDataToSave += (cTemp.ToString() + sBreakChar);
+                }
+            }
+        }        
+        //=======================================
+
+        //=======================================
+        // 파일로 저장.
+
+        if( SaveDataToTheLocalDeviceAsJsonFile( sLocalSavePath + sFilename, sDataToSave ) )
+        {
+            Debug.Log("ETHAN: File saving has succeeded!");
+        }else
+        {
+            Debug.Log("ETHAN: File saving has failed...");
+        }
+
+    }
+
+    private char Jo_MakeHangul(string Cho, string Jung, string JONG)
+    {
+
+        //int indexA = Array.IndexOf(strArr, "A");
+
+        int 초성위치, 중성위치, 종성위치;
+        int 유니코드;
+
+        초성위치 = Array.IndexOf(sArCho, Cho);    // sChoSung 위치
+        중성위치 = Array.IndexOf(sArJung, Jung);   // sJungSung 위치
+        종성위치 = Array.IndexOf(sArJONG, JONG);   // sJONGSung 위치
+
+        Debug.Log($"{Cho},{Jung},{JONG} = {초성위치}, {중성위치}, {종성위치}");
+
+        // 앞서 만들어 낸 계산식
+        유니코드 = 유니코드첫한국어 + (초성위치 * 21 + 중성위치) * 28 + 종성위치;
+
+        // 코드값을 문자로 변환
+        char 임시 = Convert.ToChar(유니코드);
+
+        return 임시;
+
+    }
+
+
+    private char 글자만들기(string Cho, string Jung, string JONG)
+    {
+        int 초성위치, 중성위치, 종성위치;
+        int 유니코드;
+
+        초성위치 = sChoSung.IndexOf(Cho);    // sChoSung 위치
+        중성위치 = sJungSung.IndexOf(Jung);   // sJungSung 위치
+        종성위치 = sJONGSung.IndexOf(JONG);   // sJONGSung 위치
+
+        Debug.Log($"{Cho},{Jung},{JONG} = {초성위치}, {중성위치}, {종성위치}");
+
+        // 앞서 만들어 낸 계산식
+        유니코드 = 유니코드첫한국어 + (초성위치 * 21 + 중성위치) * 28 + 종성위치;
+
+        // 코드값을 문자로 변환
+        char 임시 = Convert.ToChar(유니코드);
+
+        return 임시;
+    }
+
+    public bool SaveDataToTheLocalDeviceAsJsonFile(string sPathAndJsonFilename_withExtention, string sDataToSave_JsonFormat)
+    {
+
+        // 뭐하는 함수? 함수 기능 수정. 23.02.06
+        // 개인 묶음/소그룹 묶음 인지를 나타내는 싱글톤 값을 확인해서, 
+        // 어떤 파일명 (개인 묶음용 소그룹 묶음용 ) 으로 저장할지 판단해서 파일로 저장. 
+        // 이게.. 
+        // 이 함수는, 암송 메인 부터, 구절 CRUD (개인 및 소그룹도?) 에서 널리 쓰이므로.. 
+        // 이렇게 1원화 하고 플래그봐서 하도록 수정. 
+
+        //------------------------------------------------------
+        // 파일로 저장한다. : 소그룹 묶음을 소그룹 묶음 데이터의 (정해진) 파일이름으로. 
+        //------------------------------------------------------
+        // 파일로 저장한다. : 개인 묶음을 개인 묶음 데이터의 (정해진) 파일이름으로. 
+
+        /* 23.02.13
+        //string sPathAndJsonFilename_withExtention = sLocalSavePath + sFilename;
+        string sPathAndJsonFilename_withExtention = null;
+
+        //----------------------------
+        // 모드에 따라서 엑세스할 파일 이름 결정. 
+        if( GameManager.Instance.bIsItPersonalList == true )
+        {
+            sPathAndJsonFilename_withExtention = sLocalSavePath + sFilename;
+
+        }else
+        {
+            sPathAndJsonFilename_withExtention = sLocalSavePath + sFilename_SharedVersesData;
+
+        }
+        */
+
+        
+
+        //----------------------------
+        // 트라이 캐치로 파일 오퍼레이션.
+        try
+        {
+            #if UNITY_EDITOR || UNITY_ANDROID
+                File.WriteAllText(sPathAndJsonFilename_withExtention, sDataToSave_JsonFormat);
+
+            #elif UNITY_ANDROID
+                File.WriteAllText(sPathAndJsonFilename_withExtention, sDataToSave_JsonFormat);
+
+            #elif UNITY_IOS
+                File.WriteAllText(sPathAndJsonFilename_withExtention, sDataToSave_JsonFormat); // IOS 출시는 신중하게..
+                if(Application.isEditor) Debug.Log("Unity iPhone");
+
+            #else
+                File.WriteAllText(sPathAndJsonFilename_withExtention, sDataToSave_JsonFormat);
+
+            #endif
+
+            /* 이제 팝업쓰면서 일단 없애기
+            //------------------------------------------------------
+            // 디버그 메시지.             
+            GameManager.Instance.MOBILE_SCREEN_Debug("Saved in the local folder: "+ sPathAndJsonFilename_withExtention);
+            Debug.Log("OK: File saving is succeeded to this path with this name: " + sPathAndJsonFilename_withExtention);
+            */
+
+            //GameManager.Instance.bSemaphore_FileWritingIsInProgress = false;
+            return true;
+
+        }catch(Exception eFilesavingError)
+        {
+
+            if(Application.isEditor)
+            {
+                //string sTempDebugMsg = "ERROR: Failed to save the file on the device: " + eFilesavingError;
+                string sTempDebugMsg = "ERROR: Failed to save the file on the device. The path and filename:  " + sPathAndJsonFilename_withExtention
+                                            + " The detailed error message: " + eFilesavingError;
+
+                /* 이제 팝업쓰면서 일단 없애기            
+                GameManager.Instance.MOBILE_SCREEN_Debug(sTempDebugMsg);
+                */
+
+                Debug.Log(sTempDebugMsg);
+
+                Debug.Assert(false, sTempDebugMsg);
+            }
+
+            // 유니티, 에러 팝업 띄우기 찾아서 넣기. 
+
+            // 팝업메시지.. 는, 부모 오브젝트가 있어야 하므로, 각각의 씬에서~~
+
+            //GameManager.Instance.bSemaphore_FileWritingIsInProgress = false;
+            return false;
+
+        }
+
+    }
+
+#endregion
 
 }
