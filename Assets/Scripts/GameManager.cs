@@ -79,6 +79,9 @@ public class GameManager : MonoBehaviour
     private eSCORING_POLICY eSelectedScoringPolicy;
     private Dictionary<eSCORING_POLICY, Dictionary<eSCORING_CASEID, long>> dicScoringTable;
 
+    private Dictionary<eSCORING_CASEID, string> dicScoredReasonMessageTable; // 나중에는 다국어용으로 json 만들어서 불러서 딕셔너리 세팅해야?
+
+
     public GameObject gmobjScorePanel; // 점수 표시 패널. 현재 활성화된 scene에 붙어 있는 점수 패널을 (각 scene의 start에서) 찾아서 붙인다. 
 
     // 최대치 넘는지 체크 필요함. 
@@ -317,6 +320,47 @@ public class GameManager : MonoBehaviour
         //===================================
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        this.dicScoredReasonMessageTable = new Dictionary<eSCORING_CASEID, string>
+                                                        {
+                                                            // Score Mode: InTRo.
+                                                             {eSCORING_CASEID.SM_ITR_0, "1"}
+                                                            ,{eSCORING_CASEID.SM_ITR_1, "Yes, that's a harmony!"}
+                                                            // Score Mode: Pick Note.
+                                                            ,{eSCORING_CASEID.SM_PN_0, "1"}
+                                                            ,{eSCORING_CASEID.SM_PN_1, "4"}
+                                                            ,{eSCORING_CASEID.SM_PN_6, "-2"} // Yes, it's an example.
+                                                            // Score Mode: Pick Pattern Note.
+                                                            ,{eSCORING_CASEID.SM_PPN_0, "1"}
+                                                            ,{eSCORING_CASEID.SM_PPN_1, "2"} 
+                                                            ,{eSCORING_CASEID.SM_PPN_6, "-1"} // 23.08.15
+                                                            // Score Mode; Recognize Keys.
+                                                            ,{eSCORING_CASEID.SM_RK_0, "1"}
+                                                            ,{eSCORING_CASEID.SM_RK_1, "3"} 
+                                                            ,{eSCORING_CASEID.SM_RK_6, "-1"}
+                                                            //-------------------------------
+                                                            // Code Mode: InTRo.
+                                                            ,{eSCORING_CASEID.CM_ITR_0, "1"}
+                                                            ,{eSCORING_CASEID.CM_ITR_1, "1"}
+                                                            // Code Mode: Pick Number.
+                                                            ,{eSCORING_CASEID.CM_PN_0, "Correct!"}
+                                                            ,{eSCORING_CASEID.CM_PN_1, "Excellent!"}
+                                                            ,{eSCORING_CASEID.CM_PN_6, "Wrong..."}
+                                                            // Code Mode: Pick Pattern Number.
+                                                            ,{eSCORING_CASEID.CM_PPN_0, "1"}
+                                                            ,{eSCORING_CASEID.CM_PPN_1, "2"}
+                                                            ,{eSCORING_CASEID.CM_PPN_6, "-1"}
+                                                            // Code Mode: Match Sound.
+                                                            ,{eSCORING_CASEID.CM_MS_0, "1"}
+                                                            ,{eSCORING_CASEID.CM_MS_1, "3"}
+                                                            ,{eSCORING_CASEID.CM_MS_6, "-1"}
+                                                            // Code Mode; Recognize Keys.
+                                                            ,{eSCORING_CASEID.CM_RK_0, "1"}
+                                                            ,{eSCORING_CASEID.CM_RK_1, "3"} 
+                                                            ,{eSCORING_CASEID.CM_RK_6, "-1"}
+                                                        };
+
+
+
 
     }
 
@@ -341,7 +385,8 @@ public class GameManager : MonoBehaviour
         // (현재 active 되어 있는 스코어 보드중)
         // note 점수 or code 점수 패널에 점수 리프레쉬. 
         //===============================
-        this.gmobjScorePanel.GetComponent<Score_Panel_DisplayManager>().RefreshScores();
+        //this.gmobjScorePanel.GetComponent<Score_Panel_DisplayManager>().RefreshScores();
+        this.gmobjScorePanel.GetComponent<Score_Panel_DisplayManager>().RefreshScores( this.dicScoredReasonMessageTable[eCaseID] );
 
 
     }

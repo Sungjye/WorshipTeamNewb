@@ -37,7 +37,7 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
         this.SpawnNewBrick();
 
         // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
-        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_ScoreDisplay"); 
     }
 
     private void SpawnNewBrick()

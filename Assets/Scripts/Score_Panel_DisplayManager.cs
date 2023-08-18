@@ -9,6 +9,7 @@
 // 
 // 2023.07.27. sjjo. Initial.
 // 2023.08.14. sjjo. 무슨 키인지 표시하는 모드 child 추가. 
+// 2023.08.18. sjjo. 이벤트 팝업 메시지 표시하기 위해 상위 패널을 하나 더 둠. 상위 부모인 패널의 컴포넌트로 옮김. 
 // 
 //===================================================================================
 using System.Collections;
@@ -30,15 +31,38 @@ public class Score_Panel_DisplayManager : MonoBehaviour
     private GameObject gmobjCodeScoreText;
     private GameObject gmobjChosenKeyScaleText;
 
+    public GameObject gmobjEventMsgPopup_prefab; 
+    private GameObject instGmobj_MsgPopUp;
+
     private string sDISPLAYFORMAT;
 
+    
+    
     private Coroutine crTextPopEffect;
+    private Coroutine crDestroyTheMsgBox;
+
     private Vector3 v3OriginalTextBoxSize;
+
 
     void Awake()
     {
         this.sDISPLAYFORMAT = "N0"; // "#,#";
 
+        this.crTextPopEffect = null;
+
+        this.gmobjNoteScorePanel = this.transform.GetChild(0).GetChild(0).gameObject;
+        this.gmobjCodeScorePanel = this.transform.GetChild(0).GetChild(1).gameObject;
+        this.gmobjChosenKeyScalePanel = this.transform.GetChild(0).GetChild(2).gameObject;
+
+        this.gmobjNoteScoreText = this.transform.GetChild(0).GetChild(0).GetChild(1).gameObject;
+        this.gmobjCodeScoreText = this.transform.GetChild(0).GetChild(1).GetChild(1).gameObject;
+        this.gmobjChosenKeyScaleText = this.transform.GetChild(0).GetChild(2).GetChild(0).gameObject;
+
+        // 사이즈가 팝핑으로 변하는 중에 또 점수 따거나/잃으면, 그 현재 크기 기준에서 움직여서 점점 커진다!
+        // 이문제를 막기 위해. 
+        this.v3OriginalTextBoxSize = this.gmobjNoteScoreText.transform.localScale; // 노트점수 텍스트나, 코드점수 텍스트나 원래크기는 같을 것이므로 아무거나 넣어서 같이 사용.
+
+        /*
         this.gmobjNoteScorePanel = this.transform.GetChild(0).gameObject;
         this.gmobjCodeScorePanel = this.transform.GetChild(1).gameObject;
         this.gmobjChosenKeyScalePanel = this.transform.GetChild(2).gameObject;
@@ -47,11 +71,12 @@ public class Score_Panel_DisplayManager : MonoBehaviour
         this.gmobjCodeScoreText = this.transform.GetChild(1).GetChild(1).gameObject;
         this.gmobjChosenKeyScaleText = this.transform.GetChild(2).GetChild(0).gameObject;
 
-        this.crTextPopEffect = null;
-
         // 사이즈가 팝핑으로 변하는 중에 또 점수 따거나/잃으면, 그 현재 크기 기준에서 움직여서 점점 커진다!
         // 이문제를 막기 위해. 
         this.v3OriginalTextBoxSize = this.gmobjNoteScoreText.transform.localScale; 
+        */
+
+
 
     }
 
@@ -164,6 +189,92 @@ public class Score_Panel_DisplayManager : MonoBehaviour
             
         }
 
+        //this.ShowEventMessage("Test Message!");
+
+    }
+
+    public void RefreshScores(string sScoredEventMessage)
+    {
+        // 점수 스코어를 팝 효과와 함께 리프래쉬
+        // + 일단 팝핑 효과.
+
+        if( this.gmobjNoteScorePanel.activeSelf ) 
+        {
+            this.gmobjNoteScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_NoteScore.ToString(this.sDISPLAYFORMAT);
+
+            this.ScoringEffect_Pop(this.gmobjNoteScoreText);
+        }
+
+        if( this.gmobjCodeScorePanel.activeSelf )
+        {
+            this.gmobjCodeScoreText.GetComponent<TextMeshProUGUI>().text = GameManager.Instance.nl_CodeScore.ToString(this.sDISPLAYFORMAT);
+
+            this.ScoringEffect_Pop(this.gmobjCodeScoreText);
+        } 
+
+        // 선택된 키를 표시해야 하는 모드인 경우 표시를 해준다. 
+        if( this.gmobjChosenKeyScalePanel.activeSelf ) 
+        {
+            this.gmobjChosenKeyScaleText.GetComponent<TextMeshProUGUI>().text = ContentsManager.Instance.GetTheChosenKeySacleText_toDisplay();
+
+            
+        }
+
+        this.ShowEventMessage(sScoredEventMessage);
+
+    }
+
+
+    private void ShowEventMessage(string sMessage)
+    {
+        // 뭐하는 함수?
+        // 스코어의 득/실 시에, 즉 스코어 이벤트 발생시, 그 이유를 팝업으로 표시해주는 함수. 
+        // 팝업 패널을 인스턴시에잇하고, 일정시간이 지난 뒤에 없애준다. 
+        // 여러개가 뜰 수 있게 때문에 리스트로 관리해야할 듯. 
+
+        //GameObject instGmobj_MsgPopUp = Instantiate(gmobjEventMsgPopup_prefab);
+        //this.liGmobj_MsgPopUp.Add(instGmobj_MsgPopUp);
+
+
+
+        if( this.instGmobj_MsgPopUp != null)
+        {
+            // 기존에 팝업이 있다면 없애주고.. 
+            Destroy(this.instGmobj_MsgPopUp);
+            this.instGmobj_MsgPopUp = null;
+
+            // 기존 팝업 때문에 돌고 있던 코루틴도 즉시 멈춤.
+            StopCoroutine(this.crDestroyTheMsgBox);
+        }
+
+        // 그리고 나서 생성해야!
+        //this.instGmobj_MsgPopUp = Instantiate(gmobjEventMsgPopup_prefab, new Vector3(0f, 0f, 0f), Quaternion.identity);
+        this.instGmobj_MsgPopUp = Instantiate(gmobjEventMsgPopup_prefab);
+        this.instGmobj_MsgPopUp.transform.SetParent(this.transform, false); // 월드포지션 좌표계 off. 헐.. 이거 안하면, 한쪽으로 치우쳐서 팝업이 이상하게 표시됨!!!
+
+        // 메시지 넣기. 
+        this.instGmobj_MsgPopUp.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = sMessage;
+
+        this.DelayedDestroyTheMsgBox( this.instGmobj_MsgPopUp );
+
+        
+    }
+
+    private void DelayedDestroyTheMsgBox(GameObject gmobjObjectToDestroy)
+    {
+        if( this.crDestroyTheMsgBox != null ) StopCoroutine(this.crDestroyTheMsgBox);
+
+        this.crDestroyTheMsgBox = StartCoroutine( DestroyTheMsgBox_afterAwhile(gmobjObjectToDestroy) );
+
+    }
+
+    IEnumerator DestroyTheMsgBox_afterAwhile(GameObject gmobjTargetObject)
+    {
+        yield return null;
+
+        yield return new WaitForSeconds(1f);
+
+        Destroy(gmobjTargetObject);
     }
 
 

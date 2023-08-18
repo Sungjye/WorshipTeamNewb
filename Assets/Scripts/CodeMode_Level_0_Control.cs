@@ -41,7 +41,7 @@ public class CodeMode_Level_0_Control : MonoBehaviour
     {
         // 딱 한번만 하게.. 탭 브릭에 다 붙는 스크립트니.. 가 안되는 구나. 
         // 꼼수로.. 
-        if( this.name == "_1do" ) GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_Scores_NormalSize"); 
+        if( this.name == "_1do" ) GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_ScoreDisplay"); 
 
     }
 */
