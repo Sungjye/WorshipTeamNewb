@@ -12,6 +12,7 @@
 //   그림 부분에는 맞으면 O와 띵동, 틀리면 X와 부저음.  (23.07.18 TBD.)
 // 
 // 23.07.18. sjjo. Oh.. Jesus.. I want in You..
+// 23.08.21. sjjo. 연타하면 브릭이, 체크매칭 불가하게 많이 나오는 문제 해결 위해, 코드 추가.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
@@ -22,18 +23,45 @@ using TMPro;
 
 public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 {
+    public bool bSetMeCorrectOnce; // 23.08.21 사용자 입력이 나의 정체와 (한번) 맞았음을 나타내는 플래그. 한번 true로 셋되면 없어지기 전까지는 변화 없어야 함. (사용자 막연타에 대응)
+
     private AudioSource brickSpeaker;
 
     private Coroutine crPopEffect, crVanishingEffect;
     
     private Vector3 vOrigianlSize;
 
+    private Coroutine crRemoveMyData;
+
+
     // 이 오브젝트의 자체의 이름은, D4b 
     // 음 소리를 내거나, 사용자 입력과 비교하기 위해서, 파싱할 필요가 없을듯.. 
+
+    void Awake()
+    {
+        // 어웨이크로 옮김. 
+
+        //-------------------------------------------
+        // 현재 브릭의 데이터 관리를 위한 준비. 
+        // 왜 관리? 1) 매칭 불가한 연타 생성 방지. 
+        // 23.08.21
+        
+        // 생성할 때, 싱글턴 리스트에 담아주고.. 나 스스로의 이름을.
+        // 안쓰고 구현. GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Add(this.transform.gameObject); 
+
+        // 23. 08.21
+        // 일단 지금 존재하는 브릭, 왼쪽으로 쌩 가서 아직 사라지기 전인 브릭 포함. 몇개임?
+        // 안쓰고 구현. GameManager.Instance.ScoreSystem_Check_CurrentlyExistingBricks();
+
+
+        this.bSetMeCorrectOnce = false;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+
+        this.crRemoveMyData = null;
 
         if(Application.isEditor) Debug.Log("Quiz brick name: " + this.name); // 
 
@@ -48,7 +76,23 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
         Check_WhoAmI_AndPlaySound();
 
 
+
+
     }
+
+    /*
+    void OnCollisionEnter(Collision objs)
+    {
+        if(Application.isEditor)
+        {
+            Debug.Log(objs.gameObject.name);
+        }
+
+        if( objs.gameObject.name == "Ground")
+            this.bAmI_Landed = true;
+
+    }
+    */
 
     #region Visual effects when a user tapped.
 
@@ -121,75 +165,6 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
     }
 
-    void VanishingEffect()
-    {
-
-        if( crVanishingEffect != null ) StopCoroutine(crVanishingEffect); 
-
-        // 효과 코루틴 시작.
-
-        // 모바일에서 움직임이 끊어져서.. 고정 시간으로 변경: 25fps
-        crVanishingEffect = StartCoroutine( MakeMe_Disappear_typeA(0.15f, 0.04f) );
-
-    }
-
-    IEnumerator MakeMe_Disappear_typeA(float fMaxIncSize, float fInterval)
-    {
-        // 주의! 이 브릭이 정방향 일때만..
-
-        yield return null; // 다음 프레임까지 깔끔하게 기다림. 
-
-        float fSizeSpan = 0.03f;
-
-        //Vector3 vNewSize = new Vector3(1.1f, 1.1f, 1.1f);
-
-        //----------------------
-        // 커지는 단계
-        for(float fSizeInc = 0f; fSizeInc < fMaxIncSize; fSizeInc += fSizeSpan)
-        {
-            Vector3 vNewSize = new Vector3(fSizeInc, fSizeInc, fSizeInc);
-
-            this.transform.localScale = vOrigianlSize + vNewSize;
-
-            yield return new WaitForSeconds(fInterval);
-        }
-
-        //----------------------
-        // 잠시 멈추는 단계
-        yield return new WaitForSeconds(1f);
-
-        /*
-        Vector3 vChangedSize = this.transform.localScale;
-
-        //----------------------
-        // 작아지는 단계 
-        // : 거의 원래대로 만드는 함수. 
-        // : 비선형적으로 작아지며, 끝에는 사라지기. 
-        // Ref. https://docs.unity3d.com/ScriptReference/Mathf.Sin.html 
-        //
-        fSizeSpan = 0.06f; // 작아지는 속도는 좀 빠르게?
-        //
-
-        //for(float fSizeInc = fMaxIncSize; fSizeInc > 0f; fSizeInc -= fSizeSpan)
-        for(float fSizeInc = 0f; fSizeInc < 1f; fSizeInc += fSizeSpan)
-        //for(float fSizeInc = 0f; fSizeInc < fMaxIncSize; fSizeInc += fSizeSpan)// 살짝 작아졌다가?
-        {
-            Vector3 vNewSize = new Vector3(fSizeInc, fSizeInc, fSizeInc);
-
-            //this.transform.localScale = vOrigianlSize - vNewSize;
-            this.transform.localScale = vChangedSize - vNewSize;
-
-            yield return new WaitForSeconds(fInterval);
-        }
-        */
-
-        //----------------------
-        // 사라지는 단계
-        // 
-        Destroy(this.transform.gameObject, 0.1f);
-
-
-    }
 
     #endregion
 
@@ -363,6 +338,9 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
         this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material 
                             = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_Scale(this.name);
 
+        // 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
+        this.bSetMeCorrectOnce = true;
+
         // 맞았을 때는, 맞은 음을 한번 플레이 해 주고 사라지기. 
         brickSpeaker.Play();
 
@@ -384,6 +362,9 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "X";
 
         this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_X_Mark_Image;
+
+        // 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
+        // 어웨이크에서 하고, 상태는 비가역 적이므로 주석처리해도 무방. this.bSetMeCorrectOnce = false;
 
     }
 #endregion
@@ -444,10 +425,54 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
     {
         if(Application.isEditor) Debug.Log("See you then!");
 
-        Destroy(this.transform.gameObject, 0.1f);
+        float fDelay = 0.1f; // 이 딜레이, 좀 브릭이 왼쪽으로 쌩 날아가고 나서 없애줘야 하므로. 눈 앞에서 바로 사라지는 것보다..
+
+
+        //=======================================================================================
+        // Q.. GameManager.Instance.li_gmobj_CurrentlyExistingBricks 에 있는 게임오브젝트와, 
+        //     이 스크립의의 실제부모인 게임오브젝트 인스턴스는, 실제로 메모리 상에서 같은 '것' 인가?.. 음..
+        // 어쨌든 순서를 지켜보자: 이미 디스트로이된 것을 리스트에서 remove 하면 이상하니까..
+
+        //=======================================================================================
+        // 누군가가 생성한 "나" 를
+        // 이제 사라질 것이므로, 리스트에서 날린다. 데이터로서만.. 데이터 리스트에서 사라진다고, 내가 없어진 것은 아님. 
+        //GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Remove(this.transform.gameObject); // 중복된 이름의 오브젝트가 있어도 잘 제거 되려나?... 잘됩니다, 감사합니다, 주님!!!
+        this.RemoveMyData_afterThisDelay( fDelay );
+
+        //=======================================================================================
+        // 나 자신을 없애기..
+        // 여기에 넣으면 내 자신이 파괴되어서, 코루틴이 실행 안돰. Destroy(this.transform.gameObject, fDelay);
+
+
+    }
+
+    private void RemoveMyData_afterThisDelay(float fAfterThisTime)
+    {
+        if(this.crRemoveMyData != null) StopCoroutine(crRemoveMyData);
+
+        this.crRemoveMyData = StartCoroutine( crRemoveMyData_afterThisDelay(fAfterThisTime) );        
     }
 
 
+    IEnumerator crRemoveMyData_afterThisDelay(float fDelayedTime)// (GameObject gmobjTarget, float fDelayedTime)
+    {
+        // 인자로 받은 시간 만큼 기다렸다가 받은 오브젝트를, 데이터 리스트에서 제거해 주는 함수. 
+        yield return null;
+
+        yield return new WaitForSeconds(fDelayedTime);
+
+        // 안쓰고 구현. GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Remove(this.transform.gameObject); // 중복된 이름의 오브젝트가 있어도 잘 제거 되려나?... 잘됩니다, 감사합니다, 주님!!!
+
+        // 23. 08.21
+        // 일단 지금 존재하는 브릭, 왼쪽으로 쌩 가서 아직 사라지기 전인 브릭 포함. 몇개임?
+        // 안쓰고 구현. GameManager.Instance.ScoreSystem_Check_CurrentlyExistingBricks();
+
+        //=======================================================================================
+        // 나 자신을 없애기..
+        // 여기에 "안" 넣으면 내 자신이 파괴되어서, 코루틴이 실행 안돰. 
+        Destroy(this.transform.gameObject, 0f);
+
+    }
 
 
 #endregion

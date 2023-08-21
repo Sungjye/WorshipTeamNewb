@@ -44,6 +44,9 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
     void Awake()
     {
+        // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
+        GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_ScoreDisplay"); 
+        
         this.liGmobjCurrentBrick = new List<GameObject>();
 
         this.nUserFocusIndex = 0;
@@ -254,6 +257,8 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
         //GameObject gmobjFocusedBrick = this.liGmobjCurrentBrick[this.nUserFocusIndex];
 
+        GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_MS_0 );
+
         //-------------------
         // 브릭을 다 없애고,
         this.SweepAway_allBricks();
@@ -267,6 +272,20 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
     }
 
+    public void TheInputIsWrong()
+    {
+        if(Application.isEditor) Debug.Log($"WRONG.. FocusIndex: {this.nUserFocusIndex} NumOfListData: {this.liGmobjCurrentBrick.Count}");
+
+        //GameObject gmobjFocusedBrick = this.liGmobjCurrentBrick[this.nUserFocusIndex];
+
+        GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_MS_6 );
+
+        //if(Application.isEditor) Debug.Log($"WRONG.. 2/2 FocusIndex: {this.nUserFocusIndex} NumOfListData: {this.liGmobjCurrentBrick.Count}");
+    }
+
+
+
+
     public void GiveMeNewQuizBrick()
     {
         // 드래그 하고 있는 상태에서는 키패드 브릭의 레이캐스크가 계속 있으므로,
@@ -279,108 +298,8 @@ public class CodeMode_Level_MatchSound_PlayManager : MonoBehaviour
 
     }
 
-    public void TheInputIsWrong()
-    {
-        if(Application.isEditor) Debug.Log($"WRONG.. FocusIndex: {this.nUserFocusIndex} NumOfListData: {this.liGmobjCurrentBrick.Count}");
-
-        //GameObject gmobjFocusedBrick = this.liGmobjCurrentBrick[this.nUserFocusIndex];
-
-
-        //if(Application.isEditor) Debug.Log($"WRONG.. 2/2 FocusIndex: {this.nUserFocusIndex} NumOfListData: {this.liGmobjCurrentBrick.Count}");
-    }
 
     
-
-#if FALSE
-    public void CheckIfInputIsCorrect(string sTappedKeyObjectName)
-    {
-
-        string sTappedCodeName_inTermsOfTheSelectedKey = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sTappedKeyObjectName)];
-
-        // 인덱스의 범위를 확인해서 처리해야!!
-        //===================================================================
-        // 인덱스가 끝까지 왔는지 확인 후, 지금 인스턴스 브릭들 사라짐 처리. 
-        //if( this.nUserFocusIndex < this.liGmobjCurrentBrick.Count) 
-        //{
-
-            // 현재 포커스된 오브젝트를 가져와서.. 
-            GameObject gmobjFocusedBrick = this.liGmobjCurrentBrick[this.nUserFocusIndex];
-
-
-            //if( ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
-            if( gmobjFocusedBrick.GetComponent<Quiz_TextBrick_typeA_Control>().sMyDictionariedCodeName
-                    == sTappedCodeName_inTermsOfTheSelectedKey )
-            {
-                // 맞았음. 
-
-                Debug.Log("Correct!");
-
-                // 여기서 이 맞는 브릭은 사라지게 함. 
-                // 여기서 맞게 처리하는 것은, (패턴 학습효과를 위해) 사라지게 하면 안됨. 
-                gmobjFocusedBrick.GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_asCorrect(); 
-
-                // 맞으면 다음 브릭 생성!
-                //this.SpawnNewBrick();
-
-                //Invoke("SpawnNewBrick", 0.7f);
-
-                // 맞으면 인덱스 증가. 
-                this.nUserFocusIndex++;
-
-            }else
-            {
-                // 틀렸음. 
-                Debug.Log("Wrong... Brick: " + gmobjFocusedBrick.GetComponent<Quiz_TextBrick_typeA_Control>().sMyDictionariedCodeName // + ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
-                                + " Tapped: " + sTappedCodeName_inTermsOfTheSelectedKey);
-
-                //--------------------------------------------------
-                // 1단계. 틀리면 그냥 틀렸다고 표시만 해줌. 
-                // 나중에는 브릭들 무너지고.. 없어지고, 새로 시작.. ? ^^;
-                gmobjFocusedBrick.GetComponent<Quiz_TextBrick_typeA_Control>().SetMe_asWrong();
-
-            }
-
-            //---------------------------
-            // 브릭 앞의 마크도 처리. 
-            this.SetFocusMark_byTheIndex();
-
-            //---------------------------------------------------------------------
-            // 유저입력이 다시 올 떄까지 기다리지 않고, 인덱스가 끝까지 간 경우를 
-            // 지금 바로 감지하기!!!
-            // 이미 증가 되었을 것이므로. 
-            if( this.nUserFocusIndex >= this.liGmobjCurrentBrick.Count) 
-            {
-
-                // 끝까지 (다 맞춰서) 간 경우. 
-
-                //-------------------
-                // 브릭을 다 없애고,
-                this.SweepAway_allBricks();
-
-                //--------------------
-                // 잠시 기다렸다가, 다시 또 브릭세트 생성!
-                Invoke("SpawnNewBrickS", 0.7f); // 작아지는 시간 0초,  움직이기 시작하는 시간 0.5초..      
-   
-            }
-/*
-        }else
-        {
-            // 끝까지 (다 맞춰서) 간 경우. 
-
-            //-------------------
-            // 브릭을 다 없애고,
-            this.SweepAway_allBricks();
-
-            //--------------------
-            // 잠시 기다렸다가, 다시 또 브릭세트 생성!
-            Invoke("SpawnNewBrick", 1f); // 작아지는 시간 0초,  움직이기 시작하는 시간 0.5초..             
-    
-        }
-*/
-
-
-    }
-#endif
 #endregion
 
 }

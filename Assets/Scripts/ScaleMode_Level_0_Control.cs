@@ -71,7 +71,8 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
 
         // 효과 코루틴 시작.
         //crPopEffect = StartCoroutine( MakeMe_Pop_TypeA(0.1f, 0.02f) );
-        crPopEffect = StartCoroutine( MakeMe_Pop_TypeA(0.15f, 0.01f) );
+        //crPopEffect = StartCoroutine( MakeMe_Pop_TypeA(0.15f, 0.01f) );
+        crPopEffect = StartCoroutine( MakeMe_Pop_TypeA(0.1f, 0.05f) );
         //crPopEffect = StartCoroutine( MakeMe_Pop_TypeA_General(this, 0.1f, 0.02f) ); 안되네. 다른 방법으로.. 
 
     }
@@ -83,7 +84,7 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
         // 다음 프레임까지 깔끔하게 기다렸다가!
         yield return null;
 
-        float fSizeSpan = 0.03f;
+        float fSizeSpan = 0.1f; // 0.03f;
         //Vector3 vNewSize = new Vector3(1.1f, 1.1f, 1.1f);
 
         //----------------------
@@ -219,6 +220,8 @@ public class ScaleMode_Level_0_Control : MonoBehaviour
             // 0.#초 기다렸다가 호출 및 체크. 
             // 끙.. 브릭도 자기 타이머로 사라져서.. 시점 차이로, 화음 체크 안되는 경우 많음. 다시 0초..
             Invoke("CheckIfScored", 0f);
+
+            //this.CheckIfScored(); // 음.. 이걸 헐.. 쓰면 안된다.. 체크가.. 위에 인보크 0f는 되는데.. 일단 이유를 모르고.. 넘어감..
             
 
 

@@ -32,12 +32,114 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
     private GameObject gmobjCurrentBrick; // 현재 생성되어 있는 브릭
 
 
+    private ePLAY_STATUS_FORLEVEL ePlay_StateMachine;
+
     void Awake()
     {
-        this.SpawnNewBrick();
+        this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
+        //this.SpawnNewBrick();
 
         // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
         GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_ScoreDisplay"); 
+    }
+
+    void FixedUpdate()
+    {
+        this.Tick_TheStateMachine();
+    }
+
+    #region FSM related methods.
+    // 음.. FSM 사용안하고 했었는데.. 이렇게 하면 delay 를 이리저리 주는 사이나, 
+    // 여기 저기 시간의 구멍에서 (막 들어오는) 사용자의 입력과 스파운 사이에서.. 여러개가 막 스파운되거나, out of index 등이 발생한다. (pattern 모드인 경우)
+    // 그래서 어쩔수 없이 이제야 FSM을 사용해서 다시 구현.. 23.08.21
+    // 주님, 문서화의 마음과 구현할 수 있는 지혜를 주셔서 감사합니다!
+
+    private void Tick_TheStateMachine()
+    {
+        // 상태머신 틱틱 돌리기. 
+
+        // 참조: 구글 슬라이드, 230719_찬양팀막내_TechDoc_v01
+        // PlayerManager 구조
+
+        switch( this.ePlay_StateMachine )
+        {
+            case ePLAY_STATUS_FORLEVEL.START:
+                if( FSM_NoBrickExist() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.SPAWN;
+                //else ; Stay this state.
+                break;
+            case ePLAY_STATUS_FORLEVEL.SPAWN:
+                FSM_SpawnNewBrick();
+
+                if( FSM_CheckTheTargetNumberOfBricksExists() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.QUESTIONED;
+                //else ; Stay this state.
+                break;
+            case ePLAY_STATUS_FORLEVEL.QUESTIONED:
+                // 사용자가 키 탭 할 때마다, 여기의 체크 함수가 호출될 테고.. 거기서 검사 및 set 할 테고..
+
+                if( FSM_CheckTheTargetBrick_setAsCorrect() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.ANSWERD_CORRECTLY;
+                // else // 틀린 경우에 싹 날아가게 할거면 여기에 별도 처리.
+                break;
+            case ePLAY_STATUS_FORLEVEL.ANSWERD_CORRECTLY:
+                // 음.. 뭐 해당 인스턴스 브릭에서 이미 사라지는 동작이 시작되었으므로.. 바로..
+                this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.DESTROYING;
+                break;
+            case ePLAY_STATUS_FORLEVEL.ANSWERED_WRONG:
+                // 틀린 경우에 싹 날아가게 할거면 여기에 별도 처리.
+                break;
+            case ePLAY_STATUS_FORLEVEL.DESTROYING:
+                // if( FSM_DoesAnyBrickExists() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
+                // 음.. 어차피 START 스테이트 에서 동일하게 브릭이 하나도 없을 때까지, 즉 디스트로잉이 끝날 떄까지 기다리므로.. 
+                // 바로 가자. 역시 컨셉과 코드의 차이..
+                this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
+                break;
+            default:
+                this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
+                break;
+        }
+    }
+
+    private bool FSM_NoBrickExist()
+    {
+        // 현재 이판에(scene에.. ^^) 질문 브릭이 존재하는가?
+
+        bool bResult = false;
+        // 이걸로 체크 됨?
+        if( this.gmobjCurrentBrick == null ) bResult = true; 
+        
+        if(Application.isEditor) Debug.Log($"FSM_NoBrickExist: {bResult}");
+
+        return bResult;
+    }
+
+    private void FSM_SpawnNewBrick()
+    {
+
+        // 이제 기다릴 필요 없음. 앞의 START 상태에서 브릭 (다) 사라질 떄까지 기다렸으므로. 
+        this.SpawnNewBrick();
+
+    }
+
+    private bool FSM_CheckTheTargetNumberOfBricksExists()
+    {
+        // 이 판에서 원하는 개수 만큼의 질문 브릭이 생성되어 있는가?
+
+        bool bResult = false;
+
+        // 이걸로 체크 됨?
+        if( this.gmobjCurrentBrick != null ) bResult = true; 
+        
+        if(Application.isEditor) Debug.Log($"FSM_CheckTheTargetNumberOfBricksExists: {bResult}");
+
+        return bResult;
+    }
+
+    private bool FSM_CheckTheTargetBrick_setAsCorrect()
+    {
+        // 현재 타겟인 질문 브릭이 '맞았음' 으로 세팅 되었는가?
+
+        if( this.gmobjCurrentBrick == null ) return false; // 혹시나..
+
+        return this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeB_Control>().bSetMeCorrectOnce;
     }
 
     private void SpawnNewBrick()
@@ -83,8 +185,10 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
 
     }
 
+    #endregion
 
 
+    #region Public Methods which is/are called from User's tapping control scripts.
     public void CheckIfInputIsCorrect(string sTappedKeyObjectName)
     {
         // This function is called from the each key tap of a user.
@@ -92,6 +196,12 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
         // Functions
         // > Compare the tapped key object name with the quiz brick name
         // > Set the quiz brick components according to the result.
+
+
+        //==================================================================
+        // State Machine 이 QUESTIONED 모드 일 떄만 브릭이 존재하는 것이므로, 
+        // 이 떄에만 체크를 한다. 
+        if( this.ePlay_StateMachine != ePLAY_STATUS_FORLEVEL.QUESTIONED) return; // 23.08.21 FSM 문서화 및 코딩한 이후...
 
         // 탭된 (버튼 역할인) 3D 오브젝트의 이름 자체가, ePIANOKEYS 타입의 이름. 
         // 그래서 변환해서 바로 인덱싱 하면 됨.. 이라고 생각할 수 있지만, 
@@ -105,7 +215,12 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
         
         //string sTappedNoteName_inTermsOfTheSelectedKey;
 
-
+    //if( this.li_gmobj_CurrentlyExistingBricks.Count == 1 ) // 연타하면 브릭이 아직 남아 있는데도 마구 생성되는 문제를 막기 위해. 23.08.21
+    // 아니다, 바닥에 또는 어딘가에 "착지" 한 다음에 맞추든 틀리든 할수 있게 해야. 
+    //if( this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeB_Control>().bAmI_Landed == true )
+    // 다시. 
+    //if( GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Count <= 1 ) // 연타하면 브릭이 아직 남아 있는데도 마구 생성되는 문제를 막기 위해. 23.08.21  음.. 작을수는 없긴 한데..
+    //{
         if( System.Enum.IsDefined( typeof(ePIANOKEYS),  sParsedPinanoKey ) ) 
         {
             // 값이 enum 정의에 존재하면 
@@ -125,6 +240,8 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
                     == sTappedKeyObjectName )
             {
                 if(Application.isEditor) Debug.Log("Correct!");
+                
+                //if(Application.isEditor) Debug.Log($"Correct! {GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Count}");
 
                 // 여기서 이 맞는 브릭은 사라지게 함. 
                 this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeB_Control>().SetMe_asCorrect(); 
@@ -133,7 +250,12 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
 
                 // 맞으면 다음 브릭 생성!
                 //this.SpawnNewBrick();
-                Invoke("SpawnNewBrick", 0.7f);
+                //Invoke("SpawnNewBrick", 0.7f);
+
+                // 맞는 브릭이 사라지는 시퀀스를 시작한다는건 딱 1개 있다는 뜻. 
+                // 아.. 이 0.7 초사이에 맞는거 2연타 하면 1개 이상 생성됨. 
+                //if( GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Count == 1 ) // 연타하면 브릭이 아직 남아 있는데도 마구 생성되는 문제를 막기 위해. 23.08.21  
+                //Invoke("SpawnNewBrick", 0.7f);
 
             }else
             {
@@ -163,8 +285,15 @@ public class ScaleMode_Level_PickNote_PlayManager : MonoBehaviour
             }
         }
 
+    //}else
+    //{
+        // 브릭이 1개 이상이면, 처리하지 않고 처리 될 떄까지 기다림. 
+    //    return;
+    //}
 
 
     }
+
+    #endregion
 
 }

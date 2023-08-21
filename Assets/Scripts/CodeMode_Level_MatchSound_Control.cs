@@ -126,6 +126,9 @@ public class CodeMode_Level_MatchSound_Control : MonoBehaviour
                     break; // 확인했으므로 루프 더 돌 필요 없음. 
                 }
             }
+
+            // 여기까지 오면, 틀린 브릭을 드래그했다는 뜻. 음.. 다른 오브젝트도 부딪히잖아.. 
+
         }
 
     }
@@ -180,6 +183,15 @@ public class CodeMode_Level_MatchSound_Control : MonoBehaviour
             this.gmobjPlayManager.GetComponent<CodeMode_Level_MatchSound_PlayManager>().GiveMeNewQuizBrick();
             this.bCorrectAnswer_whileDragging = false;
         }
+        
+        // 이거하면, 소리들으려고 탭만 해도 wrong 뜨고 감점..
+        /*
+        else 
+        {
+            // 여기가 틀린 브릭을 드래그 했다가 놓은 경우. 
+            this.gmobjPlayManager.GetComponent<CodeMode_Level_MatchSound_PlayManager>().TheInputIsWrong();
+        }
+        */
 
     }
 

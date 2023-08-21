@@ -17,15 +17,23 @@ using UnityEngine;
 
 using TMPro;
 
-#region EthanKorTest
+// 나도 사용. #region EthanKorTest
 using System;
 using System.Linq;
 using System.IO; // 여기서 저장을 하므로, 여기서 선언.. 
-#endregion
+//#endregion
+
+
+//---------------------------------------------------------
+// [각 scene (레벨의) 플레이 매니져를 상태머신으로 구현하기 위해.]
+// : 스파우닝 시점과, 사라지는 효과 사라지는 시점에 따라, out of index 되거나, 연타시에 중복으로 인스턴시에잇되는 문제 해결을 위해.
+public enum ePLAY_STATUS_FORLEVEL { START, SPAWN, QUESTIONED, ANSWERD_CORRECTLY, ANSWERED_WRONG, DESTROYING };
+
+//---------------------------------------------------------
 
 //---------------------------------------------------------
 // [스코어 시스템. Scoring Policy]
-// : 스코어링 폴리시를 몇가지 정할 수 있어야.. 스코어링에 의한 동기부여 효과는 처음 해보브로..
+// : 스코어링 폴리시를 몇가지 정할 수 있어야.. 스코어링에 의한 동기부여 효과는 처음 해보므로..
 public enum eSCORING_POLICY {   POLICY_1_BASIC
                               , POLICY_2_AGGRESSIVE
                             };
@@ -91,6 +99,7 @@ public class GameManager : MonoBehaviour
 
 #endregion
 
+#if ETHAN_KOR_TEST // https://docs.unity3d.com/kr/2021.2/Manual/PlatformDependentCompilation.html 플레이어 설정의 Other Settings 패널을 연 후 Scripting Define Symbols 텍스트 상자로 이동하시기 바랍니다. 
 #region EthanKorTest
     public static readonly string sChoSung = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ";
     public static readonly string sJungSung = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ";
@@ -103,16 +112,20 @@ public class GameManager : MonoBehaviour
 
     // 이든이가 배열한 순서.
     public static readonly string[] sAr_ET_Cho = {"ㄱ","ㄲ","ㄴ","ㄷ","ㄸ","ㄹ","ㅁ","ㅂ","ㅃ","ㅅ","ㅆ","ㅇ","ㅈ","ㅉ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"};
-    public static readonly string[] sAr_ET_Jung = {"ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅢ","ㅚ","ㅝ","ㅙ"};
+    public static readonly string[] sAr_ET_Jung = {"ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅢ","ㅚ","ㅘ","ㅝ","ㅙ","ㅟ","ㅞ"};
     public static readonly string[] sAr_ET_JONG = {" ","ㄱ","ㄲ","ㄳ","ㄴ","ㄶ","ㄵ","ㄷ","ㄹ","ㄺ","ㄻ","ㄼ","ㄽ","ㄾ","ㄿ","ㅀ","ㅁ","ㅂ","ㅄ","ㅅ","ㅆ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"};
 
     private static readonly ushort 유니코드첫한국어 = 0xAC00;
-    private static readonly ushort 유니코드마지막한국어 = 0xD79F;
+    // 워닝 제거용. private static readonly ushort 유니코드마지막한국어 = 0xD79F;
 
+//{"ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅢ","ㅚ","ㅝ","ㅙ"};
+//{"ㅏ","ㅐ","ㅑ","ㅒ","ㅓ","ㅔ","ㅕ","ㅖ","ㅗ","ㅘ","ㅙ","ㅚ","ㅛ","ㅜ","ㅝ","ㅞ","ㅟ","ㅠ","ㅡ","ㅢ","ㅣ"};
+//{"ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅢ","ㅚ","ㅘ","ㅝ","ㅙ","ㅟ","ㅞ"};
 
     public string sLocalSavePath;
     public string sFilename;
 #endregion
+#endif
 
     void Awake()
     {
@@ -173,7 +186,7 @@ public class GameManager : MonoBehaviour
         this.ScoreSystem_SetUpTheScoreTables();
     #endregion
 
-
+#if ETHAN_KOR_TEST
 #region EthanKorTest
         sLocalSavePath = Application.persistentDataPath + "/"; // Ref. https://coding-of-today.tistory.com/178?category=984992 
 
@@ -182,9 +195,9 @@ public class GameManager : MonoBehaviour
         this.sFilename = "Ethan_Data.txt";
 
 
-        this.Ethan_Kor_Test();
+        //if(Application.isEditor) this.Ethan_Kor_Test(); // 디파인을 넣어도, 빌드를 하지 않는 이상, 에디터에서는 실행된다. 그래서 처음에 시간이 너무 걸려서 일단 막음. 
 #endregion
-
+#endif
     }
 
 
@@ -323,12 +336,12 @@ public class GameManager : MonoBehaviour
         this.dicScoredReasonMessageTable = new Dictionary<eSCORING_CASEID, string>
                                                         {
                                                             // Score Mode: InTRo.
-                                                             {eSCORING_CASEID.SM_ITR_0, "1"}
+                                                             {eSCORING_CASEID.SM_ITR_0, "Tap & Listen!"}
                                                             ,{eSCORING_CASEID.SM_ITR_1, "Yes, that's a harmony!"}
                                                             // Score Mode: Pick Note.
-                                                            ,{eSCORING_CASEID.SM_PN_0, "1"}
-                                                            ,{eSCORING_CASEID.SM_PN_1, "4"}
-                                                            ,{eSCORING_CASEID.SM_PN_6, "-2"} // Yes, it's an example.
+                                                            ,{eSCORING_CASEID.SM_PN_0, "Correct!"}
+                                                            ,{eSCORING_CASEID.SM_PN_1, "Excellent!"}
+                                                            ,{eSCORING_CASEID.SM_PN_6, "<color=#ff0000ff>Wrong...</color>"} // Yes, it's an example.
                                                             // Score Mode: Pick Pattern Note.
                                                             ,{eSCORING_CASEID.SM_PPN_0, "1"}
                                                             ,{eSCORING_CASEID.SM_PPN_1, "2"} 
@@ -344,15 +357,15 @@ public class GameManager : MonoBehaviour
                                                             // Code Mode: Pick Number.
                                                             ,{eSCORING_CASEID.CM_PN_0, "Correct!"}
                                                             ,{eSCORING_CASEID.CM_PN_1, "Excellent!"}
-                                                            ,{eSCORING_CASEID.CM_PN_6, "Wrong..."}
+                                                            ,{eSCORING_CASEID.CM_PN_6, "<color=#ff0000ff>Wrong...</color>"}
                                                             // Code Mode: Pick Pattern Number.
                                                             ,{eSCORING_CASEID.CM_PPN_0, "1"}
                                                             ,{eSCORING_CASEID.CM_PPN_1, "2"}
                                                             ,{eSCORING_CASEID.CM_PPN_6, "-1"}
                                                             // Code Mode: Match Sound.
-                                                            ,{eSCORING_CASEID.CM_MS_0, "1"}
-                                                            ,{eSCORING_CASEID.CM_MS_1, "3"}
-                                                            ,{eSCORING_CASEID.CM_MS_6, "-1"}
+                                                            ,{eSCORING_CASEID.CM_MS_0, "Correct!"}
+                                                            ,{eSCORING_CASEID.CM_MS_1, "Excellent!"}
+                                                            ,{eSCORING_CASEID.CM_MS_6, "<color=#ff0000ff>Wrong...</color>"}
                                                             // Code Mode; Recognize Keys.
                                                             ,{eSCORING_CASEID.CM_RK_0, "1"}
                                                             ,{eSCORING_CASEID.CM_RK_1, "3"} 
@@ -434,7 +447,7 @@ public class GameManager : MonoBehaviour
         // 디버깅용. 
         // 
         //GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( this.gmobjScorePanel, eSCORING_CASEID.SM_ITR_1 );
-        Debug.Log($"Existing Bricks: {this.li_gmobj_CurrentlyExistingBricks.Count}");
+        Debug.Log($"=======\nExisting Bricks: {this.li_gmobj_CurrentlyExistingBricks.Count}");
 
         /*
         for(int liIdx=0; liIdx < this.li_gmobj_CurrentlyExistingBricks.Count; liIdx++)
@@ -448,6 +461,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(objs.name);
         }
+
+        Debug.Log("=======");
 
     }
 
@@ -585,6 +600,7 @@ public void DebugMsgOnScreen(GameObject gmobjTargetTextObj, string sWhatToDispla
 
 #endregion
 
+#if ETHAN_KOR_TEST
 #region EthanKorTest
     private void Ethan_Kor_Test()
     {
@@ -644,6 +660,13 @@ public void DebugMsgOnScreen(GameObject gmobjTargetTextObj, string sWhatToDispla
         string sBreakChar = "\n";
         //=======================================
         // 이든이가 정의한, 기준으로 뽑기. 
+        // 초성 자음 단독, 먼저 해달라고 해서.. 
+        for(int ChoIdx=0; ChoIdx<sAr_ET_Cho.Length; ChoIdx++ )
+        {
+            sDataToSave += (sAr_ET_Cho[ChoIdx] + sBreakChar);
+        }
+
+        // 전체 구성글자. 
         for(int ChoIdx=0; ChoIdx<sAr_ET_Cho.Length; ChoIdx++ )
         {
             for(int JungIdx=0; JungIdx<sAr_ET_Jung.Length; JungIdx++ )
@@ -815,5 +838,6 @@ public void DebugMsgOnScreen(GameObject gmobjTargetTextObj, string sWhatToDispla
     }
 
 #endregion
+#endif
 
 }
