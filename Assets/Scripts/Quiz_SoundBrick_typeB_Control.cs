@@ -31,7 +31,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
     
     private Vector3 vOrigianlSize;
 
-    private Coroutine crRemoveMyData;
+    private Coroutine crRemoveMyself;
 
 
     // 이 오브젝트의 자체의 이름은, D4b 
@@ -61,7 +61,7 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
     void Start()
     {
 
-        this.crRemoveMyData = null;
+        this.crRemoveMyself = null;
 
         if(Application.isEditor) Debug.Log("Quiz brick name: " + this.name); // 
 
@@ -448,9 +448,9 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
     private void RemoveMyData_afterThisDelay(float fAfterThisTime)
     {
-        if(this.crRemoveMyData != null) StopCoroutine(crRemoveMyData);
+        if(this.crRemoveMyself != null) StopCoroutine(crRemoveMyself);
 
-        this.crRemoveMyData = StartCoroutine( crRemoveMyData_afterThisDelay(fAfterThisTime) );        
+        this.crRemoveMyself = StartCoroutine( crRemoveMyData_afterThisDelay(fAfterThisTime) );        
     }
 
 

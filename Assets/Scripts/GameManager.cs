@@ -23,6 +23,7 @@ using System.Linq;
 using System.IO; // 여기서 저장을 하므로, 여기서 선언.. 
 //#endregion
 
+using UnityEngine.SceneManagement;
 
 //---------------------------------------------------------
 // [각 scene (레벨의) 플레이 매니져를 상태머신으로 구현하기 위해.]
@@ -222,15 +223,80 @@ public class GameManager : MonoBehaviour
         if(Application.platform == RuntimePlatform.Android)
         {
 
-            if(Input.GetKey(KeyCode.Escape))
+            //if(Input.GetKey(KeyCode.Escape))
+            if(Input.GetKeyDown(KeyCode.Escape)) // 네비게이션 키 1초만 누르고 있어도 끝까지 나가버림 방지. 
             {
-                Application.Quit();
+                //Application.Quit();
+
+                this.EscapeNavigationKeyProcessing();
             }
 
         }
 
 
     }
+
+    private void EscapeNavigationKeyProcessing()
+    {
+        // 현재 scene 모드에 따라서 (안드로이드의) 네비게이션 back 키를 탭했을 때 가야 하는 곳이 달라짐.
+        // 이것을 처리하는 함수. 
+
+        string sCurrentSceneName, sGoToThisScene;
+
+        sCurrentSceneName = SceneManager.GetActiveScene().name;
+
+        switch( sCurrentSceneName )
+        {
+            case "01-02_KeyList":                
+                sGoToThisScene = "01-01_Mainmenu";
+                break;
+            //-----------------------------------------    
+            case "02-01_Code_Intro":                
+                sGoToThisScene = "01-02_KeyList";
+                break;
+            case "02-02_Scale_Intro_a":
+                // 이걸 안날리면 리스트 빈 오브젝트를 담고 있다. 단음 화음 쌓기, 점수주기 로직관련.
+                this.li_gmobj_CurrentlyExistingBricks.Clear();
+                sGoToThisScene = "01-02_KeyList";
+                break; 
+            //-----------------------------------------
+            case "03-01_Code_PickNumber":
+                sGoToThisScene = "02-01_Code_Intro";
+                break;
+            case "03-01_Scale_PickNote":
+                sGoToThisScene = "02-02_Scale_Intro_a";
+                break;
+            //-----------------------------------------
+            case "03-02_Code_PickPatNumber":
+                sGoToThisScene = "03-01_Code_PickNumber";
+                break;
+            case "03-02_Scale_PickPatNotes": // 23.07.24
+                sGoToThisScene = "03-01_Scale_PickNote";
+                break;
+            //-----------------------------------------
+            case "03-03_Code_MatchSound": // 23.07.24
+                sGoToThisScene = "03-02_Code_PickPatNumber";
+                break;
+            //-----------------------------------------
+            case "04-01_Scale_RecogKeys": // 23.08.04
+                sGoToThisScene = "01-02_KeyList";
+                break;
+            case "04-01_Code_RecogKeys": // 23.08.07
+                sGoToThisScene = "01-02_KeyList";
+                break;
+            default:
+                // Do nothing? No. It may be 01-01_Mainmenu
+                sGoToThisScene = "_ExitApp";
+                break;
+        }
+
+        if( sGoToThisScene == "_ExitApp" ) Application.Quit();
+        else SceneManager.LoadScene(sGoToThisScene);
+
+    }
+
+
+
 
 #region Score System related Methods
 
