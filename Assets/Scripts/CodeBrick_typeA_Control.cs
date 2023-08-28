@@ -209,7 +209,7 @@ public class CodeBrick_typeA_Control : MonoBehaviour
         //----------------------
         // 사라지는 단계
         // 
-        //Destroy(this.transform.gameObject, 0.1f);
+        Destroy(this.transform.gameObject, 0f);
 
 
     }

@@ -15,6 +15,7 @@
 // 
 // 
 // 23.07.19. sjjo. 주님, 감사합니다!!!
+// 23.08.28. sjjo. 연타하면 브릭이, Out of index 나오는 문제 해결 위해, 코드 추가.
 // 
 ///////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
@@ -32,6 +33,9 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
     private Coroutine crPopEffect, crVanishingEffect, crMovingTheMark;
     
     private Vector3 vOrigianlSize;
+
+    private Coroutine crRemoveMyself;
+    public bool bSetMeCorrectOnce; // 23.08.21 사용자 입력이 나의 정체와 (한번) 맞았음을 나타내는 플래그. 한번 true로 셋되면 없어지기 전까지는 변화 없어야 함. (사용자 막연타에 대응)
 
     // 마커 오브젝트 관련
     private Vector3 v3Marker_InitialPosition; // 마커의 처음 위치.
@@ -54,6 +58,9 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
         this.trChildObject_Image = this.transform.GetChild(0);
         this.trChildObject_Text = this.transform.GetChild(1);
         this.trChildObject_Marker = this.transform.GetChild(2);
+
+        this.bSetMeCorrectOnce = false;
+        this.crRemoveMyself = null;
     }
 
     // Start is called before the first frame update
@@ -350,6 +357,9 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
 
         this.trChildObject_Image.gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_O_Mark_Image;
 
+        // 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
+        this.bSetMeCorrectOnce = true;
+
         // 맞았을 때는, 맞은 음을 한번 플레이 해 주고 사라지기. 
         brickSpeaker.Play();
 
@@ -494,7 +504,7 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
         
         MovingAway_type2();
 
-        Invoke("IveDoneMyRole", 1f);
+        
     }
 
     private void MovingAway_type1()
@@ -505,6 +515,7 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
 
         this.GetComponent<Rigidbody>().AddForce(Vector3.left*50f, ForceMode.Impulse); // Force, Impulse, Acceleration
 
+        Invoke("IveDoneMyRole", 1f);
 
     }
 
@@ -535,10 +546,42 @@ public class Quiz_SoundBrick_typeA2_Control : MonoBehaviour
     {
         if(Application.isEditor) Debug.Log("See you then!");
 
-        Destroy(this.transform.gameObject, 0.1f);
+        //Destroy(this.transform.gameObject, 0.1f);
+
+        float fDelay = 0.1f; // 이 딜레이, 좀 브릭이 왼쪽으로 쌩 날아가고 나서 없애줘야 하므로. 눈 앞에서 바로 사라지는 것보다..
+
+        //=======================================================================================
+        // 누군가가 생성한 "나" 를
+        // 이제 사라질 것이므로, 리스트에서 날린다. 데이터로서만.. 데이터 리스트에서 사라진다고, 내가 없어진 것은 아님. 
+        this.RemoveMyData_afterThisDelay( fDelay );
+
+        //=======================================================================================
+        // 나 자신을 없애기..
+        // 여기에 넣으면 내 자신이 파괴되어서, 코루틴이 실행 안돰. Destroy(this.transform.gameObject, fDelay);
+
+    }
+
+    private void RemoveMyData_afterThisDelay(float fAfterThisTime)
+    {
+        if(this.crRemoveMyself != null) StopCoroutine(crRemoveMyself);
+
+        this.crRemoveMyself = StartCoroutine( crRemoveMyData_afterThisDelay(fAfterThisTime) );        
     }
 
 
+    IEnumerator crRemoveMyData_afterThisDelay(float fDelayedTime)// (GameObject gmobjTarget, float fDelayedTime)
+    {
+        // 인자로 받은 시간 만큼 기다렸다가 받은 오브젝트를, 데이터 리스트에서 제거해 주는 함수. 
+        yield return null;
+
+        yield return new WaitForSeconds(fDelayedTime);
+
+        //=======================================================================================
+        // 나 자신을 없애기..
+        // 여기에 "안" 넣으면 내 자신이 파괴되어서, 코루틴이 실행 안돰. 
+        Destroy(this.transform.gameObject, 0f);
+
+    }
 
 
 #endregion

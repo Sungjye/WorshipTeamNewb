@@ -14,6 +14,7 @@
 // 
 // 
 // 23.07.12. sjjo. 처음 만듭니다!
+// 23.08.28. sjjo. 연타하면 브릭이, 체크매칭 불가하게 많이 나오는 문제 해결 위해, 코드 추가.
 // 
 ///////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
@@ -35,6 +36,24 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
     // 이 오브젝트의 자체의 이름은, instCodeBrick_C__2do 
     // 이런 식일 텐데, 이 값에는 이것으로 파싱한, 이를테면 Dm 이 들어가 있다. 
     public string sMyDictionariedCodeName; 
+
+
+    private Coroutine crRemoveMyself;
+    public bool bSetMeCorrectOnce;
+
+    void Awake()
+    {
+        // 어웨이크로 옮김. 
+
+        //-------------------------------------------
+        // 현재 브릭의 데이터 관리를 위한 준비. 
+        // 왜 관리? 1) 매칭 불가한 연타 생성 방지. 
+        // 23.08.21
+
+        this.bSetMeCorrectOnce = false;
+
+        this.crRemoveMyself = null;
+    }
 
 
     // Start is called before the first frame update
@@ -343,6 +362,10 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
         this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_O_Mark_Image;
 
+
+        // 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
+        this.bSetMeCorrectOnce = true;
+
         // 맞았을 때는, 맞은 음을 한번 플레이 해 주고 사라지기. 
         brickSpeaker.Play();
 
@@ -423,10 +446,55 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
     {
         if(Application.isEditor) Debug.Log("See you then!");
 
-        Destroy(this.transform.gameObject, 0.1f);
+        //Destroy(this.transform.gameObject, 0.1f);
+
+        float fDelay = 0.1f; // 이 딜레이, 좀 브릭이 왼쪽으로 쌩 날아가고 나서 없애줘야 하므로. 눈 앞에서 바로 사라지는 것보다..
+
+
+        //=======================================================================================
+        // Q.. GameManager.Instance.li_gmobj_CurrentlyExistingBricks 에 있는 게임오브젝트와, 
+        //     이 스크립의의 실제부모인 게임오브젝트 인스턴스는, 실제로 메모리 상에서 같은 '것' 인가?.. 음..
+        // 어쨌든 순서를 지켜보자: 이미 디스트로이된 것을 리스트에서 remove 하면 이상하니까..
+
+        //=======================================================================================
+        // 누군가가 생성한 "나" 를
+        // 이제 사라질 것이므로, 리스트에서 날린다. 데이터로서만.. 데이터 리스트에서 사라진다고, 내가 없어진 것은 아님. 
+        //GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Remove(this.transform.gameObject); // 중복된 이름의 오브젝트가 있어도 잘 제거 되려나?... 잘됩니다, 감사합니다, 주님!!!
+        this.RemoveMyData_afterThisDelay( fDelay );
+
+        //=======================================================================================
+        // 나 자신을 없애기..
+        // 여기에 넣으면 내 자신이 파괴되어서, 코루틴이 실행 안돰. Destroy(this.transform.gameObject, fDelay);
+
+    }
+
+    private void RemoveMyData_afterThisDelay(float fAfterThisTime)
+    {
+        if(this.crRemoveMyself != null) StopCoroutine(crRemoveMyself);
+
+        this.crRemoveMyself = StartCoroutine( crRemoveMyData_afterThisDelay(fAfterThisTime) );        
     }
 
 
+    IEnumerator crRemoveMyData_afterThisDelay(float fDelayedTime)// (GameObject gmobjTarget, float fDelayedTime)
+    {
+        // 인자로 받은 시간 만큼 기다렸다가 받은 오브젝트를, 데이터 리스트에서 제거해 주는 함수. 
+        yield return null;
+
+        yield return new WaitForSeconds(fDelayedTime);
+
+        // 안쓰고 구현. GameManager.Instance.li_gmobj_CurrentlyExistingBricks.Remove(this.transform.gameObject); // 중복된 이름의 오브젝트가 있어도 잘 제거 되려나?... 잘됩니다, 감사합니다, 주님!!!
+
+        // 23. 08.21
+        // 일단 지금 존재하는 브릭, 왼쪽으로 쌩 가서 아직 사라지기 전인 브릭 포함. 몇개임?
+        // 안쓰고 구현. GameManager.Instance.ScoreSystem_Check_CurrentlyExistingBricks();
+
+        //=======================================================================================
+        // 나 자신을 없애기..
+        // 여기에 "안" 넣으면 내 자신이 파괴되어서, 코루틴이 실행 안돰. 
+        Destroy(this.transform.gameObject, 0f);
+
+    }
 
 
 #endregion

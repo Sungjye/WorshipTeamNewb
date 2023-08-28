@@ -13,6 +13,7 @@
 // > (TBD) Score 와 Combo 를 표시해 주기. 
 //
 // 2023.07.14. sjjo. Initial.
+// 2023.08.28. sjjo. 전반적인 구조의 문제를 근본적으로 해결하기 위해 FSM 을 적용해서, 생성, 맞다/틀리다 처리, 새브릭스파운 을 처리. Did you take God into your mind only?
 //
 //=====================================================================================
 using System.Collections;
@@ -30,6 +31,9 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
 
     private GameObject gmobjCurrentBrick; // 현재 생성되어 있는 브릭
 
+    private ePLAY_STATUS_FORLEVEL ePlay_StateMachine;
+
+
     // Start is called before the first frame update
     //void Start()
     // There is a self-checking of a instace object name 
@@ -38,11 +42,107 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
     // Therefore it should be instantiated before the run of the prefab script's Start function.
     void Awake()
     {
-        this.SpawnNewBrick();
+        //this.SpawnNewBrick();
+        this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
 
         // 현재 이 scene에서 활성화된 스코어 패널을 찾아서 넣어준다. 
         GameManager.Instance.gmobjScorePanel = GameObject.Find("Panel_ScoreDisplay"); 
 
+    }
+
+    #region FSM related methods.
+
+    void FixedUpdate()
+    {
+        this.Tick_TheStateMachine();
+    }
+
+    private void Tick_TheStateMachine()
+    {
+        // 상태머신 틱틱 돌리기. 
+
+        // 참조: 구글 슬라이드, 230719_찬양팀막내_TechDoc_v01
+        // PlayerManager 구조
+
+        switch( this.ePlay_StateMachine )
+        {
+            case ePLAY_STATUS_FORLEVEL.START:
+                if( FSM_NoBrickExist() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.SPAWN;
+                //else ; Stay this state.
+                break;
+            case ePLAY_STATUS_FORLEVEL.SPAWN:
+                FSM_SpawnNewBrick();
+
+                if( FSM_CheckTheTargetNumberOfBricksExists() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.QUESTIONED;
+                //else ; Stay this state.
+                break;
+            case ePLAY_STATUS_FORLEVEL.QUESTIONED:
+                // 사용자가 키 탭 할 때마다, 여기의 체크 함수가 호출될 테고.. 거기서 검사 및 set 할 테고..
+
+                if( FSM_CheckTheTargetBrick_setAsCorrect() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.ANSWERD_CORRECTLY;
+                // else // 틀린 경우에 싹 날아가게 할거면 여기에 별도 처리.
+                break;
+            case ePLAY_STATUS_FORLEVEL.ANSWERD_CORRECTLY:
+                // 음.. 뭐 해당 인스턴스 브릭에서 이미 사라지는 동작이 시작되었으므로.. 바로..
+                this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.DESTROYING;
+                break;
+            case ePLAY_STATUS_FORLEVEL.ANSWERED_WRONG:
+                // 틀린 경우에 싹 날아가게 할거면 여기에 별도 처리.
+                break;
+            case ePLAY_STATUS_FORLEVEL.DESTROYING:
+                // if( FSM_DoesAnyBrickExists() == true ) this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
+                // 음.. 어차피 START 스테이트 에서 동일하게 브릭이 하나도 없을 때까지, 즉 디스트로잉이 끝날 떄까지 기다리므로.. 
+                // 바로 가자. 역시 컨셉과 코드의 차이..
+                this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
+                break;
+            default:
+                this.ePlay_StateMachine = ePLAY_STATUS_FORLEVEL.START;
+                break;
+        }
+    }
+
+    private bool FSM_NoBrickExist()
+    {
+        // 현재 이판에(scene에.. ^^) 질문 브릭이 존재하는가?
+
+        bool bResult = false;
+        // 이걸로 체크 됨?
+        if( this.gmobjCurrentBrick == null ) bResult = true; 
+        
+        if(Application.isEditor) Debug.Log($"FSM_NoBrickExist: {bResult}");
+
+        return bResult;
+    }
+
+    private void FSM_SpawnNewBrick()
+    {
+
+        // 이제 기다릴 필요 없음. 앞의 START 상태에서 브릭 (다) 사라질 떄까지 기다렸으므로. 
+        this.SpawnNewBrick();
+
+    }
+
+    private bool FSM_CheckTheTargetNumberOfBricksExists()
+    {
+        // 이 판에서 원하는 개수 만큼의 질문 브릭이 생성되어 있는가?
+
+        bool bResult = false;
+
+        // 이걸로 체크 됨?
+        if( this.gmobjCurrentBrick != null ) bResult = true; 
+        
+        if(Application.isEditor) Debug.Log($"FSM_CheckTheTargetNumberOfBricksExists: {bResult}");
+
+        return bResult;
+    }
+
+    private bool FSM_CheckTheTargetBrick_setAsCorrect()
+    {
+        // 현재 타겟인 질문 브릭이 '맞았음' 으로 세팅 되었는가?
+
+        if( this.gmobjCurrentBrick == null ) return false; // 혹시나..
+
+        return this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().bSetMeCorrectOnce;
     }
 
     private void SpawnNewBrick()
@@ -77,6 +177,7 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
 
 
     }
+    #endregion
 
     private eDO_NUMBER GetOneBrickName_ineDO_NUMBER__Randomly()
     {
@@ -106,6 +207,8 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
         // > Compare the tapped key object name with the quiz brick name
         // > Set the quiz brick components according to the result.
 
+        if( this.ePlay_StateMachine != ePLAY_STATUS_FORLEVEL.QUESTIONED) return; // 23.08.21 FSM 문서화 및 코딩한 이후...
+
         // 탭된 (버튼 역할인) 3D 오브젝트의 이름 자체가, eDO_NUMBER 타입의 이름. 
         // 그래서 변환해서 바로 인덱싱 하면 됨.
         string sTappedCodeName_inTermsOfTheSelectedKey = ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), sTappedKeyObjectName)];
@@ -120,21 +223,26 @@ public class CodeMode_Level_PickNumber_PlayManager : MonoBehaviour
         if( this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().sMyDictionariedCodeName
                 == sTappedCodeName_inTermsOfTheSelectedKey )
         {
-            Debug.Log("Correct!");
+            if(Application.isEditor) Debug.Log("Correct!");
 
+                       
             // 여기서 이 맞는 브릭은 사라지게 함. 
             this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asCorrect(); 
 
+            // 맞았을 떄, 연타로 치면, 
             GameManager.Instance.ScoreSystem_PleaseUpdateTheScore( eSCORING_CASEID.CM_PN_0 );
 
             // 맞으면 다음 브릭 생성!
             //this.SpawnNewBrick();
-            Invoke("SpawnNewBrick", 0.7f);
+            // 이제 브릭생성은 FSM에서. Invoke("SpawnNewBrick", 0.7f);
 
         }else
         {
+            if(Application.isEditor) 
+            {
             Debug.Log("Wrong... Brick: " + this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().sMyDictionariedCodeName // + ContentsManager.Instance.sCodeMode_Level_PickNumber_QuizBrickName 
                             + " Tapped: " + sTappedCodeName_inTermsOfTheSelectedKey);
+            }
 
             this.gmobjCurrentBrick.GetComponent<Quiz_SoundBrick_typeA_Control>().SetMe_asWrong();
 
