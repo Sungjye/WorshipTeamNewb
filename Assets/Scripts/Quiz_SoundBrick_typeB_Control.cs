@@ -25,6 +25,8 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 {
     public bool bSetMeCorrectOnce; // 23.08.21 사용자 입력이 나의 정체와 (한번) 맞았음을 나타내는 플래그. 한번 true로 셋되면 없어지기 전까지는 변화 없어야 함. (사용자 막연타에 대응)
 
+    public bool bSetMeWrongOnce; // 23.08.29 사용자 입력의 나의 정체와 (한번) 틀렸음을 나타내는 플래그. ScaleMode_Level_RecogKeys_PlayManager 클래스에서만 쓰임.. 왜? 틀리면 바로 다 치우고, 새로운 문제 내기 위해서. 
+
     private AudioSource brickSpeaker;
 
     private Coroutine crPopEffect, crVanishingEffect;
@@ -55,6 +57,8 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
 
         this.bSetMeCorrectOnce = false;
+        this.bSetMeWrongOnce = false; // 이건, "사용자 입력"에 의해 한번도 wrong 으로 세팅 되지 않았다는 의미. 
+        
     }
 
     // Start is called before the first frame update
@@ -365,6 +369,9 @@ public class Quiz_SoundBrick_typeB_Control : MonoBehaviour
 
         // 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
         // 어웨이크에서 하고, 상태는 비가역 적이므로 주석처리해도 무방. this.bSetMeCorrectOnce = false;
+
+        // ScaleMode_Level_RecogKeys_PlayManager 클래스의, 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
+        this.bSetMeWrongOnce = true;
 
     }
 #endregion

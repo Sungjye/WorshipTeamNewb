@@ -40,6 +40,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
 
     private Coroutine crRemoveMyself;
     public bool bSetMeCorrectOnce;
+    public bool bSetMeWrongOnce; // 23.08.29 사용자 입력의 나의 정체와 (한번) 틀렸음을 나타내는 플래그. CodeMode_Level_RecogKeys_PlayManager 클래스에서만 쓰임.. 왜? 틀리면 바로 다 치우고, 새로운 문제 내기 위해서. 
 
     void Awake()
     {
@@ -51,6 +52,7 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         // 23.08.21
 
         this.bSetMeCorrectOnce = false;
+        this.bSetMeWrongOnce = false; // 이건, "사용자 입력"에 의해 한번도 wrong 으로 세팅 되지 않았다는 의미. 
 
         this.crRemoveMyself = null;
     }
@@ -386,6 +388,9 @@ public class Quiz_SoundBrick_typeA_Control : MonoBehaviour
         this.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text = "X";
 
         this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material = ContentsManager.Instance.matQuiz_X_Mark_Image;
+
+        // CodeMode_Level_RecogKeys_PlayManager 클래스의, 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
+        this.bSetMeWrongOnce = true;
 
     }
 #endregion
