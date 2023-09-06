@@ -80,12 +80,19 @@ public class ContentsManager : MonoBehaviour
 
     public AudioClip AudioClip_Error;
 
-    public Material[] matCkey_ScoreImage;
-    public Material[] matGkey_ScoreImage;
-    public Material[] matFkey_ScoreImage;
-    public Material[] matDkey_ScoreImage;
-    public Material[] matAkey_ScoreImage;
-    public Material[] matEkey_ScoreImage;
+    private Material[] matCkey_ScoreImage;
+    private Material[] matGkey_ScoreImage;
+    private Material[] matFkey_ScoreImage;
+    private Material[] matDkey_ScoreImage;
+    private Material[] matAkey_ScoreImage;
+    private Material[] matEkey_ScoreImage;
+
+    private Material[] matCkey_CodeImage;
+    private Material[] matGkey_CodeImage;
+    private Material[] matFkey_CodeImage;
+    private Material[] matDkey_CodeImage;
+    private Material[] matAkey_CodeImage;
+    private Material[] matEkey_CodeImage;
 
     public Material matQuiz_Tap_Mark_Image, matQuiz_O_Mark_Image, matQuiz_X_Mark_Image;
 
@@ -153,6 +160,14 @@ public class ContentsManager : MonoBehaviour
         this.matDkey_ScoreImage = Resources.LoadAll<Material>("Materials/Dkey_Scores"); // 23.08.08
         this.matAkey_ScoreImage = Resources.LoadAll<Material>("Materials/Akey_Scores"); // 23.08.08
         this.matEkey_ScoreImage = Resources.LoadAll<Material>("Materials/Ekey_Scores"); // 23.08.08
+
+        // 23.09.06
+        this.matCkey_CodeImage = Resources.LoadAll<Material>("Materials/Ckey_Codes");
+        this.matGkey_CodeImage = Resources.LoadAll<Material>("Materials/Gkey_Codes"); // 23.
+        this.matFkey_CodeImage = Resources.LoadAll<Material>("Materials/Fkey_Codes"); // 23.
+        this.matDkey_CodeImage = Resources.LoadAll<Material>("Materials/Dkey_Codes"); // 23.
+        this.matAkey_CodeImage = Resources.LoadAll<Material>("Materials/Akey_Codes"); // 23.
+        this.matEkey_CodeImage = Resources.LoadAll<Material>("Materials/Ekey_Codes"); // 23.
 
 
         this.matQuiz_Tap_Mark_Image = Resources.Load<Material>("Materials/Mark_Tap");
@@ -860,6 +875,131 @@ public class ContentsManager : MonoBehaviour
 #region Private Methods for the Musical notation image materials
     //========================================
     // 각 키별, 악보이미지 머티리얼 
+
+    //--------------
+    // 스케일, 코드.
+    private Material AmI_Ckey_CodeMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        // C 키: 코드
+        //-----------
+        switch( sMyName )
+        {
+            case "_1do": maItsMaterial = this.matCkey_CodeImage[0]; break;
+            case "_2do": maItsMaterial = this.matCkey_CodeImage[1]; break;
+            case "_3do": maItsMaterial = this.matCkey_CodeImage[2]; break;
+            case "_4do": maItsMaterial = this.matCkey_CodeImage[3]; break;
+            case "_5do": maItsMaterial = this.matCkey_CodeImage[4]; break;
+            case "_6do": maItsMaterial = this.matCkey_CodeImage[5]; break;
+            case "_7do": maItsMaterial = this.matCkey_CodeImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Gkey_CodeMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        //  G키: 코드
+        //-----------
+        switch( sMyName )
+        {
+            case "_1do": maItsMaterial = this.matGkey_CodeImage[0]; break;
+            case "_2do": maItsMaterial = this.matGkey_CodeImage[1]; break;
+            case "_3do": maItsMaterial = this.matGkey_CodeImage[2]; break;
+            case "_4do": maItsMaterial = this.matGkey_CodeImage[3]; break;
+            case "_5do": maItsMaterial = this.matGkey_CodeImage[4]; break;
+            case "_6do": maItsMaterial = this.matGkey_CodeImage[5]; break;
+            case "_7do": maItsMaterial = this.matGkey_CodeImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Fkey_CodeMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        //  #키: 코드
+        //-----------
+        switch( sMyName )
+        {
+            case "_1do": maItsMaterial = this.matFkey_CodeImage[0]; break;
+            case "_2do": maItsMaterial = this.matFkey_CodeImage[1]; break;
+            case "_3do": maItsMaterial = this.matFkey_CodeImage[2]; break;
+            case "_4do": maItsMaterial = this.matFkey_CodeImage[3]; break;
+            case "_5do": maItsMaterial = this.matFkey_CodeImage[4]; break;
+            case "_6do": maItsMaterial = this.matFkey_CodeImage[5]; break;
+            case "_7do": maItsMaterial = this.matFkey_CodeImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Dkey_CodeMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        //  D키: 코드
+        //-----------
+        switch( sMyName )
+        {
+            case "_1do": maItsMaterial = this.matDkey_CodeImage[0]; break;
+            case "_2do": maItsMaterial = this.matDkey_CodeImage[1]; break;
+            case "_3do": maItsMaterial = this.matDkey_CodeImage[2]; break;
+            case "_4do": maItsMaterial = this.matDkey_CodeImage[3]; break;
+            case "_5do": maItsMaterial = this.matDkey_CodeImage[4]; break;
+            case "_6do": maItsMaterial = this.matDkey_CodeImage[5]; break;
+            case "_7do": maItsMaterial = this.matDkey_CodeImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Akey_CodeMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        //  A키: 코드
+        //-----------
+        switch( sMyName )
+        {
+            case "_1do": maItsMaterial = this.matAkey_CodeImage[0]; break;
+            case "_2do": maItsMaterial = this.matAkey_CodeImage[1]; break;
+            case "_3do": maItsMaterial = this.matAkey_CodeImage[2]; break;
+            case "_4do": maItsMaterial = this.matAkey_CodeImage[3]; break;
+            case "_5do": maItsMaterial = this.matAkey_CodeImage[4]; break;
+            case "_6do": maItsMaterial = this.matAkey_CodeImage[5]; break;
+            case "_7do": maItsMaterial = this.matAkey_CodeImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }
+
+    private Material AmI_Ekey_CodeMode_Retrieve_MusicalNotation(string sMyName)
+    {
+        Material maItsMaterial = null;
+        //-----------
+        //  E키: 코드
+        //-----------
+        switch( sMyName )
+        {
+            case "_1do": maItsMaterial = this.matEkey_CodeImage[0]; break;
+            case "_2do": maItsMaterial = this.matEkey_CodeImage[1]; break;
+            case "_3do": maItsMaterial = this.matEkey_CodeImage[2]; break;
+            case "_4do": maItsMaterial = this.matEkey_CodeImage[3]; break;
+            case "_5do": maItsMaterial = this.matEkey_CodeImage[4]; break;
+            case "_6do": maItsMaterial = this.matEkey_CodeImage[5]; break;
+            case "_7do": maItsMaterial = this.matEkey_CodeImage[6]; break;
+            default: maItsMaterial = null; break;
+        }
+        return maItsMaterial;
+    }        
+
+    //--------------
+    // 스케일, 단음.
     private Material AmI_Ckey_ScaleMode_Retrieve_MusicalNotation(string sMyName)
     {
         Material maItsMaterial = null;
@@ -1430,7 +1570,7 @@ public class ContentsManager : MonoBehaviour
         return acResult_AudioClipData;
     }
 
-    public Material Check_WhoAmI_Retrieve_myMusicalNotation_Scale(string sUserTappedObjectName)
+    /*public 23.09.08 스케일, 코드 공용화로, 사용하지 더이상 사용하지 않음. */private Material Check_WhoAmI_Retrieve_myMusicalNotation_Scale(string sUserTappedObjectName)
     {
         // 뭐하는 함수?
         // 스케일 모드인 경우, 
@@ -1466,6 +1606,85 @@ public class ContentsManager : MonoBehaviour
             */
             default:
                 break;
+        }
+
+        return maResult_NotationMaterialData;
+    }
+
+
+    //public Ma
+    // Check_WhoAmI_Retrieve_myMusicalNotation_Code
+
+    public Material Check_WhoAmI_Retrieve_myMusicalNotation_CodeOrScale(string sUserTappedObjectName)
+    {
+        // 뭐하는 함수?
+        // 코드인지 스케일 모드인지 상관없이 (이름으로 구별..) 
+        // 넘어온 게임오브젝트의 이름을 확인해서
+        // 키를 확인하고, 해당하는 음 또는 코드의 악보 이미지 머티리얼을 리턴해 주는 함수. 
+
+        Material maResult_NotationMaterialData = null;
+
+        if( sUserTappedObjectName.Substring(0,1) == "_" ) // _1do, _3do
+        {
+            switch( GameManager.Instance.eSelectedKey )
+            {
+                case eAVAILABLEKEYS.C:
+                    maResult_NotationMaterialData = AmI_Ckey_CodeMode_Retrieve_MusicalNotation(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.G:
+                    maResult_NotationMaterialData = AmI_Gkey_CodeMode_Retrieve_MusicalNotation(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.F:
+                    maResult_NotationMaterialData = AmI_Fkey_CodeMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                case eAVAILABLEKEYS.D:
+                    maResult_NotationMaterialData = AmI_Dkey_CodeMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                case eAVAILABLEKEYS.A:
+                    maResult_NotationMaterialData = AmI_Akey_CodeMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                case eAVAILABLEKEYS.E:
+                    maResult_NotationMaterialData = AmI_Ekey_CodeMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                /*
+                case eAVAILABLEKEYS.%:
+                    maResult_NotationMaterialData = AmI_%key_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                */
+                default:
+                    break;
+            }
+        }else
+        {
+            // 스케일 모드인 경우. 
+            switch( GameManager.Instance.eSelectedKey )
+            {
+                case eAVAILABLEKEYS.C:
+                    maResult_NotationMaterialData = AmI_Ckey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.G:
+                    maResult_NotationMaterialData = AmI_Gkey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);
+                    break;
+                case eAVAILABLEKEYS.F:
+                    maResult_NotationMaterialData = AmI_Fkey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                case eAVAILABLEKEYS.D:
+                    maResult_NotationMaterialData = AmI_Dkey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                case eAVAILABLEKEYS.A:
+                    maResult_NotationMaterialData = AmI_Akey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                case eAVAILABLEKEYS.E:
+                    maResult_NotationMaterialData = AmI_Ekey_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                /*
+                case eAVAILABLEKEYS.%:
+                    maResult_NotationMaterialData = AmI_%key_ScaleMode_Retrieve_MusicalNotation(sUserTappedObjectName);                
+                    break;
+                */
+                default:
+                    break;
+            }
         }
 
         return maResult_NotationMaterialData;

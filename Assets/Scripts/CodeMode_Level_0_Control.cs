@@ -154,7 +154,8 @@ public class CodeMode_Level_0_Control : MonoBehaviour
         // 인스턴시에잇된 오브젝트 자식으로 붙어 있는 TMP의 텍스트 내용을 정하기:
         // Ref. https://mentum.tistory.com/333 , https://chashtag.tistory.com/50 
         // 탭된 (버튼 역할인) 3D 오브젝트의 이름 자체가, eDO_NUMBER 타입의 이름. 그래서 변환해서 바로 인덱싱 하면 됨. 
-        instCodeBrick.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text 
+        //instCodeBrick.transform.GetChild(0).gameObject.GetComponent<TextMeshPro>().text 
+        instCodeBrick.transform.GetChild(1).gameObject.GetComponent<TextMeshPro>().text // 이제는, 0: 머티리얼, 1: TMP
                     = sCodeName;
                     //= ContentsManager.Instance.dicCode_byKeyAndDoNum[GameManager.Instance.eSelectedKey][(eDO_NUMBER)System.Enum.Parse(typeof(eDO_NUMBER), this.name)];
                     //= ContentsManager.Instance.dicCode_byKeyAndDoNum[eKEYCODES.C][eDO_NUMBER._1do];

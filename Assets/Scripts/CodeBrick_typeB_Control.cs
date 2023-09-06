@@ -1,18 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////////
 //
-// 단음 (scale) 브릭 프리팹의 제어를 위한 스크립트. 
+// 코드 (code) 브릭 프리팹의 제어를 위한 스크립트. 
 // 
-// 
-// 주님, 안정적으로 동작할 수 있게, 차분히 만들게 해 주십시오. 
+// 주님, 찬양반주에 찬양드림에 실제로 도움이 될 수 있게 해 주십시요. 
 //
-// 23.07.11. sjjo. 큐브 기반으로, 하위의 악보 큐브, 글자 TMP로 구성한 프리팹 대상. 
+// 23.09.05. sjjo. 주시는 마음에 따라, 코드브릭 첫 연습 모드에서도, 악보를 표시하게.
 // 
 ///////////////////////////////////////////////////////////////////////////////////
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScaleBrick_typeA_Control : MonoBehaviour
+public class CodeBrick_typeB_Control : MonoBehaviour
 {
     private AudioSource brickSpeaker;
 
@@ -142,10 +141,17 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
 
         string sMyName = this.name; // 나의 오브젝트 네임. 
 
-        // e.g. 
+        // e.g. 이건 스케일 경우. 
         // instScaleBrick_C_F4#
         // 012345678901234567
-        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( sMyName.Substring(17) );
+        //this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( sMyName.Substring(17) );
+
+        // 끝에 3개, 즉 _3do 이것만 넘기기.
+        sMyName = sMyName.Substring(sMyName.Length-4, 4);
+
+        
+        this.brickSpeaker.clip = ContentsManager.Instance.Check_WhoAmI_Retrieve_myAudioClip_CodeOrScale( sMyName );
+
 
         // 공용화. 23.08.07
         // 프룻 브릭일 경우는 TMP 자식 1개만 있고, 머티리얼이 없다. 그래서 분기 처리. 
@@ -153,7 +159,7 @@ public class ScaleBrick_typeA_Control : MonoBehaviour
         if( this.transform.childCount == 2) // 0: 머티리얼, 1: TMP
         {
             this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material 
-                            = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_CodeOrScale( sMyName.Substring(17) );
+                            = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_CodeOrScale( sMyName ); // e.g. _3do
         }
 
         brickSpeaker.Play();

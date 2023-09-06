@@ -387,7 +387,7 @@ public class Quiz_SoundBrick_typeB2_Control : MonoBehaviour
         //this.AmI_Ckey_thenShowScore(this.name);
         // 공용화. 23.08.07
         this.transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().material 
-                            = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_Scale(this.name);
+                            = ContentsManager.Instance.Check_WhoAmI_Retrieve_myMusicalNotation_CodeOrScale(this.name);
 
         // 플레이 매니져의 업데이트 함수에서 확인하기 위함. 
         this.bSetMeCorrectOnce = true;
